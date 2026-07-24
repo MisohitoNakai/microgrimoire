@@ -1,0 +1,37 @@
+/* interval-names-ja.js
+   ja.xen.wiki/w/31平均律 掲載「31平均律の音程と近似値」表に準拠した
+   各歩(0〜31)の日本語音程名・DMS・純正比・純正セント・誤差。 */
+window.INTERVAL_NAMES_JA = [
+  { step: 0,  cent: 0.000,    dms: "0.000",   name: "同度，ユニゾン",              ratio: "1/1",           just: 0.000,    err: 0.000 },
+  { step: 1,  cent: 38.710,   dms: "11.613",  name: "長1度，ディエシス，減2度",    ratio: "49/48・45/44",  just: 35.697,   err: 3.013 },
+  { step: 2,  cent: 77.419,   dms: "23.226",  name: "半音階的半音，増1度，縮2度",  ratio: "25/24・22/21",  just: 70.672,   err: 6.747 },
+  { step: 3,  cent: 116.129,  dms: "34.839",  name: "全音階的半音，短2度",        ratio: "16/15・15/14",  just: 111.731,  err: 4.398 },
+  { step: 4,  cent: 154.839,  dms: "46.452",  name: "中立2度",                    ratio: "12/11",         just: 150.637,  err: 4.202 },
+  { step: 5,  cent: 193.548,  dms: "58.065",  name: "全音，長2度",                ratio: "10/9・9/8",     just: 203.910,  err: -10.362 },
+  { step: 6,  cent: 232.258,  dms: "69.677",  name: "拡2度，減3度",              ratio: "8/7",           just: 231.174,  err: 1.084 },
+  { step: 7,  cent: 270.968,  dms: "81.290",  name: "縮3度，増2度",              ratio: "7/6",           just: 266.871,  err: 4.097 },
+  { step: 8,  cent: 309.677,  dms: "92.903",  name: "短3度",                      ratio: "6/5",           just: 315.641,  err: -5.964 },
+  { step: 9,  cent: 348.387,  dms: "104.516", name: "中立3度",                    ratio: "11/9",          just: 347.408,  err: 0.979 },
+  { step: 10, cent: 387.097,  dms: "116.129", name: "長3度",                      ratio: "5/4",           just: 386.314,  err: 0.783 },
+  { step: 11, cent: 425.806,  dms: "127.742", name: "拡3度，減4度",              ratio: "14/11・9/7",    just: 417.508,  err: 8.298 },
+  { step: 12, cent: 464.516,  dms: "139.355", name: "短4度，増3度",              ratio: "13/10・21/16",  just: 454.214,  err: 10.302 },
+  { step: 13, cent: 503.226,  dms: "150.968", name: "完全4度",                    ratio: "4/3",           just: 498.045,  err: 5.181 },
+  { step: 14, cent: 541.935,  dms: "162.581", name: "長4度",                      ratio: "15/11・11/8",   just: 536.951,  err: 4.985 },
+  { step: 15, cent: 580.645,  dms: "174.194", name: "増4度",                      ratio: "7/5",           just: 582.512,  err: -1.867 },
+  { step: 16, cent: 619.355,  dms: "185.806", name: "減5度",                      ratio: "10/7",          just: 617.488,  err: 1.867 },
+  { step: 17, cent: 658.065,  dms: "197.419", name: "短5度",                      ratio: "16/11・22/15",  just: 663.049,  err: -4.985 },
+  { step: 18, cent: 696.774,  dms: "209.032", name: "完全5度",                    ratio: "3/2",           just: 701.955,  err: -5.181 },
+  { step: 19, cent: 735.484,  dms: "220.645", name: "長5度，減6度",              ratio: "32/21・20/13",  just: 729.219,  err: 6.265 },
+  { step: 20, cent: 774.194,  dms: "232.258", name: "増5度，縮6度",              ratio: "14/9・11/7",    just: 764.916,  err: 9.278 },
+  { step: 21, cent: 812.903,  dms: "243.871", name: "短6度",                      ratio: "8/5",           just: 813.686,  err: -0.783 },
+  { step: 22, cent: 851.613,  dms: "255.484", name: "中立6度",                    ratio: "18/11",         just: 852.592,  err: -0.979 },
+  { step: 23, cent: 890.323,  dms: "267.097", name: "長6度",                      ratio: "5/3",           just: 884.359,  err: 5.964 },
+  { step: 24, cent: 929.032,  dms: "278.710", name: "拡6度，減7度",              ratio: "12/7",          just: 933.129,  err: -4.097 },
+  { step: 25, cent: 967.742,  dms: "290.323", name: "縮7度，増6度",              ratio: "7/4",           just: 968.826,  err: -1.084 },
+  { step: 26, cent: 1006.452, dms: "301.935", name: "短7度",                      ratio: "16/9・9/5",     just: 1017.596, err: -11.145 },
+  { step: 27, cent: 1045.161, dms: "313.548", name: "中立7度",                    ratio: "11/6",          just: 1049.363, err: -4.202 },
+  { step: 28, cent: 1083.871, dms: "325.161", name: "長7度",                      ratio: "15/8",          just: 1088.269, err: -4.398 },
+  { step: 29, cent: 1122.581, dms: "336.774", name: "減8度，拡7度",              ratio: "21/11",         just: 1119.463, err: 3.118 },
+  { step: 30, cent: 1161.290, dms: "348.387", name: "短8度，増7度",              ratio: "—",             just: null,     err: null },
+  { step: 31, cent: 1200.000, dms: "360.000", name: "オクターヴ",                  ratio: "2/1",           just: 1200.000, err: 0.000 }
+];

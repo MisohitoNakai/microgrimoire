@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ⅰ-2 セントと比、音程の算術 — 微分音のグリモワール</title>
+<link rel="icon" href="./assets/data/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+</head>
+<body>
+<header class="topbar">
+  <button id="nav-toggle" aria-label="目次を開く"><span></span><span></span><span></span></button>
+  <a class="site-name" href="index.html">微分音のグリモワール</a>
+  <span class="topbar-section">第Ⅰ部 土台</span>
+</header>
+
+<div class="layout">
+  <aside id="sidebar" aria-label="目次"></aside>
+  <div id="sidebar-overlay"></div>
+
+  <main class="content">
+    <p class="eyebrow">第Ⅰ部 土台：音・周波数・知覚　─　2</p>
+    <h1>セントと比、音程の算術</h1>
+
+    <div class="intuition">
+      <span class="layer-tag">直感レイヤー</span>
+      <p>音程の正体は周波数の「比」でした。ところが比は掛け算でしか積めず、暗算に向きません。そこで比の対数をとって「足し算で積める物差し」に変えたのが<strong>セント</strong>です。半音＝100¢、オクターブ＝1200¢。この物差しがあれば、「純正の長3度は 12 平均律より 14¢ 狭い」「31平均律ならそれは 1¢ 未満の差」といった微分音の会話がすべて数字でできるようになります。<br>この節はいわば、本書全体で使う<strong>電卓の使い方</strong>です。</p>
+    </div>
+
+    <h2 id="def-cent">セントの定義</h2>
+
+    <p>セントは、オクターブ（比 2/1）を対数的に 1200 等分した音程の単位です。周波数 \(f_1\) から \(f_2\) への音程の大きさは</p>
+
+    <p>$$ c = 1200 \log_2 \frac{f_2}{f_1} \qquad\Longleftrightarrow\qquad \frac{f_2}{f_1} = 2^{\,c/1200} $$</p>
+
+    <p>で与えられます。12edo の半音がちょうど 100¢ になるよう設計されているため、12edo 育ちの耳にとって直感的な換算（「50¢＝半音の半分（四分音）」「10¢＝半音の1割」）がそのまま通用します。<br>そして本書の主役の一歩、<strong>31edo の 1 ステップは 1200/31 ≈ 38.71¢</strong> です。</p>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── なぜ log₂ か・単位の由来・精度の慣習</summary>
+      <div class="precise-body">
+        <p>対数の底を 2 に、係数を 1200 に選ぶのは、<br>（1）オクターブ等価性により 2 が音組織の自然な周期であること、<br>（2）12×100 という分割が既存の記譜・理論と接続しやすいこと<br>によります。セントは19世紀末に A. J. Ellis が Helmholtz『音感覚論』の英訳・注釈で普及させた単位です。対数の物差しなので、<strong>音程の合成は加算、転回・下行は減算（負のセント値）</strong>になります。数値の精度について本書では、定義値（12edo の 700¢ など）は整数で、無理数になる値は小数第2〜3位までを示します。丸めた値どうしの加減算では末位に ±0.01¢ 程度の食い違いが出ることがありますが、議論に影響しません。<br>ほかの対数単位としてはオクターブを 1 とする octave（oct）、10 進の savart、対数の底を 3 、係数を 1300 に選んだ hekt という表記などもありますが、本書はセントに統一します。</p>
+      </div>
+    </details>
+
+    <h2 id="sec-arith">音程の算術 ── 比は掛け、セントは足す</h2>
+
+    <p>音程を積み重ねることは、比の世界では<strong>乗算</strong>、セントの世界では<strong>加算</strong>です。完全5度（3/2）の上に長3度（5/4）を積むと：</p>
+
+    <p>$$ \frac{3}{2} \times \frac{5}{4} = \frac{15}{8}, \qquad 701.955¢ + 386.314¢ = 1088.269¢ $$</p>
+
+    <p>15/8 は純正の長7度です。逆に音程の「差」は比の除算・セントの減算です。オクターブから完全5度を引けば完全4度：\( \frac{2}{1} \div \frac{3}{2} = \frac{4}{3} \)、\(1200 - 701.955 = 498.045¢\)。この「掛け算を足し算に変える」機構こそ、微分音理論の計算をすべて支えるエンジンです。第Ⅱ部で導入する素因数の格子も、第Ⅲ部の monzo（素数指数ベクトル）も、この算術の整理にほかなりません。</p>
+
+    <div class="widget">
+      <p class="widget-title">音程を積む</p>
+      <div class="wrow">
+        <label>1つ目</label>
+        <select id="st-a">
+          <option value="3/2" selected>3/2 完全5度</option>
+          <option value="4/3">4/3 完全4度</option>
+          <option value="5/4">5/4 純正長3度</option>
+          <option value="6/5">6/5 純正短3度</option>
+          <option value="9/7">7/6 セプティマル長3度</option>
+          <option value="7/6">7/6 セプティマル短3度</option>
+          <option value="9/8">9/8 大全音</option>
+        </select>
+        <label>× 2つ目</label>
+        <select id="st-b">
+          <option value="3/2">3/2 完全5度</option>
+          <option value="4/3">4/3 完全4度</option>
+          <option value="5/4" selected>5/4 純正長3度</option>
+          <option value="6/5">6/5 純正短3度</option>
+          <option value="9/7">7/6 セプティマル長3度</option>
+          <option value="7/6">7/6 セプティマル短3度</option>
+          <option value="9/8">9/8 大全音</option>
+        </select>
+      </div>
+      <div class="wrow"><span class="wval" id="st-result" style="min-width:100%">—</span></div>
+      <div class="wrow">
+        <button class="btn" id="st-play">3音を積んで聴く</button>
+      </div>
+      <p class="widget-note">基音 220 Hz の上に2つの音程を順に積み、3音を和音として鳴らします。比の乗算とセントの加算が同じことの二通りの表現であることを確認してください。</p>
+    </div>
+
+    <h2 id="sec-ratios">主な純正音程のセント値</h2>
+
+    <p>以下は本書で繰り返し登場する純正音程<br>（小さな整数比の音程——正確な定義と「なぜ特別か」は<span class="xref" data-file="part2-01-ji-limits.html">第Ⅱ部1</span>）<br>の早見です。各行のボタンで、基音 220 Hz との2音を試聴できます。</p>
+
+    <div class="table-scroll">
+    <table id="ji-table">
+      <thead><tr><th>比</th><th>通称</th><th class="num">セント</th><th>試聴</th></tr></thead>
+      <tbody></tbody>
+    </table>
+    </div>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── 12edo との差を読む</summary>
+      <div class="precise-body">
+        <p>上の表を 12edo（各音程が 100¢ の倍数）と見比べると、微分音の出発点が見えてきます。<br>3/2（701.96¢）と 12edo の5度（700¢）の差はわずか −1.96¢。<br>一方、5/4（386.31¢）と 12edo の長3度（400¢）の差は <strong>+13.69¢</strong> もあり、同時に鳴らせばはっきりうなります（<a href="part1-01-sound.html#sec-beats">前節</a>）。<br>さらに 7/4（968.83¢）に至っては最寄りの 12edo 音程から 31¢ 以上離れ、11/8（551.32¢）は半音の「ちょうど中間」に落ちて 12edo では表現不能です。<strong><br>12edo は素数 3 の音程には優秀だが、5 でほころび、7・11・13 では手が届かない</strong>——この診断が、第Ⅱ部以降で音律を「組み直す」動機になります。<br>そして先取りすれば、31edo は 5/4 を +0.78¢、7/4 を −1.08¢ で捉えます。次のウィジェットで、その差を耳で確かめられます。</p>
+      </div>
+    </details>
+
+    <h2 id="sec-converter">換算と試聴 ── 純正 / 12edo / 31edo</h2>
+
+    <div class="widget">
+      <p class="widget-title">セント換算機＋三音律で比較</p>
+      <div class="wrow">
+        <label>比</label>
+        <input type="number" id="cv-num" value="5" min="1" step="1" style="width:5em"> ／
+        <input type="number" id="cv-den" value="4" min="1" step="1" style="width:5em">
+        <span class="wval" id="cv-cents">386.31 ¢</span>
+      </div>
+      <div class="wrow">
+        <label>または セント直接入力</label>
+        <input type="number" id="cv-direct" value="" placeholder="例: 550" step="0.01" style="width:8em">
+        <span class="wval" id="cv-ratio"></span>
+      </div>
+      <div class="wrow">
+        <button class="btn" id="cv-just">純正比で聴く</button>
+        <button class="btn secondary" id="cv-12">最寄りの 12edo</button>
+        <button class="btn secondary" id="cv-31">最寄りの 31edo</button>
+      </div>
+      <div class="wrow"><span class="wval" id="cv-info" style="min-width:100%">—</span></div>
+      <p class="widget-note">基音 220 Hz との2音で鳴らします。5/4 や 7/4 を入れて、12edo と 31edo の「うなりの差」を聴き比べてください。これが本書全体の予告編です。詳細な理屈は<span class="xref" data-file="part4-01-why31.html">第Ⅳ部</span>で。</p>
+    </div>
+
+    <h2 id="sec-edo">EDO のステップサイズ</h2>
+
+    <p>オクターブを n 等分した音律（n-edo）の 1 ステップは 1200/n ¢ です。本書に登場する主な EDO を挙げます（それぞれの個性は<span class="xref" data-file="part5-04-spotlights.html">第Ⅴ部</span>で）。</p>
+
+    <div class="table-scroll">
+    <table>
+      <thead><tr><th>EDO</th><th class="num">1 ステップ（¢）</th><th>ひとこと</th></tr></thead>
+      <tbody>
+        <tr><td>12</td><td class="num">100.00</td><td>通常の平均律。本書の出発点</td></tr>
+        <tr><td>19</td><td class="num">63.16</td><td>もう一つのミーントーンで、31 の姉妹</td></tr>
+        <tr><td>22</td><td class="num">54.55</td><td>Porcupine / Superpyth の本拠地</td></tr>
+        <tr><td>24</td><td class="num">50.00</td><td>四分音、12 の倍</td></tr>
+        <tr><td><strong>31</strong></td><td class="num"><strong>38.71</strong></td><td><strong>本書の主役。ミーントーンの実体化</strong></td></tr>
+        <tr><td>41</td><td class="num">29.27</td><td>Schismatic ほか多面体</td></tr>
+        <tr><td>53</td><td class="num">22.64</td><td>3-limit がほぼ純正</td></tr>
+        <tr><td>72</td><td class="num">16.67</td><td>12 の6倍・Miracle の本拠地</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── 相対セントという読み替え</summary>
+      <div class="precise-body">
+        <p>EDO の内部で議論するときは、1 ステップを単位とする「ステップ数」で数える方が見通しがよいことが多く、誤差を 1 ステップに対する百分率（相対セント、relative cent）で測る流儀もあります。例えば 3/2 は 31edo では 18 ステップ（696.77¢、誤差 −5.18¢）で、これは 1 ステップの約 13% にあたります。ステップ数による音程の勘定は、第Ⅲ部で val（各素数を何ステップに写像するかの表）として一般化されます。</p>
+      </div>
+    </details>
+
+    <div class="keybox">
+      <span class="kb-label">この節の要点</span>
+      セントは比の対数：\(c = 1200\log_2 r\)。<br><strong>比の乗算＝セントの加算</strong>という算術が全理論の土台。<br>12edo は素数 3 に強く 5・7・11 に弱い。31edo の 1 ステップは 38.71¢ で、5/4 を +0.78¢、7/4 を −1.08¢ の精度で捉える。
+    </div>
+
+    <p>物差しは手に入りました。次節では、この物差しで測るべき最初の対象、自然が用意した音程の設計図「<strong>倍音列</strong>」に進みます。</p>
+
+    <nav class="pager" id="pager"></nav>
+  </main>
+</div>
+
+<script src="assets/data/toc.js"></script>
+<script src="assets/data/glossary.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/audio.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+<script>
+(function () {
+  "use strict";
+  const BASE = 220;
+  const rc = r => 1200 * Math.log2(r);
+
+  /* --- 純正音程テーブル --- */
+  const JI = [
+    ["16/15", 16 / 15, "純正短2度（全音階的半音）"],
+    ["9/8",   9 / 8,   "大全音"],
+    ["10/9",  10 / 9,  "小全音"],
+    ["6/5",   6 / 5,   "純正短3度"],
+    ["5/4",   5 / 4,   "純正長3度"],
+    ["4/3",   4 / 3,   "完全4度"],
+    ["7/5",   7 / 5,   "セプティマル増4度（Huygens Tritone）"],
+    ["3/2",   3 / 2,   "完全5度"],
+    ["8/5",   8 / 5,   "純正短6度"],
+    ["5/3",   5 / 3,   "純正長6度"],
+    ["7/4",   7 / 4,   "自然7度（セプティマル短7度）"],
+    ["11/8",  11 / 8,  "第11倍音（長4度）"],
+    ["13/8",  13 / 8,  "第13倍音"],
+    ["15/8",  15 / 8,  "純正長7度"],
+    ["2/1",   2,       "オクターブ"]
+  ];
+  const tbody = document.querySelector("#ji-table tbody");
+  JI.forEach(([label, r, name]) => {
+    const tr = document.createElement("tr");
+    const c = rc(r);
+    tr.innerHTML = "<td><code>" + label + "</code></td><td>" + name +
+      "</td><td class='num'>" + c.toFixed(2) + "</td><td></td>";
+    const btn = document.createElement("button");
+    btn.className = "btn small secondary";
+    btn.textContent = "♪";
+    btn.setAttribute("aria-label", label + " を試聴");
+    btn.addEventListener("click", () => XenAudio.playFreqs([BASE, BASE * r], { dur: 2.0 }));
+    tr.lastElementChild.appendChild(btn);
+    tbody.appendChild(tr);
+  });
+
+  /* --- 音程を積む --- */
+  const stA = document.getElementById("st-a");
+  const stB = document.getElementById("st-b");
+  const stRes = document.getElementById("st-result");
+  function parseRatio(s) { const [n, d] = s.split("/").map(Number); return [n, d]; }
+  function gcd(a, b) { return b ? gcd(b, a % b) : a; }
+  function stUpdate() {
+    const [n1, d1] = parseRatio(stA.value);
+    const [n2, d2] = parseRatio(stB.value);
+    let n = n1 * n2, d = d1 * d2;
+    const g = gcd(n, d); n /= g; d /= g;
+    const c1 = rc(n1 / d1), c2 = rc(n2 / d2);
+    stRes.textContent =
+      `${n1}/${d1} × ${n2}/${d2} = ${n}/${d}　｜　` +
+      `${c1.toFixed(2)}¢ + ${c2.toFixed(2)}¢ = ${(c1 + c2).toFixed(2)}¢`;
+  }
+  stA.addEventListener("change", stUpdate);
+  stB.addEventListener("change", stUpdate);
+  stUpdate();
+  document.getElementById("st-play").addEventListener("click", () => {
+    const [n1, d1] = parseRatio(stA.value);
+    const [n2, d2] = parseRatio(stB.value);
+    const f1 = BASE, f2 = BASE * n1 / d1, f3 = f2 * n2 / d2;
+    XenAudio.playSeq([f1, f2, f3], { dur: 0.5, gap: 0.06 });
+    XenAudio.playFreqs([f1, f2, f3], { dur: 2.2, when: 1.85 });
+  });
+
+  /* --- 換算機＋三律比較 --- */
+  const STEP31 = 1200 / 31;
+  const cvNum = document.getElementById("cv-num");
+  const cvDen = document.getElementById("cv-den");
+  const cvDirect = document.getElementById("cv-direct");
+  const cvCents = document.getElementById("cv-cents");
+  const cvRatio = document.getElementById("cv-ratio");
+  const cvInfo = document.getElementById("cv-info");
+
+  function currentCents() {
+    const dv = parseFloat(cvDirect.value);
+    if (cvDirect.value !== "" && isFinite(dv)) return dv;
+    const n = parseFloat(cvNum.value), d = parseFloat(cvDen.value);
+    if (!(n > 0 && d > 0)) return null;
+    return rc(n / d);
+  }
+  function cvUpdate() {
+    const c = currentCents();
+    if (c == null) { cvCents.textContent = "—"; cvInfo.textContent = "—"; return; }
+    cvCents.textContent = c.toFixed(2) + " ¢";
+    if (cvDirect.value !== "") {
+      cvRatio.textContent = "比 = " + Math.pow(2, c / 1200).toFixed(5);
+    } else cvRatio.textContent = "";
+    const c12 = Math.round(c / 100) * 100;
+    const s31 = Math.round(c / STEP31);
+    const c31 = s31 * STEP31;
+    cvInfo.textContent =`純正: ${c.toFixed(2)}¢`+`｜`+`12edo 最寄り: ${c12}¢（誤差 ${(c12 - c >= 0 ? "+" : "")}${(c12 - c).toFixed(2)}¢）`+`｜`+`31edo 最寄り: ${s31} ステップ = ${c31.toFixed(2)}¢（誤差 ${(c31 - c >= 0 ? "+" : "")}${(c31 - c).toFixed(2)}¢）`;
+
+  }
+  [cvNum, cvDen, cvDirect].forEach(el => el.addEventListener("input", cvUpdate));
+  cvUpdate();
+
+  function playDyadAt(c) {
+    XenAudio.playFreqs([BASE, XenAudio.freqFromCents(BASE, c)], { dur: 2.4 });
+  }
+  document.getElementById("cv-just").addEventListener("click", () => {
+    const c = currentCents(); if (c != null) playDyadAt(c);
+  });
+  document.getElementById("cv-12").addEventListener("click", () => {
+    const c = currentCents(); if (c != null) playDyadAt(Math.round(c / 100) * 100);
+  });
+  document.getElementById("cv-31").addEventListener("click", () => {
+    const c = currentCents(); if (c != null) playDyadAt(Math.round(c / STEP31) * STEP31);
+  });
+})();
+</script>
+</body>
+</html>

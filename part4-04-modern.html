@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ⅳ-4 現代の31平均律 — 微分音のグリモワール</title>
+<link rel="icon" href="./assets/data/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <button id="nav-toggle" aria-label="目次を開く"><span></span><span></span><span></span></button>
+  <a class="site-name" href="index.html">微分音のグリモワール</a>
+  <span class="topbar-section">第Ⅳ部 31平均律</span>
+</header>
+
+<div class="layout">
+  <aside id="sidebar" aria-label="目次"></aside>
+  <div id="sidebar-overlay"></div>
+
+  <main class="content">
+    <p class="eyebrow">第Ⅳ部 31平均律　─　4</p>
+    <h1>現代の31平均律 ── 楽器・ソフトウェア・共同体</h1>
+
+    <div class="intuition">
+      <span class="layer-tag">直感レイヤー</span>
+      <p>フォッカーの時代、31音を鳴らすには専用オルガンを建てる必要がありました。<br>現在は事情が一変しています。<br><strong>コンピュータの中でソフトシンセは調律ファイルひとつで 31edo になり、isomorphic 鍵盤（Lumatone など）は物理的に 31edo を弾くことができ、フレットを増やしたギターも複数の工房が製作しています</strong>。参入コストが劇的に下がった結果、31edo は「歴史的な珍品」から「選択肢のひとつ」へ戻ってきました。<br>この節は現在地の見取り図です。具体的な制作手順（Scala・Anamark Tuning・MTS-ESP・DAW 統合）は第Ⅶ部で詳述するため、ここでは何がどこにあるかを掴みます。</p>
+    </div>
+
+    <h2 id="sec-instruments">物理楽器</h2>
+
+    <p><strong>オルガン</strong>：フォッカー・オルガン（1950）は修復を経てアムステルダムの <a href="https://www.muziekgebouw.nl/">Muziekgebouw aan 't IJ</a> で現役です。Huygens-Fokker 財団が管理し、演奏会・貸出の窓口になっています。31音の生楽器としては今も世界の中心です。</p>
+
+    <p><strong>isomorphic鍵盤</strong>：六角形配列の MIDI 鍵盤 <a href="https://www.lumatone.io/">Lumatone</a>（280鍵）は、31edo を含む任意の EDO をファームウェア・マッピングで割り当てられます。六角格子は Bosanquet–Fokker 型の一般化鍵盤（<span class="xref" data-file="part4-05-keyboard.html">次節</span>）の現代的実装で、<strong>「運指の形＝音程の形」が調によらず不変</strong>という 31edo との相性の良さが光ります。</p>
+
+    <p><strong>ギター・撥弦楽器</strong>：31edo フレットのギターは、フレット間隔が最小約 4mm 相当まで詰まるため高フレット域の製作精度が課題ですが、専門工房のカスタム製作・既製ネックの交換で実現されています。オランダ31音楽派の時代から31ギターの伝統があり（財団のアーカイブに資料有）、現在もアメリカや日本でギターの製作事例があります。</p>
+    
+    <div class="center-box">
+      <img src="./assets/data/31EDO_guitar.png"/ style="width: 75%;">
+      <p>画像は筆者所有・31edo 57フレット</p>
+    </div>
+    
+        
+    <p>スライド管・擦弦は連続音高楽器なので、<strong>そもそも 31edo を弾けます</strong>。問題は楽器でなく奏者の音程感で、これはⅦ部の耳訓練の主題です。</p>
+
+    <h2 id="sec-software">ソフトウェア</h2>
+
+    <div class="table-scroll">
+    <table>
+      <thead><tr><th>レイヤー</th><th>代表</th><th>31edo での役割</th></tr></thead>
+      <tbody>
+        <tr><td>記録</td><td><strong>AnaMark Tuning</strong><br>「.tun」 形式ファイル</td><td>現代の事実上の標準形式（Ⅶ-1）</td></tr>
+        <tr><td>通信</td><td><strong>MTS-ESP</strong>・MPE</td><td>プラグイン一斉リチューン。実運用の中核（Ⅶ-2）</td></tr>
+        <tr><td>記譜</td><td><strong>MuseScore 4</strong>・Dorico</td><td>四分音記号・Sagittal 記号を標準搭載、31edo 再生対応（Ⅲ-6）<br>ただしバグはある</td></tr>
+        <tr><td>生成</td><td><a href="https://sevish.com/scaleworkshop/">Scale Workshop</a></td><td>ブラウザだけで音階設計→書き出し</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="sec-community">共同体と情報源</h2>
+
+    <p>本書の理論の一次情報源は <a href="https://en.xen.wiki/w/Main_Page">Xenharmonic Wiki</a>です。<br>本書で使ってきた RTT の語彙「val」、「wedgie」、「POTE」、MOS命名などはこのコミュニティで2000年代以降に整備されたもので、31edo の項目・各音律族の項目・EDO 比較表が常時更新されています。歴史・楽器・オランダ語圏の資料は <a href="https://huygens-fokker.org/">Huygens-Fokker 財団</a>のアーカイブが充実しています。日本語圏でも微分音の演奏・制作共同体は着実に育っており、<a href="https://vrchat.com/home/world/wrld_81d5853e-767c-42af-9aac-8787f55e65db/info">VR空間での体験</a>など、地理に縛られない活動形態が微分音のような「学習コストのあるもの」と好相性です。</p>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── レパートリーの読み方</summary>
+      <div class="precise-body">
+        <p>31edo のレパートリーは大きく三層に読めます。<strong><br>（1）歴史層</strong>——Vicentino の例、そしてミーントーン時代の鍵盤音楽全般。31はミーントーンの完成形なので、ルネサンス・バロック音楽を 31edo で弾くことは「復元」に近い行為です。（G♯とA♭を両方持つ曲がとりわけ映えます）。<br><strong>（2）オランダ楽派層</strong>——フォッカー・オルガンのために書かれた20世紀作品群（Badings ほか）。31edo を「拡張された調性」として使う書法の宝庫です。<strong><br>（3）現代Xenharmonic層</strong>——ミーントーン以外の顔（Ⅳ-2）を意図的に使う近年の音楽。ポップス・ジャズ・電子音楽への応用が進んでおり、本書の読者が加わるのはこの層かもしれません。三層で 31edo の「同じ音たち」の意味がまったく違う多面性（Ⅳ-2）は歴史の中でも起きているわけです。</p>
+      </div>
+    </details>
+
+    <div class="keybox">
+      <span class="kb-label">この節の要点</span>
+        現代の 31edo は<strong>従来よりは大幅に低コストで始められます。</strong>：ソフト（.tun → MTS-ESP → DAW）だけで完結します。<br>物理側は大幅にお金がかかります。Lumatone・カスタムギター・そして現役のフォッカー・オルガンがあります。31edo グランドピアノを特注して何千万円とかからずとも、31edo の鍵盤でのピアノ演奏は2026年時点で<strong>たった80万円+音源代程度で</strong>スタートできます。<br>情報は Xenharmonic Wiki と Huygens-Fokker 財団。<br>レパートリーは歴史層・オランダ楽派層・現代Xenharmonic層の3系統かもしれない。
+    </div>
+
+    <nav class="pager" id="pager"></nav>
+  </main>
+</div>
+
+<script src="assets/data/toc.js"></script>
+<script src="assets/data/glossary.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/audio.js"></script>
+</body>
+</html>

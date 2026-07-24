@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>序章 本書の使い方 — 微分音のグリモワール</title>
+<link rel="icon" href="./assets/data/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+</head>
+<body>
+<header class="topbar">
+  <button id="nav-toggle" aria-label="目次を開く"><span></span><span></span><span></span></button>
+  <a class="site-name" href="index.html">微分音のグリモワール</a>
+  <span class="topbar-section">序章</span>
+</header>
+
+<div class="layout">
+  <aside id="sidebar" aria-label="目次"></aside>
+  <div id="sidebar-overlay"></div>
+
+  <main class="content">
+    <p class="eyebrow">序章</p>
+    <h1>本書の使い方</h1>
+
+    <p>本書は、微分音の理論・知覚・実践を一望するためのリファレンスです。<br>全七部＋付録からなり、物理と知覚の土台（第Ⅰ部）から出発して、純正律の格子（第Ⅱ部）、Regular Temperament と MOS の数理（第Ⅲ部）、主役である31平均律（第Ⅳ部）、多彩な音律のアトラス（第Ⅴ部）、協和と不協和の科学の深部（第Ⅵ部）、そして制作の現場（第Ⅶ部）へと進みます。</p>
+
+    <h2 id="sec-layers">二層構成 ── 直感と精密</h2>
+
+    <p>微分音に関わる人の頭の中と、一般的な音楽家の理解の間には距離があります。本書はその距離を「章を分ける」のではなく、<strong>各節の内部に二つのレイヤーを積む</strong>ことで埋めます。<br>以下に凡例を実物で示します。</p>
+
+    <div class="intuition">
+      <span class="layer-tag">直感レイヤー</span>
+      <p>琥珀色のこの枠が「直感レイヤー」です。各節の冒頭に置かれ、その節の内容をなるべく数式を使わす、日常の言葉で要約します。急いでいるとき・はじめて読むときは、この枠と音の出るウィジェットだけを辿っても一つの読書になるよう書かれています。</p>
+    </div>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── 定義・数式・文献レベルの記述</summary>
+      <div class="precise-body">
+        <p><span class="layer-tag">精密レイヤー</span></p>
+        <p>藍色の枠が「精密レイヤー」です。定義、導出、数値、用語の由来など、正確さを要する内容はここに置かれます。見出しをクリックすると折りたたむことができます。初読では飛ばし、二周目で開く、という読み方を想定しています。<br>
+        例：セントの定義　 \( c = 1200 \log_2 (f_2/f_1) \)。</p>
+      </div>
+    </details>
+
+    <p>この二層の間に、通常の本文（どちらでもない地の文）が流れます。<br>地の文は「直感より正確に、精密より軽く」を目安に書かれています。</p>
+
+    <h2 id="sec-notation">記法と単位のお約束</h2>
+
+    <ul>
+      <li><strong>周波数比</strong><br>基本的に 3/2, 5/4 のように分数で書きます。音程の合成は比の乗算、セントの加算に対応します（第Ⅰ部2）。</li>
+      <li><strong>セント</strong><br> ¢ で表します。1200¢＝オクターブ。数値は原則として小数第2〜3位までを示します。</li>
+      <li><strong>EDO</strong>（equal divisions of the octave）<br>オクターブの等分割を指し、12edo, 31edo のように書きます。日本語の「平均律」は文脈に応じて併用します。</li>
+      <li><strong>音名</strong><br>当面 12edo の慣用音名（A4 = 440 Hz）を方位磁針として使い、31平均律固有の音名・記譜は第Ⅲ部6と第Ⅳ部5で導入します。</li>
+      <li><strong>val・monzo</strong><br>角括弧記法 ⟨ … ]・[ … ⟩ は第Ⅲ部で定義してから使用します。</li>
+      <li><strong>訳語の方針</strong><br>コミュニティで合意された日本語訳が定着していない専門用語（val, monzo, MOS, tempering out など）は無理に訳さず原語のまま用い、初出時に短い注を添えます。</li>
+    </ul>
+
+    <h2 id="sec-audio">音の出るページについて</h2>
+
+    <p>本書の特徴は、概念をその場で<strong>鳴らして確かめられる</strong>ことです。<br>「♪」 の付いた枠（ウィジェット）にはボタンやスライダーがあり、クリックすると音が出ます。ブラウザの自動再生制限のため、<strong>音はページを開いただけでは鳴らず、最初のクリックで有効化</strong>されます。<br>ヘッドフォンまたはある程度のスピーカーでの試聴を推奨します（特に第Ⅰ部4の「粗さ」や第Ⅰ部5の聴き分けテストは、再生環境の影響を受けます）。</p>
+
+    <p>試聴の基準音色には、のこぎり波を積分して得られる<strong>放物線波</strong>（倍音振幅が 1/n² で減衰）を採用しています。倍音を十分に含みつつ高次が穏やかで、音域による音量差が出にくく、純正音程と調整された音程の比較に適しています。</p>
+    
+<div class="center-box">
+      <img src="./assets/data/parabolicwave.png"/ style="width: 100%;">
+    </div>
+
+    <div class="widget">
+      <p class="widget-title">音のお試し ── 基準音色（放物線波）</p>
+      <div class="wrow">
+        <button class="btn" id="intro-play">A3 を鳴らす（220 Hz）</button>
+        <button class="btn secondary" id="intro-play-sine">比較：純音（正弦波）</button>
+      </div>
+      <p class="widget-note">放物線波は倍音を含むため「楽音らしい」響きがあり、純音は成分がひとつだけの「実験室の音」です。以降の部では、この違い自体が主役になります。</p>
+    </div>
+
+    <h2 id="sec-routes">読書経路</h2>
+
+    <p>全体は依存関係の順（Ⅰ→Ⅶ）に並んでいますが、通読だけが読み方ではありません。</p>
+
+    <ul>
+      <li><strong>音楽家として</strong>：<br>Ⅰ（土台）→ Ⅳ（31平均律）→ Ⅶ（実践）。理論の背景が気になったら Ⅱ・Ⅲ に戻る。各節は直感レイヤーだけ拾えば速く進めます。</li>
+      <li><strong>理論家として</strong>：<br>Ⅰ → Ⅱ → Ⅲ → Ⅴ → Ⅵ と積み上げ、Ⅳ を「すべての交差点」として味わう。精密レイヤーを開きながら深く理解できます。</li>
+      <li><strong>実装者として</strong>：<br>Ⅰ → Ⅳ5（記譜・鍵盤）→ Ⅶ（Scala・MIDI・楽器）。調律ファイルの中身が知りたくなったら Ⅲ へ。</li>
+    </ul>
+
+    <h2 id="sec-xref">相互参照と用語集</h2>
+
+    <p>本文中には、関連する他の節への相互参照が随所に置かれています。<br>（クリックでその節へ飛べます）<br>多くの概念は複数の部にまたがるため、初出の節と応用の節を行き来しながら読むと理解が深まります。サイドバーの検索窓からは、<strong>用語集</strong>（付録A）の項目をいつでも引けます。<br>未知の用語に出会ったら、まずここで意味を確かめてください。</p>
+
+    <h2 id="sec-status">本書の構成と方針</h2>
+
+    <p>本書は<strong>第Ⅰ部から第Ⅶ部と付録A〜C</strong>までの全編で構成されています。<br>音の物理（Ⅰ）から純正律と格子（Ⅱ）、Regular Temperament Theory（Ⅲ）、31平均律の全貌（Ⅳ）、音律アトラス（Ⅴ）、響きの科学（Ⅵ）、そして制作の実践（Ⅶ）へ。すべての部がどこかで31平均律に合流します。<br>音律の同定・数値・固有名詞は、Xenharmonic Wiki 等の一次コミュニティ資料と照合したうえで記載しています（特に第Ⅳ・Ⅴ部）。</p>
+
+    <p>それでは、音の物理から魔導書の紐を解きましょう。</p>
+
+    <nav class="pager" id="pager"></nav>
+  </main>
+</div>
+
+<script src="assets/data/toc.js"></script>
+<script src="assets/data/glossary.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/audio.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+<script>
+document.getElementById("intro-play").addEventListener("click", () => XenAudio.playFreq(220, { dur: 1.2 }));
+document.getElementById("intro-play-sine").addEventListener("click", () => XenAudio.playFreq(220, { dur: 1.2, wave: "sine", gain: 0.3 }));
+</script>
+</body>
+</html>

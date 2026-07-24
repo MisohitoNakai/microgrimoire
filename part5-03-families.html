@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ⅴ-3 種族ごとの解説 — 微分音のグリモワール</title>
+<link rel="icon" href="./assets/data/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <button id="nav-toggle" aria-label="目次を開く"><span></span><span></span><span></span></button>
+  <a class="site-name" href="index.html">微分音のグリモワール</a>
+  <span class="topbar-section">第Ⅴ部 音律アトラス</span>
+</header>
+
+<div class="layout">
+  <aside id="sidebar" aria-label="目次"></aside>
+  <div id="sidebar-overlay"></div>
+
+  <main class="content">
+    <p class="eyebrow">第Ⅴ部 色々な音律 ── 音律アトラス　─　3</p>
+    <h1>種族ごとの解説 ── 15の道の歩き方</h1>
+
+    <div class="intuition">
+      <span class="layer-tag">直感レイヤー</span>
+      <p>マトリクスの各行＝各族を、1本ずつ歩きます。書式は統一：<strong>消すコンマ／generator／MOS／性格／主な EDO</strong>。プレイヤーは各族の★EDO（マトリクスの機械判定）の調律で generator・代表 MOS・特徴和音を鳴らします。「性格」の記述は、コンマの消去が強制する構造的事実（何が同一視されるか）から導ける範囲に留めます。</p>
+    </div>
+
+    <div class="widget">
+      <p class="widget-title">種族プレイヤー（★EDO の調律で試聴）</p>
+      <div class="wrow">
+        <label for="fp-sel">種族</label>
+        <select id="fp-sel"></select>
+        <span class="wval" id="fp-tune"></span>
+      </div>
+      <div class="wrow">
+        <button class="btn" id="fp-gen">generator</button>
+        <button class="btn" id="fp-mos">代表 MOS</button>
+        <button class="btn secondary" id="fp-chord">特徴和音</button>
+      </div>
+    </div>
+
+    <h2 id="sec-fifth">5度系の道</h2>
+
+    <p><strong>ミーントーン</strong><br>（81/80・gen 完全5度・MOS 5,7,12,19,31）<br>完全5度を狭めて「長3度＝完全5度4つ」を成立させる、西洋音楽の母語（Ⅲ-1・第Ⅳ部）。<br>主な EDO：12○・19○・26○・31★・50<br>全音階は strictly proper、増6度＝7/4 という7-limitの出口を持ちます。</p>
+
+    <p><strong>superpyth</strong><br>（64/63・2.3.7・gen 広い完全5度 ≈709¢・MOS 5,7,12,17,22）<br>ミーントーンの逆の思想。<br>完全5度を<strong>広げ</strong>「完全5度4つ−2oct」を 5/4 でなく <strong>9/7</strong>（セプティマル長3度）に、<br>「完全4度3つ」を 7/6 に着地させます。<br>主な EDO：17○・22★・27○<br>素数5を経由しない鋭い調性です。</p>
+
+    <p><strong>schismatic</strong><br>（32805/32768・gen ほぼ純正の完全5度・MOS 5,7,12,17,29,41,53）<br>完全5度をわずか（≈0.2¢）動かすだけで「−8個の完全5度＝長3度」を成立させる、精度番長。<br>主な EDO：12○・41★・53★<br>中世のピタゴラス音律での実践（G♭ を F♯ の代わりに使う）に歴史的な足跡があり、53edo はこの道の都です。ミーントーンと対照的に、<strong>5limitの協和が遠い運指</strong>になるのが作曲上の個性です。</p>
+
+    <p><strong>mavila</strong><br>（135/128・gen 狭すぎる完全5度? ≈679¢・MOS 5,7,9,16,23）<br>5度を大きく狭めると、全音階の L と s が<strong>入れ替わり</strong>ます（anti-diatonic：2L5s）。<br>長調のつもりで弾くと非常に短調っぽい。知覚実験のような道。<br>主な EDO：7△・9・16○・23<br>名はモザンビークのチョピ族の木琴の音階調査（mavila村）に由来します。</p>
+
+    <h2 id="sec-third">3度系の道</h2>
+
+    <p><strong>magic</strong><br>（3125/3072・gen 長3度近辺・MOS 4,7,10,13,16,19,22,41）<br>「長3度5つ＝5度＋oct」。5度が複雑（5 gen）な代わりに3度の連鎖が異様に効率的。<br>主な EDO：19○・22○・41★<br>7音 MOS は広い音と狭い音が極端で、非全音階的。</p>
+
+    <p><strong>würschmidt</strong><br>（393216/390625・gen 長3度近辺・MOS 4,7,10,13,…,31,34）<br>「長3度8つ＝5度＋2oct」。magic より精密で複雑。<br>主な EDO：31★・34★・65</p>
+
+    <p><strong>hanson（kleismic）</strong><br>（15625/15552・gen 短3度近辺・MOS 4,7,11,15,19,34,53）<br>「純正短3度6つ＝完全5度+オクターブ」。短3度（6/5）の連鎖で全てを組む、透明で叙情的な道。15○・19○・34★・53★・72★。19edo が meantone と hanson を両方支持する点は覚えておく価値があります。</p>
+
+    <p><strong>mohajira（rastmic）</strong><br>（243/242・2.3.11・gen 中立3度・MOS 4,7,10,17,24,41）<br>「中立3度2つ＝完全5度」。マカーム系旋法の格子であり、ブルーノート表現の母体（Ⅳ-6）。<br>主な EDO：17○・<strong>24★</strong>・31○・41★。<br>四分音の 24edo がこの道の★である点はⅤ-4 の 24edo の項で掘ります。</p>      
+
+    <h2 id="sec-small">小歩の道 ── generator が小さい世界</h2>
+
+    <p><strong>porcupine</strong><br>（250/243・gen ≈164¢・MOS 7,8,15,22,29）<br>「完全4度×2＝純正短3度×3」。<br>7音 MOS（1L6s）はほぼ均等な7音で、既存の調性からは遠い種族のひとつ。<br>主な EDO：15○・22★。<br>22edo の看板的存在です。</p>
+
+    <p><strong>miracle</strong><br>（225/224・1029/1024・gen secor ≈116.7¢・MOS 10,11,21,31,41,72）<br>11-limit を最少歩数で覆う効率の極点（Ⅳ-2）。<br>主な EDO：10○・31★・41★・72★。</p>
+
+    <p><strong>slendric（mothra）</strong><br>（1029/1024・2.3.7・gen ≈8/7・MOS 5,6,11,16,21,26,31,36,41）<br>「8/7 三つ＝5度」<br>主な EDO：26○・31○・36★・41★・46○<br>5音～6音 MOS はガムランの slendro 音階風です。（名の由来でもあります）。</p>
+
+    <p><strong>orwell</strong><br>（225/224・1728/1715・gen ≈7/6 271.5¢・MOS 4,5,9,13,22,31,53）<br>generator 自体が 7/6 という subminor の道。<br>9音 MOS が遊び場。<br>主な EDO：22○・31★・53★<br>名は generator ≈ 84edo の 19歩（George Orwell の小節〝1984年〟）に掛けている。</p>
+
+
+
+    <h2 id="sec-period">周期分割の道 ── 移調の限られた形</h2>
+
+    <p><strong>2分割の道 srutal（diaschismic）</strong><br>（2048/2025・period 600¢・MOS 10,12,22,34,46）<br>半オクターブを周期に持ち、同じ形が2回オクターブ内に現れる対称性が構造の核。<br>主な EDO：12○・22○・34★・46★<br>7-limit 拡張の pajara は 22edo の第二の看板です。</p>
+
+    <p><strong>3分割の道 augmented</strong><br>（128/125・period 400¢）ディエシスを消して「長3度3つ＝oct」を強制する道。<br>主な EDO：12△・27○<br>12edo の増三和音の対称性はこの種族の遺産です。</p>
+
+    <p><strong>5分割の道 blackwood</strong><br>（256/243・period 240¢）リンマを消し「5度5つ＝2oct」＝5等分周期。10△・15★。15edo の 5×3 構造（blackwood[10]）は、ペンタトニックが5つの調に同時に存在する奇景を生みます。</p>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── 出典について</summary>
+      <div class="precise-body">
+        <p>本書の各種族名・歴史的経緯（mavila の語源、orwell の命名、blackjack など）は <a href="https://en.xen.wiki/w/Main_Page">Xenharmonic Wiki</a> の各項目を参照しており、一見おふざけにも見える命名たちですが、至って真面目です。より深い各論（7-limit 拡張の分岐、tuning spectrum、対応する平面図）は同 Wiki が最も充実した一次資料です。</p>
+      </div>
+    </details>
+
+    <div class="keybox">
+      <span class="kb-label">この節の要点</span>
+      5度系（meantone／superpyth／schismatic／mavila）は5度の伸縮で得られるタイプ。<br>3度系（magic／würschmidt／hanson／mohajira）は3度連鎖の和声先行型。<br>小歩系（porcupine／miracle／slendric／orwell）は新しい旋法資源。<br>周期分割系（srutal／augmented／blackwood）は対称性の道。<br>各種族の性格は「消したコンマが何を同一視するか」から導かれる。
+    </div>
+
+    <nav class="pager" id="pager"></nav>
+  </main>
+</div>
+
+<script src="assets/data/toc.js"></script>
+<script src="assets/data/glossary.js"></script>
+<script src="assets/data/atlas-data.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/audio.js"></script>
+<script>
+(function () {
+  "use strict";
+  const A = window.ATLAS;
+  const C4 = 261.6255653;
+
+  /* 各族：★EDO（機械判定の代表）と代表 MOS の音数 */
+  const PLAY = {
+    meantone: { edo: 31, mosN: 7 },  superpyth: { edo: 22, mosN: 7 },
+    schismatic: { edo: 53, mosN: 7 }, magic: { edo: 41, mosN: 7 },
+    wurschmidt: { edo: 31, mosN: 7 }, hanson: { edo: 53, mosN: 7 },
+    porcupine: { edo: 22, mosN: 7 },  srutal: { edo: 46, mosN: 10 },
+    augmented: { edo: 27, mosN: 6 },  blackwood: { edo: 15, mosN: 10 },
+    mavila: { edo: 16, mosN: 7 },     miracle: { edo: 31, mosN: 10 },
+    orwell: { edo: 31, mosN: 9 },     mohajira: { edo: 24, mosN: 7 },
+    slendric: { edo: 36, mosN: 5 }
+  };
+
+  const sel = document.getElementById("fp-sel");
+  Object.keys(PLAY).forEach(k => {
+    const o = document.createElement("option");
+    o.value = k; o.textContent = A.fams[k].jp;
+    sel.appendChild(o);
+  });
+  const tuneEl = document.getElementById("fp-tune");
+
+  function ctx() {
+    const k = sel.value, P = PLAY[k], F = A.fams[k];
+    const cell = F.cells[P.edo];
+    const step = 1200 / P.edo;
+    return { k, P, F, cell, step, g: cell.gs * step, per: F.period };
+  }
+  function upd() {
+    const c = ctx();
+    tuneEl.textContent = c.P.edo + "edo 調律（gen " + c.cell.gs + "歩＝" + c.cell.gc + "¢・period " + c.F.period + "¢）";
+  }
+  sel.addEventListener("change", upd); upd();
+
+  document.getElementById("fp-gen").addEventListener("click", () => {
+    const c = ctx();
+    XenAudio.playFreqs([C4, XenAudio.freqFromCents(C4, c.g)], { dur: 1.8 });
+  });
+
+  document.getElementById("fp-mos").addEventListener("click", () => {
+    const c = ctx();
+    const perSteps = Math.round(c.per / c.step);      // 1 period の歩数
+    const nPer = Math.round(1200 / c.per);            // オクターブ内の period 数
+    const perN = Math.max(1, Math.round(c.P.mosN / nPer));  // period あたりの音数
+    let pcs = [];
+    for (let rep = 0; rep < nPer; rep++)
+      for (let i = 0; i < perN; i++)
+        pcs.push(((i * c.cell.gs) % perSteps + perSteps) % perSteps + rep * perSteps);
+    pcs = [...new Set(pcs)].sort((a, b) => a - b);
+    pcs.push(Math.round(1200 / c.step));
+    XenAudio.playSeq(pcs.map(s => XenAudio.freqFromCents(C4, s * c.step)), { dur: 0.34, gap: 0.06 });
+  });
+
+  /* 特徴和音：mapping の列から導いた (period, gen) → ¢ の式（gen は period 内簡約値） */
+  document.getElementById("fp-chord").addEventListener("click", () => {
+    const c = ctx(), g = c.g;
+    let cents;
+    switch (c.k) {
+      case "meantone":
+      case "superpyth": cents = [0, 4 * g - 2400, g]; break;          // 3度（super/major）＋5度
+      case "schismatic": cents = [0, 6000 - 8 * g, g]; break;         // 5/4 = 5oct − 8g
+      case "magic":      cents = [0, g, 5 * g - 1200]; break;         // 5/4 = g、3/2 = 5g − oct
+      case "wurschmidt": cents = [0, g, 8 * g - 2400]; break;         // 3/2 = 8g − 2oct
+      case "hanson":     cents = [0, g, 6 * g - 1200]; break;         // 短三和音：6/5 = g、3/2 = 6g − oct
+      case "porcupine":  cents = [0, 2 * g, 1200 - 3 * g]; break;
+      case "srutal":     cents = [0, 600 - 2 * g, 600 + g]; break;    // 5/4 = per − 2g、3/2 = per + g
+      case "augmented":  cents = [0, 400, 400 + g]; break;            // 5/4 = per、3/2 = per + g
+      case "blackwood":  cents = [0, 240 + g, 720]; break;            // 5/4 = per + g、3/2 = 3 per
+      case "mavila":     cents = [0, -4 * g + 2400, 1200 - g]; break;  // 5/4 = 3g − oct、3/2 = oct − g
+      case "miracle":    cents = [0, 1200 - 7 * g, 6 * g]; break;
+      case "orwell":     cents = [0, g, 7 * g - 1200]; break;         // subminor 三和音 6:7:9
+      case "mohajira":   cents = [0, g, 2 * g]; break;                // 中立三和音
+      case "slendric":   cents = [0, g, 3 * g]; break;                // 8/7 の塔＝5度で閉じる
+    }
+    XenAudio.playFreqs(cents.map(x => XenAudio.freqFromCents(C4, x)), { dur: 2.6 });
+  });
+})();
+</script>
+</body>
+</html>

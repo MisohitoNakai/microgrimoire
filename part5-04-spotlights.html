@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ⅴ-4 EDO スポットライト — 微分音のグリモワール</title>
+<link rel="icon" href="./assets/data/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <button id="nav-toggle" aria-label="目次を開く"><span></span><span></span><span></span></button>
+  <a class="site-name" href="index.html">微分音のグリモワール</a>
+  <span class="topbar-section">第Ⅴ部 音律アトラス</span>
+</header>
+
+<div class="layout">
+  <aside id="sidebar" aria-label="目次"></aside>
+  <div id="sidebar-overlay"></div>
+
+  <main class="content">
+    <p class="eyebrow">第Ⅴ部 色々な音律 ── 音律アトラス　─　4</p>
+    <h1>EDO スポットライト ── 交差点の人物誌</h1>
+
+    <div class="intuition">
+      <span class="layer-tag">直感レイヤー</span>
+      <p>今度は列を主役に、代表的な EDO を1つずつ照らします。<br>各 EDO の「人柄」を3点で見ていきましょう。<br><strong>素数ごとの成績</strong>（何が得意か）、<strong>支持する音律の顔ぶれ</strong>（マトリクスの列）、<strong>看板の音階</strong>（その EDO らしさが最も出る MOS）。<br>下のウィジェットで任意の EDO を照らせます。</p>
+    </div>
+  
+      <div class="widget">
+      <p class="widget-title">スポットライト（5〜72edo）</p>
+      <div class="wrow">
+        <label for="sp-edo">EDO</label>
+        <select id="sp-edo"></select>
+        <button class="btn" id="sp-dia">5度圏の7音階を聴く</button>
+        <button class="btn secondary" id="sp-sig">看板音階を聴く</button>
+        <span class="wval" id="sp-signame"></span>
+      </div>
+      <div class="table-scroll"><table><tbody id="sp-primes"></tbody></table></div>
+      <div class="table-scroll"><table><tbody id="sp-faces"></tbody></table></div>
+      <p class="widget-note">素数成績は patent val の誤差、顔ぶれはアトラス15族との照合（Ⅴ-1 の判定）。「5度圏の7音階」はその EDO の最良5度を7つ積んだ音階で、ミーントーン系なら普通の全音階、superpyth 系なら明暗の反転した全音階、mavila 系なら anti-diatonic が聴こえます。</p>
+    </div>
+    <h2 id="sec-profiles">EDO 10種ピックアップ</h2>
+
+    <p><strong>12</strong>──<br>尊大な工業的妥協。81/80 と 32805/32768 を同時に消す唯一の小 EDO で、meantone と schismatic の両方の顔を平凡ならざる水準で持ちます（srutal・augmented も支持）。<br>素数7は +31¢ と大きく外し、7-limit の扉は閉ざされています。31edo から見ると「完全5度を優先した隣人」です。</p>
+
+    <p><strong>17</strong>──<br>5を捨てた音律。素数5の誤差が −33¢ を超えるため 5-limit の3度は実用外ですが、そのぶん <strong>superpyth（○）と mohajira／rastmic（○）</strong>の複合体として鮮烈です。広い5度（705.9¢）の硬質な旋法と中立3度によるマカーム的旋法が同居します。</p>
+
+    <p><strong>19</strong>──<br>もうひとつのミーントーン、そして多重性。第一の顔は<strong>ミーントーン</strong>（gen 694.74¢・POTE比 −1.5¢）：歴史的な 1/3 コンマ・ミーントーン的な完全5度 694.79¢ と非常に近く、16世紀に Guillaume Costeley が19分割を明示的に論じた記録もあります。31edo が 1/4 コンマの完成形なら、<strong>19 は 1/3 コンマの完成形</strong>です。そして第二の顔が <strong>magic</strong>（gen 378.95¢・POTE比 −1.1¢）で、ミーントーンと magic という文法の異なる2つの道を、ほぼ同じ精度で支持する<strong>二重性</strong>が19の個性です（さらに hanson も −1.2¢ で支持）。短3度が 6/5 に近く（+0.15¢）、逆に長3度は狭い。</p>
+
+    <p><strong>22</strong>──<br>81/80 を消さない。むしろ広げる。<strong>superpyth★・porcupine★・srutal○・magic○・orwell○</strong>。ミーントーンの大前提が成立しないため、西洋音楽の和声の常識がことごとく通用しない。Paul Erlich の記念碑的論文（1998）が示したとおり、それこそが22の価値です。porcupine の7音音階と pajara（srutal の7-limit 拡張）の対称性など。の対極にある「もう一つの現代」です。</p>
+
+    <p><strong>24</strong>──<br>四分音、そして rastmic の★。12 に中間音を足しただけ（5-limit では 12 の複製＝contorted）に見えて、新しい音たちは <strong>11-limit で本領</strong>を発揮します。<br>中立3度 350¢ は mohajira／rastmic の道の<strong>ほぼ最適な generator</strong>（POTE比 −0.5¢・★）であり、現代アラブ音楽理論の24音体系（マカームの四分音記述）の実装でもあります。「12 と完全互換のまま中立音程が手に入る」ことが、四分音が20世紀の微分音運動（Hába、Вышнеградский）の入口になった理由です。</p>
+
+    <p><strong>26</strong>──<br>flattone と、驚異の7。5度 692.3¢ はミーントーンの中でもかなり強烈に歪んでいで、全音階は s が広い独特の表情になります。特筆すべきは素数7：<strong>7/4 ＝ 969.2¢（誤差 +0.4¢）</strong>と、31 をも上回る精度です。7-limit ミーントーンの別解（flattone 系の写像）の本拠地。</p>
+
+    <p><strong>34</strong>──<br>5-limit の隠れた優等生。3 が +3.9¢・5 が +1.9¢ と、純5-limit では 31 より高精度（そのかわり 7 は −15.9¢ で不可）。<strong>srutal★・hanson★・würschmidt★</strong>と、5-limit の精密系の道が3本も★で通ります。17×2 の構造ゆえ、17 の旋法資源も内包します。</p>
+
+    <p><strong>41</strong>──<br>精密系の交差点、そして Kite ギター。<strong>schismatic★・magic★・miracle★・mohajira★</strong>であり、「★」が立ち並ぶ超交差点です。3 が +0.5¢ とほぼ純正で、7 も 11 も実用圏（−3.0¢。11 は +4.8¢）。<br>近年は「1フレット飛ばし」で運指を現実化した <strong>Kite ギター</strong>（41edo 専用設計）の登場で、弦楽器側の実践が急速に育っています。31 の次に学ぶ EDO の最有力候補かもしれません。</p>
+
+    <p><strong>53</strong>──<br>ほぼ純正の5-limit。3 が −0.07¢、5 が −1.4¢。<strong>schismatic★・hanson★・orwell★</strong>。<br>3 の近似がとびぬけてよいことから歴史も厚く、漢代の京房六十律、Mercator の53コンマ、そして<strong>トルコ古典音楽の53コンマ理論</strong>（Holdrian comma）と、東西で独立に到達された「5度圏がほぼ閉じる」場所です。31 が「3度と7度の音律」なら、53 は「完全5度と5-limit の音律」という性格の違いが際立ちます。</p>
+
+    <p><strong>72</strong>──<br><strong>miracle★</strong>（secor＝7歩＝116.67¢：POTE比 −0.01¢という驚異の一致）を筆頭に 11-limit までの精度が揃います。ビザンティン聖歌理論の72分割（moria）という歴史的先例、Boulez 以後の現代音楽での使用、そして blackjack［21］という名たる音階を構成。</p>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── 31 の位置の相対化</summary>
+      <div class="precise-body">
+        <p>スポットライトを並べると、31 の位置が相対化されて見えます。<br>純 5-limit の精度なら 34・53 が上、3（5度）の精度なら 41・53 が上。31 の強みはあくまで<strong>「5 と 7 の同時的な良さ」と「ミーントーン互換」の組合せ</strong>（Ⅳ-1）であり、それは目的関数の選び方のひとつです。本書が31を主役に据えるのは、この調性音楽の遺産と 7-limit 和声の接続という目的関数を最も初歩的とみなす立場の表明であって、他の交差点の価値を減じるものではありません。アトラスの存在意義は、まさにこの<strong>選択の相対性を可視化する</strong>ことにあります。</p>
+      </div>
+    </details>
+
+    <div class="keybox">
+      <span class="kb-label">この節の要点</span>
+      EDOそれぞれに消すコンマの特徴があり、それらが交差する。こうして比較してみると、目的に応じたあらゆる EDO の選択肢が見えてきます。
+    </div>
+
+    <nav class="pager" id="pager"></nav>
+  </main>
+</div>
+
+<script src="assets/data/toc.js"></script>
+<script src="assets/data/glossary.js"></script>
+<script src="assets/data/matrix-data.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/audio.js"></script>
+<script>
+(function () {
+  "use strict";
+  const A = window.MATRIX;
+  const C4 = 261.6255653;
+  const PR = [3, 5, 7, 11, 13];
+
+  const sel = document.getElementById("sp-edo");
+  for (let n = 5; n <= 72; n++) {
+    const o = document.createElement("option");
+    o.value = n; o.textContent = n + "edo";
+    if (n === 19) o.selected = true;
+    sel.appendChild(o);
+  }
+
+  /* 看板音階：gen（歩）× 音数（EDO ごと。無指定は5度圏7音） */
+  const SIG = {
+    12: { g: 7, N: 12, name: "半音階" },
+    15: { g: null, per: 3, name: "blackwood[10]", custom: [0, 2, 3, 5, 6, 8, 9, 11, 12, 14, 15] },
+    17: { g: 5, N: 7, name: "mohajira[7]（中立旋法）" },
+    19: { g: 6, N: 7, name: "magic[7]（第二の顔）" },
+    22: { g: 3, N: 7, name: "porcupine[7]" },
+    24: { g: 7, N: 7, name: "mohajira[7]（ラースト風）" },
+    26: { g: 15, N: 7, name: "全音階（平らなミーントーン）" },
+    31: { g: 18, N: 12, name: "meantone[12]" },
+    34: { g: null, per: 2, name: "srutal[10]", custom: [0, 3, 6, 9, 12, 17, 20, 23, 26, 29, 34] },
+    41: { g: 4, N: 10, name: "miracle[10]" },
+    53: { g: 14, N: 11, name: "hanson[11]" },
+    72: { g: 7, N: 21, name: "miracle[21]（blackjack）" }
+  };
+
+  const primesEl = document.getElementById("sp-primes");
+  const facesEl = document.getElementById("sp-faces");
+  const signameEl = document.getElementById("sp-signame");
+
+  function render() {
+    const n = parseInt(sel.value, 10);
+    const step = 1200 / n;
+    // 素数成績
+    primesEl.innerHTML = "<tr><th>素数</th>" + PR.map(p => "<td class='num'>" + p + "</td>").join("") + "</tr>" +
+      "<tr><th>誤差</th>" + PR.map(p => {
+        const st = Math.round(n * Math.log2(p));
+        const e = st * step - 1200 * Math.log2(p);
+        const cls = Math.abs(e) <= 3 ? "style='color:#8a6116;font-weight:700'" : "";
+        return "<td class='num' " + cls + ">" + (e >= 0 ? "+" : "") + e.toFixed(1) + "¢</td>";
+      }).join("") + "</tr>";
+    // 顔ぶれ（マトリクスの全律射を照合：種族・連盟・rank-3・非オクターブ含む）
+    const rows = [];
+    for (const k in A.fams) {
+      const F = A.fams[k];
+      const c = F.cells[n];
+      if (!c) continue;
+      if (c.sup) { rows.push([999, F.jp, { sup: true }]); }   // 支持のみ（順位は末尾）
+      else { rows.push([Math.abs(c.err), F.jp, c]); }
+    }
+    rows.sort((a, b) => a[0] - b[0]);
+    facesEl.innerHTML = rows.length
+      ? "<tr><th>顔ぶれ</th><td>" + rows.map(([, jp, c]) =>
+          c.sup ? "◆" + jp : c.mark + (c.cont ? "(重)" : "") + jp).join("　") + "</td></tr>"
+      : "<tr><th>顔ぶれ</th><td>（カタログ内の律射の支持なし——この EDO はさらに珍しい道を歩きます）</td></tr>";
+    const s = SIG[n];
+    signameEl.textContent = s ? "看板：" + s.name : "看板：5度圏の7音階";
+  }
+  sel.addEventListener("change", render);
+  render();
+
+  function playSteps(stepsArr, n) {
+    const st = 1200 / n;
+    XenAudio.playSeq(stepsArr.map(s => XenAudio.freqFromCents(C4, s * st)), { dur: 0.34, gap: 0.06 });
+  }
+  function chainScale(g, N, n) {
+    const pcs = [];
+    for (let i = 0; i < N; i++) pcs.push(((i * g) % n + n) % n);
+    const u = [...new Set(pcs)].sort((a, b) => a - b);
+    u.push(n);
+    return u;
+  }
+
+  document.getElementById("sp-dia").addEventListener("click", () => {
+    const n = parseInt(sel.value, 10);
+    const g = Math.round(n * Math.log2(1.5));
+    playSteps(chainScale(g, 7, n), n);
+  });
+  document.getElementById("sp-sig").addEventListener("click", () => {
+    const n = parseInt(sel.value, 10);
+    const s = SIG[n];
+    if (!s) { document.getElementById("sp-dia").click(); return; }
+    if (s.custom) { playSteps(s.custom, n); return; }
+    playSteps(chainScale(s.g, s.N, n), n);
+  });
+})();
+</script>
+</body>
+</html>

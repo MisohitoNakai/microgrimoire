@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ⅶ-6 31edo 制作ワークフロー — 微分音のグリモワール</title>
+<link rel="icon" href="./assets/data/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+@font-face { font-family:"BravuraText"; src:url("https://cdn.jsdelivr.net/gh/steinbergmedia/bravura@master/redist/woff/BravuraText.woff2") format("woff2"); font-display:swap; }
+.chlegend { display:flex; gap:1.2rem; flex-wrap:wrap; margin:.5rem 0 .2rem; }
+.chlegend span { display:inline-flex; align-items:center; gap:.4rem; font-size:.85rem; }
+.chip { width:1rem; height:1rem; border-radius:3px; display:inline-block; }
+.chtable td, .chtable th { text-align:center; font-family:ui-monospace,monospace; font-size:.82rem; }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <button id="nav-toggle" aria-label="目次を開く"><span></span><span></span><span></span></button>
+  <a class="site-name" href="index.html">微分音のグリモワール</a>
+  <span class="topbar-section">第Ⅶ部 実践</span>
+</header>
+
+<div class="layout">
+  <aside id="sidebar" aria-label="目次"></aside>
+  <div id="sidebar-overlay"></div>
+
+  <main class="content">
+    <p class="eyebrow">第Ⅶ部 実践　─　6</p>
+    <h1>31edo 制作ワークフロー ── 作品にしよう</h1>
+
+    <div class="intuition">
+      <span class="layer-tag">直感レイヤー</span>
+      <p>最後は<strong>ひとつの制作の流れ</strong>を確認します。この節は実際の手順書です。情報を Xenharmonic Wiki で知り、そして本書の推す<strong>Reaper 上での31edo チャンネル・マッピング方式</strong>〝白鍵3段・黒鍵2段の鍵盤を3つの MIDI チャンネルに畳む方法〟さらには Reaper のノート色で視覚化する具体的なやり方までを、一気に示します。</p>
+    </div>
+
+    <h2 id="sec-learn">情報源 ── どこで学ぶか</h2>
+
+      <p>理論の一次情報は <a href="https://en.xen.wiki/"><strong>Xenharmonic Wiki</strong></a> です。本書で使った RTT の語彙（val・POTE・MOS・各音律族）はすべてここに項目があり、31edo のページ・各族のページ・EDO 比較表が常時更新されます。作品を発表して<strong>コミュニティの地図に載る</strong>のも Wiki の役割で、新しい音律・音階・楽曲を項目として追加できます。編集はアカウント登録制で、微分音への愛を語らないと取れません。編集は既存項目の書式に倣うのが作法です。</p>
+
+    <p>日本語での実践的な入門としては、<a href="https://note.com/harai_tama/n/ne7ca88d5275a#5b92a933-d35a-40f8-a839-1cb799df16dc">筆者のNote記事</a>で、Scale Workshop での <code>.scl</code> 作成から Reaper の初期設定、基準周波数（C4＝261.6255653 Hz 派と A440 派）の選び方まで、具体的な手順を平易にまとめています。本書の理論と、記事の手順を併せて読むと、理解から制作への橋渡しがスムーズです。</p>
+
+    <h2 id="sec-mapping">31edo チャンネル・マッピング方式</h2>
+
+    <p>本書が推す実制作の中核が、<strong>31音を「白鍵3段・黒鍵2段」に配置し、3つの MIDI チャンネルに畳み込む</strong>方式です。トラック切替で音を上下させるのは煩雑になるため、この静的なチャンネル割り当てが効いてきます。まず配置を確認しまてみましょう。</p>
+
+    <div class="widget">
+      <p class="widget-title">白鍵3段・黒鍵2段の31音配置（クリックで試聴・色＝MIDI チャンネル）</p>
+      <div id="ck-board"></div>
+      <div class="chlegend">
+        <span><i class="chip" style="background:#e8564b"></i>Ch.1（赤系）</span>
+        <span><i class="chip" style="background:#f2c14e"></i>Ch.2（黄系）</span>
+        <span><i class="chip" style="background:#5cb26a"></i>Ch.3（緑系）</span>
+      </div>
+      <p class="widget-note">配色は Reaper のピアノロールでノートをチャンネル別に色分けした際の系統色に準拠（Ch.1 赤・Ch.2 黄・Ch.3 緑）。中段白鍵の起点（0番目）が31edo の「ド」＝MIDI No.60 です。</p>
+    </div>
+
+    <p>配置の定義（中段白鍵の起点＝0番目＝MIDI No.60。左から）：</p>
+
+    <div class="table-scroll">
+    <table>
+      <tbody>
+        <tr><th>上段白鍵</th><td>1, 6, 11, 14, 19, 24, 29</td></tr>
+        <tr><th>上段黒鍵</th><td>3, 8, 16, 21, 26</td></tr>
+        <tr><th>中段白鍵</th><td>0, 5, 10, 13, 18, 23, 28</td></tr>
+        <tr><th>下段黒鍵</th><td>2, 7, 15, 20, 25</td></tr>
+        <tr><th>下段白鍵</th><td>-1(∽30), 4, 9, 12, 17, 22, 27</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>この31鍵を、MIDI ノート No.60〜71（12鍵ぶん）に対し、<strong>3つのチャンネルへ次のように割り当てます</strong>（各チャンネルが No.60 から順に12音を担当）：</p>
+
+    <div class="table-scroll">
+    <table class="chtable">
+      <thead><tr><th>MIDI No.</th><th>60</th><th>61</th><th>62</th><th>63</th><th>64</th><th>65</th><th>66</th><th>67</th><th>68</th><th>69</th><th>70</th><th>71</th></tr></thead>
+      <tbody>
+        <tr><th style="color:#b32f26">Ch.1</th><td>0</td><td>2</td><td>5</td><td>8</td><td>10</td><td>13</td><td>15</td><td>18</td><td>20</td><td>23</td><td>26</td><td>28</td></tr>
+        <tr><th style="color:#c99320">Ch.2</th><td>1</td><td>3</td><td>6</td><td>9</td><td>11</td><td>14</td><td>16</td><td>19</td><td>21</td><td>24</td><td>27</td><td>29</td></tr>
+        <tr><th style="color:#3a8248">Ch.3</th><td>-1</td><td>1</td><td>4</td><td>7</td><td>9</td><td>12</td><td>14</td><td>17</td><td>19</td><td>22</td><td>25</td><td>27</td></tr>
+        <tr><th style="color:#2222cc">Ch.4</th><td colspan="12">ペダル・ベンド・モジュレーション・キースイッチ等の制御信号用</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>この表の各数字が「31edo の何番目の音（歩数）か」を表します。たとえば MIDI No.60 を Ch.1 で鳴らせば 0番目（ド）、Ch.2 なら 1番目、Ch.3 なら −1番目（＝30番目）。同じ MIDI ノートでも<strong>チャンネルを変えると別の微分音が鳴る</strong>状態にし、12鍵の器に31音を、3チャンネルという「臨時記号」で畳み込む仕組みです。Ch.4 は音高に使わず、ペダルやベンド等の制御に残します。</p>
+
+    <p>Reaper の場合、各チャンネルに対応する31edo の音高を、<code>.tun</code> 等であらかじめ用意し、同じ音源を3チャンネルぶん複製します。<a href="part7-01-scala.html">Ⅶ-1</a>のファイルが上記の表と同様の配置です。<strong>ノートのチャンネルを色として表示</strong>する 5.0 UIであれば、ピアノロール上で「赤＝Ch.1・黄＝Ch.2・緑＝Ch.3」が一目で読めます。上図の配色はこの画面表示を先取りしたものです。チャンネル変更のショートカット割り当てがされていると便利です。</p>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── この配置の利点</summary>
+      <div class="precise-body">
+        <p>チャンネル・マッピング方式の利点を再確認します。MPE が「発音ごとに動的に ch を割る」のに対し、この方式は<strong>ピッチクラスを静的に3ch へ固定</strong>するため、<br>(a) 同時発音数が ch あたりの制限を受けにくい<br>(b) ピアノロールの色がそのまま「どの微分音か」を表す可読性を生む<br>(c) Ch.4 を制御に残せる。<br>「トラック切替による上げ下げ」の煩雑さを避けたい、（願わくば平易なきーでのチャンネル操作すらも少なくしたい）という実制作の要求への、洗練された解答です。<br>欠点は初期設定に手間がかかることですが、一度組めば以後の制作は通常の MIDI 打ち込みと変わりません。</p>
+      </div>
+    </details>
+
+    <div class="keybox">
+      <span class="kb-label">この節の要点</span>
+      情報源は <strong>Xenharmonic Wiki</strong> で知り、制作の核は<strong>31音を白鍵3段・黒鍵2段に配置し3チャンネルへ畳む方式</strong>が非常に効率的。<br>Reaper のノート色（Ch.1赤・Ch.2黄・Ch.3緑）で可読化。
+    </div>
+
+    <p>これで第Ⅶ部の実践編を終えます。本編は完結です。<br>参照・早見表が、あなたの制作の傍らに置く道具になりますので、そちらも御覧ください。</p>
+
+    <nav class="pager" id="pager"></nav>
+  </main>
+</div>
+
+<script src="assets/data/toc.js"></script>
+<script src="assets/data/glossary.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/audio.js"></script>
+<script src="assets/channel-keyboard.js"></script>
+<script>
+(function () {
+  "use strict";
+  const C4 = 261.6255653;
+  const STEP31 = 1200 / 31;
+  ChannelKeyboard.render(document.getElementById("ck-board"), {
+    onPlay: s => XenAudio.playFreqs([XenAudio.freqFromCents(C4, s * STEP31)], { dur: 1.0 })
+  });
+})();
+</script>
+</body>
+</html>

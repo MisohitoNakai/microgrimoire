@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ⅳ-6 西洋音楽の拡張ハーモニー — 微分音のグリモワール</title>
+<link rel="icon" href="./assets/data/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+@font-face {
+  font-family: "BravuraText";
+  src: url("https://cdn.jsdelivr.net/gh/steinbergmedia/bravura@master/redist/woff/BravuraText.woff2") format("woff2"),
+       url("https://cdn.jsdelivr.net/gh/steinbergmedia/bravura@master/redist/woff/BravuraText.woff") format("woff");
+  font-display: swap;
+}
+.smufl { font-family: "BravuraText", serif; font-size: 1.5em; line-height: 1; vertical-align: -0.12em; }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <button id="nav-toggle" aria-label="目次を開く"><span></span><span></span><span></span></button>
+  <a class="site-name" href="index.html">微分音のグリモワール</a>
+  <span class="topbar-section">第Ⅳ部 31平均律</span>
+</header>
+
+<div class="layout">
+  <aside id="sidebar" aria-label="目次"></aside>
+  <div id="sidebar-overlay"></div>
+
+  <main class="content">
+    <p class="eyebrow">第Ⅳ部 31平均律　─　6</p>
+    <h1>西洋音楽の拡張ハーモニー</h1>
+
+    <div class="intuition">
+      <span class="layer-tag">直感レイヤー</span>
+      <p>31音を西洋音楽をどう活かすかです。<br>31edo の語彙は12の語彙の<strong>置き換え</strong>ではなく<strong>拡張</strong>という位置づけで、全音階も生き残ります。<br>12では潰れて区別できなかったものが分離し（<strong>エンハーモニックの差異</strong>）、長・短の間に新しい色が挿し込まれ（<strong>中立音程</strong>）、そして「ほとんど純正な第7倍音」が<strong>増六の和音</strong>という伝統的な文法の中から発掘されます。<br>これが 31edo の和声の三本柱です。</p>
+    </div>
+
+    <h2 id="sec-enharmonic">エンハーモニックの差異 ── G♯ ≠ A♭ の音楽的帰結</h2>
+
+    <p>12edo では綴りの違いにすぎなかった G♯／A♭ が、31edo では<strong>1歩（38.7¢）離れた別の音</strong>です。これは面倒ではなく資源です。</p>
+
+    <p><strong>（1）綴りが響きに出現</strong> ──<br>「A への導音としての G♯」は低め、「サブドミナントマイナー Fm の3度の A♭」は高め。<br>このような調性由来の文脈が音高として実体化します。</p>
+
+    <p><strong>（2）閉じないaug／dim7コード</strong>  ──<br>12edo で増三和音（augコード）は 400×3＝1200 と閉じますが、31edo では長3度3つ＝30歩となり、<strong>オクターブにディエシス1つぶん届きません</strong>。<br>減七和音（dim7コード）も短3度4つ＝32歩で1歩超過。<br>12edo の「転義万能の対称性」は、31edo では<strong>綴りごとに厳密に解決先のセマンティックがある別個の和音</strong>に分離し、和声の文法が精密になります。</p>
+
+    <p><strong>（3）エンハーモニックが「音の出来事」になる</strong>──<br>12edo では単なる綴り替えだった A♭→G♯ が、31edo では1歩の実際の下降です。このような微小な声部の移動を成し得るのは 31edo の大きな強みとなります。</p>
+
+    <div class="widget">
+      <p class="widget-title">エンハーモニックの差異を聴く</p>
+      <img src="./assets/data/score_enharmonic.png" alt="エンハーモニックの差異を示す楽譜例（赤い音符が1歩の声部移動）" style="width:100%;height:auto;display:block;margin:.4rem 0;border:1px solid #e6e8f2;border-radius:4px">
+      <audio controls preload="none" src="./assets/data/enharmonic.mp3" style="width:100%;margin:.4rem 0">お使いのブラウザは音声再生に対応していません。</audio>
+      <p class="widget-note">赤い音符はエンハーモニックによる1歩の声部移動の場所。</p>
+    </div>
+
+
+
+    <h2 id="sec-aug6">増六の和音と自然7度（7/4）</h2>
+
+    <p>ホイヘンスの発見（Ⅳ-3）の和声的な収穫がここにあります。C から数えて、<strong>短7度（C–B♭）は26歩＝1006.5¢、自然7度（C–A♯）は25歩＝967.7¢</strong>です。31edo では両者は別の音程で、後者は 7/4（968.8¢）と 1.1¢ しか違いません。つまり…</p>
+
+    <p>西洋音楽で、<strong>属七の和音 C–E–G–B♭</strong>（0, 10, 18, 26歩）では、第7音 B♭ は下行して A へ導かれます（F メジャーキーの属七としての振る舞い）。<br>いっぽう<strong>ドイツ増六 C–E–G–A♯</strong>（0, 10, 18, 25歩）では、A♯ は上行して B へ解決しようとします。12edo ではこの二つは同音（A♯＝B♭）で、綴りの違いは解決方向の指示にすぎませんでした。<br>31edo では<strong>綴り・音高・声部進行の三つが一体で分離することになります</strong>。<br>下行する B♭（26歩）と上行する A♯（25歩）は別の音であり、後者を含む増六和音の音程構成はほぼ純正の <strong>4:5:6:7</strong>です。なお現在の日本での実践例も、25歩を含むこの和音は<strong>属七の代用としてではなく、むしろ増六の諸和音として</strong>、すなわち増6度＝7/4 として導入するのが主流となりつつあります。</p>
+
+    <p>古典和声の増六（ドイツ・フランス・イタリア）に加えて、最近の J-pop には興味深い和音が現れることを 2017年に Joshua Taipale 氏が自身の運営する Discord サーバー「Ongaku Concept」内で指摘し、これを「Blackadder Chord」と命名しました。後にこの和音にフォーマルな名前を与えようと本人の Twitter 上の投稿で「日本の増六」という名前を提唱しています。<br>これも古典和声の増六和音と深い関連のために、31edo での実践においても用いることが可能で、7-limit の語彙として実践の蓄積があります。</p>
+
+    <div class="widget">
+      <p class="widget-title">増六の和音を聴く</p>
+      <img src="./assets/data/score_aug6.png" alt="増六和音と自然7度（7/4）を示す楽譜例" style="width:100%;height:auto;display:block;margin:.4rem 0;border:1px solid #e6e8f2;border-radius:4px">
+      <audio controls preload="none" src="./assets/data/aug6.mp3" style="width:100%;margin:.4rem 0">お使いのブラウザは音声再生に対応していません。</audio>
+      <p class="widget-note">赤い音符は増六。7-limitの協和関係が現れています。</p>
+    </div>
+      
+    <h2 id="sec-neutral">中立音程によるブルーノート表現</h2>
+
+      <p>31edo の3度をまず5種類程紹介します。</p>
+        <ul>
+          <li>縮（subminor）7歩（≈7/6）</li>
+          <li>短（minor）8歩（≈6/5）</li>
+          <li>中立（neutral）9歩（≈11/9）</li>
+          <li>長（Major）10歩（≈6/5）</li>
+          <li>拡（SuperMajor）11歩（≈9/7）</li>
+        </ul>
+    <p>ブルースの「ブルーノート」は本来メジャースケールの3度・5度・7度として体系化されてきましたが、現今のロック、ポップスなどの実践では専ら3度のみが用いられるケースが多く、<strong>短3度と長3度の間を揺れ動くベンド</strong>として実践されています。この鍵盤には存在しない音を、奏者が奏法や歌として作ってきたのです。<br>31edo はこの中間帯に<strong>固定的なピッチを、ただの旋律のみならず和声的な意味</strong>として与えることができます。<br>9歩の中立3度がブルー・サードの領域に立っており、これは 11/9 という 11-limit の音程語彙として利用出来そうです。</p>
+
+    <p>現在の日本では（動画サイト等での31edo 演奏・解説）で、<br><strong>メジャーペンタトニックを枠組みに、中立3度をブルーノートとして挿す</strong>用法——<br><strong>0-5-9-10-18-23</strong>｜C・D・E<span class="smufl">&#xE280;</span>・E・G・A<br>およびそのマイナーキーへの転回——<br><strong>0-8-13-17-18-26</strong>｜C・E♭・F・G<span class="smufl">&#xE280;</span>・G・B♭<br>
+    という用法が散見されています。</p>
+    <p>もちろん中立3度＝ブルーノートの唯一解ではありません。<br>ブルーノートは揺れをもって用いてこられたのは事実で、勿論、他に固定的なピッチを与えるスキーマが存在します。<br>31edo の利点は<strong>揺れの通過点を離散的に書き取り、さらなる意味を与えられる</strong>ことで、長2度から長3度の間の4段のグラデーションを、記譜可能・再現可能な形で和声にすら組み込めることです。<br>特に、中東のマカームのラースト（C・D・E<span class="smufl">&#xE280;</span>・F・G・A・B<span class="smufl">&#xE280;</span>）を核とする旋法と、ブルースの中間音の実践が、同じ中立音程の上に出会うのは示唆的とする評論もあります。</p>
+
+    <div class="widget">
+      <p class="widget-title">ブルーノートを取りこんだ和声を聴く</p>
+      <img src="./assets/data/score_bluenote.png" alt="中立音程によるブルーノート表現を示す楽譜例" style="width:100%;height:auto;display:block;margin:.4rem 0;border:1px solid #e6e8f2;border-radius:4px">
+      <audio controls preload="none" src="./assets/data/bluenote.mp3" style="width:100%;margin:.4rem 0">お使いのブラウザは音声再生に対応していません。</audio>
+      <p class="widget-note">赤い音符はブルーノート。11-limitの協和関係が現れています。</p>
+    </div>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── 語彙の代数的な出どころ</summary>
+      <div class="precise-body">
+        <p>本節の内容は、すべて第Ⅲ部の枠組みから機械的に導かれます。<br>属七と自然七の分離は、B♭（五度圏で −2）と A♯（同 +10）が完全5度12個ぶん離れているピタゴラスコンマの -1 歩への写像であり、増六の和音と自然七の一致はミーントーン上で Septimal kleisma（225/224）が消去されることにより実現します。<br>中立3度は 243/242（rastma）の消去により「11/9 が完全5度の半分に相当」という素性を持ちます。
+        <br>増三和音の非閉鎖は 128/125（ディエシス）が31edo で1歩に写ること（Ⅱ-4）そのものです。</p>
+      </div>
+    </details>
+
+    <div class="keybox">
+      <span class="kb-label">この節の要点</span>
+      31edo の西洋音楽への拡張において、新しい和声の三本柱は、<br>(1) エンハーモニックの差異<br>(2) 増六和音と自然七<br>(3) 中立音程によるブルーノート表現<br>が挙げられる。
+    </div>
+
+    <nav class="pager" id="pager"></nav>
+  </main>
+</div>
+
+<script src="assets/data/toc.js"></script>
+<script src="assets/data/glossary.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/audio.js"></script>
+</body>
+</html>

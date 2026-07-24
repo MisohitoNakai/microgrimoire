@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ⅱ-2 格子・トネッツ — 微分音のグリモワール</title>
+<link rel="icon" href="./assets/data/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<style>
+  .tz-node { cursor: pointer; }
+  .tz-node circle { fill: #fff; stroke: #565863; stroke-width: 1.2; transition: fill .12s; }
+  .tz-node:hover circle { fill: var(--accent-bg); stroke: var(--accent); }
+  .tz-node.origin circle { fill: var(--accent); stroke: var(--accent-dark); }
+  .tz-node.origin text { fill: #fff; }
+  .tz-node.paired circle { fill: #fbf5e8; stroke: #c9973a; stroke-width: 2; }
+  .tz-node text { pointer-events: none; }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <button id="nav-toggle" aria-label="目次を開く"><span></span><span></span><span></span></button>
+  <a class="site-name" href="index.html">微分音のグリモワール</a>
+  <span class="topbar-section">第Ⅱ部 純正律とその格子</span>
+</header>
+
+<div class="layout">
+  <aside id="sidebar" aria-label="目次"></aside>
+  <div id="sidebar-overlay"></div>
+
+  <main class="content">
+    <p class="eyebrow">第Ⅱ部 純正律とその格子　─　2</p>
+    <h1>格子・トネッツ ── 純正律の地図</h1>
+
+    <div class="intuition">
+      <span class="layer-tag">直感レイヤー</span>
+      <p>前節で、純正音程には素数の「血統」があると分かりました。ならば素数ごとに軸を1本ずつ取れば、音の世界は<strong>マス目（格子）</strong>として描けるはずです。<br>右へ1歩＝完全5度（×3/2）、<br>上へ1歩＝純正長3度（×5/4）。すると長三和音は地図の上の<strong>三角形</strong>になり、和声進行は地図の上の<strong>移動</strong>になります。この地図〝トネッツ〟は本書で最も長く使う道具です。<br>まずは下の地図をクリックして、歩き回ってみてください。</p>
+    </div>
+
+    <h2 id="sec-coords">素数は座標軸である</h2>
+
+    <p>5-limit の任意の音程は \(2^{a} \times 3^{b} \times 5^{c}\)（\(a,b,c\) は整数）と一意に書けます。ここでオクターブ等価性（Ⅰ-1）を使い、2 の指数を「音域合わせ」として脇に置けば、残る座標は \((b, c)\) となり、<strong>3 の歩数と 5 の歩数の組</strong>だけです。つまり 5-limit のピッチクラス全体は、平面上の格子点と一対一に対応します。この指数の組を正式なベクトル記法（monzo）として整備するのは<span class="xref" data-file="part3-02-rtt.html">第Ⅲ部2</span>で行い、本節では地図として直感をつくります。</p>
+
+    <p>格子を音楽家向けに描き直したものが<strong>トネッツ</strong>（Tonnetz, 音のネットワーク）です。右方向が 3/2、右上方向が 5/4、右下方向が 6/5。すると <strong>上向きの三角形が長三和音、下向きの三角形が短三和音</strong>になります。</p>
+
+    <div class="widget">
+      <p class="widget-title">トネッツ（5-limit・中心 1/1 ＝ 261.6 Hz）</p>
+      <div class="wrow">
+        <label>クリック時の音</label>
+        <span class="pillgroup" id="tz-mode">
+          <button data-m="dyad" class="on">1/1 との2音</button>
+          <button data-m="maj">長三和音</button>
+          <button data-m="min">短三和音</button>
+          <button data-m="solo">単音</button>
+        </span>
+        <label style="margin-left:auto"><input type="checkbox" id="tz-comma"> 12edoで音名が同じになるペアを強調</label>
+      </div>
+      <div id="tz-plot"></div>
+      <div class="wrow"><span class="wval" id="tz-info" style="min-width:100%">ノードをクリックすると音が鳴ります。</span></div>
+      <p class="widget-note">ラベルはオクターブに畳んだ比とセント値。「長三和音」モードではクリックした音を根音に、その右（+3/2）と右上（+5/4）の音が同時に鳴ります。<br><strong>「12edoで音名が同じになるペアを強調」</strong>をオンにすると、琥珀色の枠のペア（9/8 と 10/9 ペア、81/64 と 5/4ペア、27/16 と 5/3ペアなど）が現れます。<br>楽譜の上では同じ名前で呼ばれるのに、地図の上では別の場所にあり、高さも約 21.5¢ 違う。この「地図上の分身」の正体が次節の主題、シントニックコンマです。</p>
+    </div>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── 格子の数学的な骨格</summary>
+      <div class="precise-body">
+        <p>p-limit の正の有理数の全体は、乗法に関して<strong>階数（rank）が素数の個数に等しい自由アーベル群</strong>をなします。5-limit なら \( \{2^a \times 3^b \times 5^c\} \cong \mathbb{Z}^3 \)。オクターブ等価で 2 を法とすれば \(\mathbb{Z}^2\)、平面格子です。7-limit では \(\mathbb{Z}^3\)（オクターブ畳み込み後）となり、トネッツは三次元の格子（各点から 3/2, 5/4, 7/4 の3方向）に拡張されます。<br>紙面には二次元への射影や層状の描画で対応する事しかできませんので、本書でも 7-limit の格子図は必要な箇所で局所的に描きます。<br>重要なのは次の抽象です。<br><strong>音程＝格子のベクトル、音程の合成＝ベクトルの加算</strong>。Ⅰ-2 の「比は掛け、セントは足す」が、ここで幾何になりました。</p>
+        <p>歴史的な注：この格子の原型は Euler（1739, <em>Tentamen novae theoriae musicae</em>）の speculum musicum に遡り、19世紀に Oettingen と Riemann が和声理論の道具として発展させました。現代の音楽理論では、三和音間の変形（P・L・R 操作）を扱うネオ・リーマン理論の舞台としても知られており。微分音理論では、トネッツはこのあと「コンマで折り畳まれる空間」として主役になります（Ⅱ-5・第Ⅲ部）。</p>
+      </div>
+    </details>
+
+    <h2 id="sec-triads">地図の読み方 ── 和音は形、進行は移動</h2>
+
+    <p>トネッツの効用は通常、「形が意味を持つ」ことです。長三和音は上向き三角、短三和音は下向き三角。共通音を保った進行は、<strong>辺を共有する三角形への移動</strong>として見えます。C→Am（共通音 C・E）は三角形の反転、C→F・C→G は左右への平行移動。そして遠隔転調は地図上の長い旅でした。</p>
+
+    <p>ところが、微分音の中ではほかにも重要な読み方があります。<strong>同じ場所に戻る旅は、比の積が 1 になる旅</strong>だということです。左に4歩（5度を4回）進んで、下に1歩(長3度下がる)……といった閉路（ループ）を作ると、五線譜上は元の音 1/1 に帰還するはずです。<br>ところが五線譜の音名の上では閉じて見える旅が、格子の上では<strong>原点とは全く異なる位置で終わる</strong>ことがあります。このずれこそコンマであり、普通は純正律で、和声進行がピッチをじわじわと引きずり下ろす現象「コンマポンプ」の正体です。地図を手に入れた今、次節でこのジレンマを正面から扱えます。</p>
+
+    <div class="keybox">
+      <span class="kb-label">この節の要点</span>
+      素数を軸に取れば純正律は<strong>格子</strong>になる（5-limit＝平面）。<br>通常のトネッツでは右＝3/2、右上＝5/4、右下＝6/5、<strong>三角形＝三和音</strong>。音程の合成はベクトルの加算。同じ音名が地図上の複数の場所に現れる「分身」があり、その差がコンマ。
+    </div>
+
+    <nav class="pager" id="pager"></nav>
+  </main>
+</div>
+
+<script src="assets/data/toc.js"></script>
+<script src="assets/data/glossary.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/audio.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+<script>
+(function () {
+  "use strict";
+  const NS = "http://www.w3.org/2000/svg";
+  const C4 = 261.6256;
+  const A_RANGE = 4, B_RANGE = 2;          // 3の指数 −4..4、5の指数 −2..2
+  const DX = 74, DY = 86;                  // 格子間隔
+  const W = 740, H = 480;
+
+  /* オクターブに畳んだ比（正確な整数分数として） */
+  function nodeRatio(a, b) {
+    let num = 1, den = 1;
+    if (a > 0) num *= Math.pow(3, a); else den *= Math.pow(3, -a);
+    if (b > 0) num *= Math.pow(5, b); else den *= Math.pow(5, -b);
+    while (num / den >= 2) den *= 2;
+    while (num / den < 1) num *= 2;
+    const g = (function gcd(x, y) { return y ? gcd(y, x % y) : x; })(num, den);
+    return [num / g, den / g];
+  }
+
+  const svg = document.createElementNS(NS, "svg");
+  svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+  svg.setAttribute("width", "100%");
+  document.getElementById("tz-plot").appendChild(svg);
+
+  const cx = W / 2, cy = H / 2;
+  const pos = (a, b) => [cx + a * DX + b * DX / 4, cy - b * DY];
+
+  /* 辺（5度・長3度・短3度） */
+  const gEdges = document.createElementNS(NS, "g");
+  svg.appendChild(gEdges);
+  function edge(a1, b1, a2, b2) {
+    if (Math.abs(a2) > A_RANGE || Math.abs(b2) > B_RANGE) return;
+    const [x1, y1] = pos(a1, b1), [x2, y2] = pos(a2, b2);
+    const l = document.createElementNS(NS, "line");
+    l.setAttribute("x1", x1); l.setAttribute("y1", y1);
+    l.setAttribute("x2", x2); l.setAttribute("y2", y2);
+    l.setAttribute("stroke", "#e4e5ea");
+    l.setAttribute("stroke-width", "1.4");
+    gEdges.appendChild(l);
+  }
+  for (let a = -A_RANGE; a <= A_RANGE; a++)
+    for (let b = -B_RANGE; b <= B_RANGE; b++) {
+      edge(a, b, a + 1, b);       // 3/2
+      edge(a, b, a, b + 1);       // 5/4
+    }
+
+  /* 同名異音ペア（81/80 だけ離れた組） */
+  const PAIRS = [
+    [[2, 0], [-2, 1]],    // 9/8 vs 10/9
+    [[4, 0], [0, 1]],     // 81/64 vs 5/4
+    [[3, 0], [-1, 1]],    // 27/16 vs 5/3
+    [[-2, 0], [2, -1]],   // 16/9 vs 9/5
+    [[-4, 0], [0, -1]],   // 128/81? → 対 8/5
+    [[-3, 0], [1, -1]]    // 32/27 vs 6/5
+  ];
+  const pairedKeys = new Set();
+  PAIRS.forEach(pr => pr.forEach(([a, b]) => pairedKeys.add(a + "," + b)));
+
+  /* ノード */
+  const gNodes = document.createElementNS(NS, "g");
+  svg.appendChild(gNodes);
+  const mode = { play: "dyad" };
+  const info = document.getElementById("tz-info");
+
+  for (let a = -A_RANGE; a <= A_RANGE; a++)
+    for (let b = -B_RANGE; b <= B_RANGE; b++) {
+      const [x, y] = pos(a, b);
+      if (x < 26 || x > W - 26) continue;
+      const [n, d] = nodeRatio(a, b);
+      const r = n / d;
+      const cents = 1200 * Math.log2(r);
+      const g = document.createElementNS(NS, "g");
+      g.setAttribute("class", "tz-node" + (a === 0 && b === 0 ? " origin" : ""));
+      g.setAttribute("data-key", a + "," + b);
+      const c = document.createElementNS(NS, "circle");
+      c.setAttribute("cx", x); c.setAttribute("cy", y); c.setAttribute("r", 24);
+      g.appendChild(c);
+      const t1 = document.createElementNS(NS, "text");
+      t1.setAttribute("x", x); t1.setAttribute("y", y - 2);
+      t1.setAttribute("text-anchor", "middle");
+      t1.setAttribute("font-size", "11.5");
+      t1.setAttribute("fill", "#1e1f24");
+      t1.textContent = n + "/" + d;
+      g.appendChild(t1);
+      const t2 = document.createElementNS(NS, "text");
+      t2.setAttribute("x", x); t2.setAttribute("y", y + 12);
+      t2.setAttribute("text-anchor", "middle");
+      t2.setAttribute("font-size", "9.5");
+      t2.setAttribute("fill", "#565863");
+      t2.textContent = cents.toFixed(0) + "¢";
+      g.appendChild(t2);
+
+      g.addEventListener("click", () => {
+        const f = C4 * r;
+        if (mode.play === "solo") {
+          XenAudio.playFreq(f, { dur: 1.2 });
+        } else if (mode.play === "dyad") {
+          XenAudio.playFreqs([C4, f], { dur: 2.0 });
+        } else if (mode.play === "maj") {
+          XenAudio.playFreqs([f, f * 5 / 4, f * 3 / 2], { dur: 2.2 });
+        } else {
+          XenAudio.playFreqs([f, f * 6 / 5, f * 3 / 2], { dur: 2.2 });
+        }
+        info.textContent = "選択：" + n + "/" + d + "（" + cents.toFixed(2) + "¢・3の歩数 " + a + "、5の歩数 " + b + "）";
+      });
+      gNodes.appendChild(g);
+    }
+
+  /* モード切替 */
+  const pills = document.querySelectorAll("#tz-mode button");
+  pills.forEach(b => b.addEventListener("click", () => {
+    pills.forEach(x => x.classList.remove("on"));
+    b.classList.add("on");
+    mode.play = b.getAttribute("data-m");
+  }));
+
+  /* 同名異音の強調 */
+  document.getElementById("tz-comma").addEventListener("change", ev => {
+    document.querySelectorAll(".tz-node").forEach(nd => {
+      const on = ev.target.checked && pairedKeys.has(nd.getAttribute("data-key"));
+      nd.classList.toggle("paired", on);
+    });
+  });
+})();
+</script>
+</body>
+</html>

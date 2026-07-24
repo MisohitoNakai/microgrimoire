@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ⅴ-2 相互参照マトリクス — 微分音のグリモワール</title>
+<link rel="icon" href="./assets/data/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+#mx-table td { text-align: center; cursor: pointer; padding: .32rem .4rem; }
+#mx-table td.hit:hover { background: #eef0fa; }
+#mx-table td.star { color: #8a6116; font-weight: 700; }
+#mx-table td.cont { color: #9a9caa; }
+#mx-table th.rowh { white-space: nowrap; }
+#mx-table td.c31 { background: #f6f2e6; }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <button id="nav-toggle" aria-label="目次を開く"><span></span><span></span><span></span></button>
+  <a class="site-name" href="index.html">微分音のグリモワール</a>
+  <span class="topbar-section">第Ⅴ部 音律アトラス</span>
+</header>
+
+<div class="layout">
+  <aside id="sidebar" aria-label="目次"></aside>
+  <div id="sidebar-overlay"></div>
+
+  <main class="content">
+    <p class="eyebrow">第Ⅴ部 色々な音律 ── 音律アトラス　─　2</p>
+    <h1>相互参照マトリクス</h1>
+
+    <div class="intuition">
+      <span class="layer-tag">直感レイヤー</span>
+      <p>アトラスの中心図です。<strong>行＝種族（15個）、列＝EDO（19個）</strong>。<br>セルの記号は機械的判定。<br>（★＝POTE比1¢以内／○＝5¢以内／△＝それ以上／括弧＝contorted な重複）。<br>セルをクリックすると、その交差点での generator の歩数・セント値・POTE とのずれが下に表示され、その generator を試聴できます。31 の列（薄い琥珀）を縦に眺めたり、好きな種族の行を横に辿ってみてください。「道の上を EDO が並ぶ」感覚が掴めるはずです。</p>
+    </div>
+
+    <div class="widget">
+      <p class="widget-title">種族 × EDO マトリクス（セルをクリックで詳細と試聴）</p>
+      <div class="table-scroll">
+        <table id="mx-table"><thead></thead><tbody></tbody></table>
+      </div>
+      <div class="wrow"><span class="wval" id="mx-info" style="min-width:80%">—</span>
+        <button class="btn small" id="mx-play" disabled>generator を聴く</button></div>
+      <p class="widget-note">判定はすべて patent val の kernel 検査＋POTE ソルバー（Ⅲ-5）による再計算可能な値です。空欄＝不支持。周期がオクターブの1/2・1/3・1/5 の族（srutal・augmented・blackwood）は、周期を実装できない EDO（奇数など）が自動的に空欄になります。</p>
+    </div>
+
+    <h2 id="sec-reading">読みどころ</h2>
+
+    <p><strong>31 の列</strong>：meantone★・würschmidt★・orwell★・miracle★、そして slendric○・mohajira○——<br>第Ⅳ部2の顔ぶれが、客観判定でもほぼ★で並びます。<br><strong>53 の列</strong>：schismatic★・hanson★・orwell★——<br>5-limit をほぼ純正に扱う別系統の巨人で、81/80 を消さない。<br><strong>41 の列</strong>：schismatic★・magic★・miracle★・mohajira★・slendric★——<br>11-limit までの POTE の王。81/80 を消さない。<br><strong>22 の列</strong>：superpyth★・porcupine★・srutal○・magic○——<br>81/80 を消さない世界で、ミーントーンの常識が通じない全音階の音楽が生えます。<br><strong>19 の列</strong>：meantone○（Δ1.5¢）と magic○（Δ1.2¢）が拮抗する二重性。<br><strong>24 の列</strong>：mohajira★——<br>四分音の律 24 は、rastmic の道ではむしろ最適に近い実装です（Ⅴ-4）。</p>
+
+    <p><strong>行の読み方</strong>の例としてミーントーン行：12○ → 19○ → 26○ → 31★。<br>generator は 700 → 694.7 → 692.3 → 696.8 と揺れながら POTE（696.24）へ収束していします。<br>連分数の分母たち（Ⅲ-4）が道の上のマイル標です。</p>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── この表が語らないこと</summary>
+      <div class="precise-body">
+        <p>三つ注意点を明記します。<br>（1）★は generator 1変数のずれであり、<strong>全体の誤差分布は要約しません</strong>。<br>たとえば superpyth の 22★ は「superpyth として最適に近い」ことを意味しますが、superpyth 自体が高めの歪みを抱えた種族です。（badness が meantone より粗い）。族そのものの精度は次節の各論で述べます。<br>（2）カタログの15種族は網羅ではなく、badness 上位や重要性による選抜です（5-limit 中心＋7-limit 2族＋subgroup 3族）。<br>（3）patent val 基準のため、wart val でのみ支持される組合せ（例：17c のミーントーン的運用）は空欄です。これは表の限界として明記しておきます。</p>
+      </div>
+    </details>
+
+    <div class="keybox">
+      <span class="kb-label">この節の要点</span>
+      15種族と19個の EDO の全交差を機械的判定で一望。
+    </div>
+
+    <nav class="pager" id="pager"></nav>
+  </main>
+</div>
+
+<script src="assets/data/toc.js"></script>
+<script src="assets/data/glossary.js"></script>
+<script src="assets/data/atlas-data.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/audio.js"></script>
+<script>
+(function () {
+  "use strict";
+  const A = window.ATLAS;
+  const C4 = 261.6255653;
+  const thead = document.querySelector("#mx-table thead");
+  const tbody = document.querySelector("#mx-table tbody");
+  const info = document.getElementById("mx-info");
+  const playBtn = document.getElementById("mx-play");
+  let cur = null;
+
+  thead.innerHTML = "<tr><th class='rowh'>種族＼EDO</th>" +
+    A.edos.map(n => "<th class='num" + (n === 31 ? " c31" : "") + "'>" + n + "</th>").join("") + "</tr>";
+
+  const order = ["meantone","superpyth","schismatic","magic","wurschmidt","hanson","porcupine",
+                 "srutal","augmented","blackwood","mavila","miracle","orwell","mohajira","slendric"];
+  tbody.innerHTML = order.map(k => {
+    const F = A.fams[k];
+    return "<tr><th class='rowh'>" + F.jp + "<br><small>" + F.c + "</small></th>" +
+      A.edos.map(n => {
+        const c = F.cells[n];
+        const cls = (n === 31 ? "c31 " : "") + (c ? "hit " + (c.mark === "★" ? "star" : "") + (c.cont ? " cont" : "") : "");
+        return "<td class='" + cls + "' data-f='" + k + "' data-n='" + n + "'>" + (c ? (c.cont ? "(" + c.mark + ")" : c.mark) : "·") + "</td>";
+      }).join("") + "</tr>";
+  }).join("");
+
+  tbody.addEventListener("click", ev => {
+    const td = ev.target.closest("td.hit");
+    if (!td) return;
+    const k = td.getAttribute("data-f"), n = td.getAttribute("data-n");
+    const F = A.fams[k], c = F.cells[n];
+    info.innerHTML = "<strong>" + F.jp + " × " + n + "edo</strong>　generator（" + F.gname + "）＝ " +
+      c.gs + "歩 ＝ " + c.gc + "¢（POTE " + F.pote + "¢ 比 " + (c.err >= 0 ? "+" : "") + c.err + "¢）" +
+      (c.cont ? "　※contorted（より小さい EDO の複製）" : "") +
+      "　period＝" + F.period + "¢";
+    cur = c;
+    playBtn.disabled = false;
+  });
+  playBtn.addEventListener("click", () => {
+    if (!cur) return;
+    XenAudio.playFreqs([C4, XenAudio.freqFromCents(C4, cur.gc)], { dur: 1.8 });
+  });
+})();
+</script>
+</body>
+</html>

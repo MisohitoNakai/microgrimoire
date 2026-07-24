@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ⅰ-4 臨界帯域・粗さ・協和の土台 — 微分音のグリモワール</title>
+<link rel="icon" href="./assets/data/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+</head>
+<body>
+<header class="topbar">
+  <button id="nav-toggle" aria-label="目次を開く"><span></span><span></span><span></span></button>
+  <a class="site-name" href="index.html">微分音のグリモワール</a>
+  <span class="topbar-section">第Ⅰ部 土台</span>
+</header>
+
+<div class="layout">
+  <aside id="sidebar" aria-label="目次"></aside>
+  <div id="sidebar-overlay"></div>
+
+  <main class="content">
+    <p class="eyebrow">第Ⅰ部 土台：音・周波数・知覚　─　4</p>
+    <h1>臨界帯域・粗さ・協和の土台</h1>
+
+    <div class="intuition">
+      <span class="layer-tag">直感レイヤー</span>
+      <p>前節のうなりの実験で、2音の差を広げていくと<br>「ゆっくりした揺れ」→「速いザラつき」→「なめらかな2音」<br>と変わっていくのを聴きました。この途中に現れるザラつきが<strong>粗さ</strong>です。耳の中の周波数フィルターにはそれぞれ「幅」があり、2音がひとつのフィルターの中で押し合うと粗さが生まれ、離れれば消える。この単純な機構だけで、「なぜ半音のぶつかりは濁るのか」「なぜ低音の密な和音は泥になるのか」、そして「なぜ純正音程が滑らかなのか」の骨格が説明できます。ただし、それは協和の物語の<strong>全部ではない</strong>という留保つきで。</p>
+    </div>
+
+    <h2 id="sec-ear">耳はフィルターバンクである</h2>
+
+    <p>内耳の蝸牛では、基底膜という膜が周波数ごとに違う場所で共振し、音を成分に分解しています。つまり耳は生まれつきのスペクトル分析器です。ただしその分解能は無限ではありません。基底膜上の各場所は一定の<strong>幅</strong>をもつ帯域に反応し、この幅を<strong>臨界帯域</strong>と呼びます。2つの純音が臨界帯域より十分離れていれば、別々の場所で処理されて互いに干渉しません。近ければ同じ場所で重なり、うなり・粗さ・マスキングが生じます。</p>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── 臨界帯域と ERB</summary>
+      <div class="precise-body" id="sec-cb">
+        <p>臨界帯域の現代的な推定として、聴覚フィルタの等価矩形帯域幅 <strong>ERB</strong>（equivalent rectangular bandwidth）が広く使われます（Glasberg &amp; Moore, 1990）：</p>
+        <p>$$ \mathrm{ERB}(f) \approx 24.7\left(\frac{4.37 f}{1000} + 1\right) \ \text{Hz} $$</p>
+        <p>重要なのはこれを<strong>セントに換算したときの振る舞い</strong>です。中心周波数 \(f\) の帯域幅を音程幅（¢）に直すと、高域では 200¢ 台に落ち着くのに対し、低域では急激に広がり、100 Hz 前後では<strong>短3度〜それ以上</strong>に達します。下図はその換算です。</p>
+        <div id="cb-plot"></div>
+        <p>点線は短3度（300¢）。曲線がこれを上回る低域では、短3度ですら「同じフィルターの中」で押し合うことになります。<strong>低音域で密な和音がにごり、オーケストレーションで低声部の音程を広く取るのが定石になる</strong>のは、この曲線の直接の帰結です。なお歴史的な Bark 尺度（Zwicker の臨界帯域）でも大勢は同じで、本書では以後 ERB を使います。</p>
+      </div>
+    </details>
+
+    <h2 id="sec-roughness">粗さ ── うなりの向こう側</h2>
+
+    <p>臨界帯域の内側にある2音の干渉は、差が小さいうちは「うなり」として、差がおよそ 20〜30 Hz を超えるあたりからは個々の揺れを追えない「ザラつき」＝<strong>粗さ</strong>として聞こえます。さらに差を広げて臨界帯域の外へ出ると、粗さは消えてなめらかな2音になります。<br>Plomp と Levelt（1965）は純音対でこの過程を系統的に測定し、<strong>粗さ（感覚的不協和）は臨界帯域のおよそ 1/4 の隔たりで最大になり、帯域幅を超えるとほぼ消える</strong>ことを示しました。スライダーで実際に体感してみましょう。</p>
+
+    <div class="widget">
+      <p class="widget-title">粗さの探索 ── 2つの複合音</p>
+      <div class="wrow">
+        <button class="btn" id="rg-toggle">再生</button>
+        <label for="rg-base">下の音</label>
+        <input type="range" id="rg-base" min="0" max="1000" value="500">
+        <span class="wval" id="rg-base-read">220.0 Hz</span>
+      </div>
+      <div class="wrow">
+        <label for="rg-int">音程</label>
+        <input type="range" id="rg-int" min="0" max="1200" value="0" step="1">
+        <span class="wval" id="rg-int-read">0 ¢</span>
+        <span class="wval" id="rg-near"></span>
+      </div>
+      <p class="widget-note">音色は純音。0¢ から少しずつ広げ、うなり→粗さ→分離、の変化を確かめてください。<br>702¢（3/2）の直前・直後を行き来すると、響きがふっと滑らかになる「くぼみ」がはっきり分かります（386¢＝5/4 のくぼみはこの音色では控えめです。（理由は下の不協和曲線で見えます。）<br>同じ操作を下の音 110 Hz 付近で行うと、粗さの領域が音程として広くなる。これは臨界帯域の曲線そのものです。</p>
+    </div>
+
+    <h2 id="sec-curve">不協和曲線 ── くぼみとしての純正音程</h2>
+
+    <p>純音対の粗さの実験曲線がわかれば、<strong>複合音どうしの粗さは、すべての部分音の組み合わせの粗さの合算</strong>として見積もれます。これを計算したのが不協和曲線（Plomp–Levelt 型モデル、ここでは Sethares のパラメータ化を使用）です。下図は、16個の倍音をもつ2つの複合音について、音程 0〜1200¢ を2¢刻みで粗さの総和を計算しグラフにしたものです。倍音の配合（音色）は切り替えられます。</p>
+
+    <div class="widget">
+      <p class="widget-title">不協和曲線（実計算）</p>
+      <div class="wrow">
+
+          
+      <label>下の音</label>
+        <select id="dc-base">
+          <option value="55">A1（55 Hz）</option>
+          <option value="110">A2（110 Hz）</option>
+          <option value="220" selected>A3（220 Hz）</option>
+          <option value="440">A4（440 Hz）</option>
+          <option value="880">A5（880 Hz）</option>
+          <option value="1760">A6（1760 Hz）</option>
+        </select>
+          
+        <label style="margin-left:1em">目盛</label>
+        <span class="pillgroup" id="dc-grid">
+          <button data-g="none" class="on">なし</button>
+          <button data-g="12">12edo</button>
+          <button data-g="31">31edo</button>
+          <button data-g="41">41edo</button>            
+          <button data-g="46">46edo</button>
+        </span>
+      </div>
+      <div class="wrow">
+        <label>音色（倍音の配合）</label>
+        <span class="pillgroup" id="dc-amp">
+          <button data-a="saw" class="on">1/n（のこぎり波）</button>
+          <button data-a="para">1/n²（放物線波・本書基準）</button>
+        </span>
+      </div>
+      <div id="dc-plot"></div>
+      <div class="wrow">
+        <span class="widget-note" id="dc-hint">曲線上をクリックすると、その音程の2音が鳴ります。</span>
+      </div>
+      <p class="widget-note">くぼみの位置に注目してください。<br>2/1、3/2、4/3、5/4、6/5、5/3、7/6、7/4……<strong>純正音程が計算から浮かび上がってきます</strong>。くぼみは倍音の一致（＝衝突の消失）の場所だからです。目盛を 12edo に切り替えると、5/4 や 7/4 のくぼみが目盛から外れているのが見えます。31edo や 41edo に切り替えると、主要なくぼみのほぼ真上に目盛が落ちます。低い基音（C3）を選ぶと曲線全体が「にごり」側へ持ち上がります。そして音色を 1/n²（本書の基準音色）に切り替えてみると、<strong>5/4 や 6/5 のくぼみが浅くなります</strong>。高次倍音の弱い音色では、周波数比の数字が大きい場合、粗さのレベルが小さくなります。くぼみは音程の性質ではなく<strong>音程×音色</strong>の性質で、この観点についてはまた、第Ⅵ部3（Sethares）で深く掘り下げます。</p>
+    </div>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── モデルの式と、その射程</summary>
+      <div class="precise-body">
+        <p>2つの純音（周波数 \(f_1 \le f_2\)、音量 \(l_1, l_2\)）の粗さを、Sethares（1993）のパラメータ化で</p>
+        <p>$$ d = \min(l_1, l_2)\left[ e^{-b_1 s (f_2 - f_1)} - e^{-b_2 s (f_2 - f_1)} \right], \qquad s = \frac{d^{*}}{s_1 f_1 + s_2} $$</p>
+        <p>とします（\(b_1 = 3.51,\ b_2 = 5.75,\ d^{*} = 0.24,\ s_1 = 0.0207,\ s_2 = 18.96\)）。\(s\) の項が「臨界帯域の幅は周波数に依存する」ことの反映で、極大が臨界帯域の約 1/4 に来るよう較正されています。複合音対の不協和は、両者の全部分音ペアについて \(d\) を合算した値です。上図はこの合算を 2¢ 刻みで掃引したものにすぎません。</p>
+        <p><strong>射程と限界</strong>を明確にしておきます。<br>このモデルが説明するのは<strong>感覚的（sensory）な協和</strong>、つまりは文脈のない、その場のザラつきの少なさです。次の3点は説明しません。<br>（1）純音どうし（倍音なし）でも聴取者は単純比の音程をある程度好むこと——<br>比の解釈の曖昧さを情報量で測る <span class="xref" data-file="part6-01-he.html">Harmonic Entropy（第Ⅵ部1）</span>が扱う領域です。<br>（2）和声的文脈・調性の中での「協和の役割」——<br>音楽的（musical）協和は学習・文化と切り離せず、その論争は<span class="xref" data-file="part6-06-consonance.html">第Ⅵ部6</span>で扱います。<br>（3）このモデルの最大の含意——<br><strong>不協和曲線は音色（スペクトル）の関数であり、スペクトルを変えればくぼみの位置ごと動かせる</strong>のではないかということ。すなわち「音律に合わせて音色を設計する」道が開けます。これが<span class="xref" data-file="part6-03-timbre.html">第Ⅵ部3</span>の主題です。</p>
+      </div>
+    </details>
+
+    <h2 id="sec-consonance">協和の土台 ── ここまでで言えること・言えないこと</h2>
+
+    <p>第Ⅰ部のここまでで、協和について次の骨格が立ちました。<br>楽音は倍音列をもつ（前節）。耳は有限の分解能（臨界帯域）で音を分析し、帯域内の衝突は粗さになる（本節）。ゆえに<strong>基本周波数が小さな整数比にある2音は、倍音の衝突が少なく、滑らかに響く</strong>。純正音程の特権性は、神秘ではなく音響と生理の帰結として一定程度導けるのです。</p>
+
+    <p>同時に、正直な留保も本書の方針です。<br>感覚的協和は<strong>協和のすべてではありません</strong>。協和の好みには文化差・経験差も関係するという実証研究があること（<span class="xref" data-file="part6-06-consonance.html">第Ⅵ部6</span>）、粗さの計算値が人間の主観評価と相関しないことなども実証されています。また粗さが消えても残る「音程のまとまり感」を説明するには別の道具（MF・Harmonic Entropy など<span class="xref" data-file="part6-05-virtual-pitch.html">第Ⅵ部5</span>・<span class="xref" data-file="part6-01-he.html">第Ⅵ部1</span>）が必要です。第Ⅰ部では協和感の存在という土台だけを確保し、詳細に協和の正体を探る議論は第Ⅵ部に委ねます。</p>
+
+    <div class="keybox">
+      <span class="kb-label">この節の要点</span>
+      耳のフィルターには幅（臨界帯域≈ERB）があり、帯域内の2音は<strong>粗さ</strong>を生む。粗さは帯域の約 1/4 で最大になる。複合音の粗さを部分音ペアで合算すると<strong>不協和曲線</strong>が得られ、そのくぼみとして純正音程が浮かび上がる。ただしこれは協和の一要素に過ぎず全てではない。
+    </div>
+
+    <p>最後に残った土台はひとつ。そもそも人の耳は、どこまで細かい音高の差を聞き分けられるのか。<br>31等分なんて細かすぎないのか。次節で自分の耳を測ってみましょう。</p>
+
+    <nav class="pager" id="pager"></nav>
+  </main>
+</div>
+
+<script src="assets/data/toc.js"></script>
+<script src="assets/data/glossary.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/audio.js"></script>
+<script src="assets/figures.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+<script>
+(function () {
+  "use strict";
+
+  /* ============ 臨界帯域（ERB）の音程幅プロット ============ */
+  (function () {
+    const erb = f => 24.7 * (4.37 * f / 1000 + 1);
+    const widthCents = f => {
+      const e = erb(f) / 2;
+      return 1200 * Math.log2((f + e) / (f - e));
+    };
+    const pts = [];
+    for (let i = 0; i <= 300; i++) {
+      const oct = i / 300 * 5;            // 55 * 2^0..5
+      const f = 55 * Math.pow(2, oct);
+      pts.push([oct, widthCents(f)]);
+    }
+    const p = Fig.plot(document.getElementById("cb-plot"), {
+      w: 680, h: 260, x: [0, 5], y: [0, 1050],
+      pad: { l: 56, r: 14, t: 12, b: 42 }
+    });
+    // 短3度の参照線
+    p.vline; // noop reference guard
+    const m3 = [];
+    for (let x = 0; x <= 5; x += 0.5) m3.push([x, 300]);
+    p.polyline(m3, { stroke: "#8a6116", "stroke-width": 1.4, "stroke-dasharray": "5 4" });
+    p.label(4.55, 360, "短3度 300¢", { fill: "#8a6116", "text-anchor": "middle" });
+    p.polyline(pts, {});
+    p.axisX([0, 1, 2, 3, 4, 5], v => (55 * Math.pow(2, v)).toFixed(0), "中心周波数（Hz・対数目盛）");
+    p.axisY([0, 300, 600, 900], v => v + "¢", "ERB の音程幅");
+  })();
+
+  /* ============ 粗さの探索（持続2音） ============ */
+  (function () {
+    let v1 = null, v2 = null;
+    const tgl = document.getElementById("rg-toggle");
+    const bS = document.getElementById("rg-base");
+    const iS = document.getElementById("rg-int");
+    const bR = document.getElementById("rg-base-read");
+    const iR = document.getElementById("rg-int-read");
+    const near = document.getElementById("rg-near");
+    const REF = [
+      [0, "1/1"], [203.91, "9/8"], [231.17, "8/7"], [266.87, "7/6"], [315.64, "6/5"],
+      [386.31, "5/4"], [435.08, "9/7"], [498.04, "4/3"], [582.51, "7/5"], 
+      [701.96, "3/2"], [813.69, "8/5"], [884.36, "5/3"], [968.83, "7/4"], [1200, "2/1"]
+    ];
+    const baseHz = () => 110 * Math.pow(2, bS.value / 1000 * 2);   // 110–440
+    function upd() {
+      const f = baseHz(), c = +iS.value;
+      bR.textContent = f.toFixed(1) + " Hz";
+      iR.textContent = c + " ¢";
+      let best = REF[0], bd = 1e9;
+      REF.forEach(r => { const d = Math.abs(r[0] - c); if (d < bd) { bd = d; best = r; } });
+      near.textContent = bd < 12 ? "≈ " + best[1] : "";
+      if (v1) { v1.setFreq(f); v2.setFreq(XenAudio.freqFromCents(f, c)); }
+    }
+    bS.addEventListener("input", upd);
+    iS.addEventListener("input", upd);
+    upd();
+    tgl.addEventListener("click", () => {
+      if (v1) {
+        v1.stop(); v2.stop(); v1 = v2 = null;
+        tgl.textContent = "再生"; tgl.classList.remove("secondary");
+      } else {
+        const f = baseHz(), c = +iS.value;
+        v1 = XenAudio.hold(f, { gain: 0.12 , });
+        v2 = XenAudio.hold(XenAudio.freqFromCents(f, c), { gain: 0.12 , });
+        tgl.textContent = "停止"; tgl.classList.add("secondary");
+      }
+    });
+  })();
+
+  /* ============ 不協和曲線（Sethares 実計算） ============ */
+  (function () {
+    const NPART = 16;
+    const B1 = 3.51, B2 = 5.75, DSTAR = 0.24, S1 = 0.0207, S2 = 18.96;
+    let ampMode = "saw";                                  // 'saw' = 1/n, 'para' = 1/n²
+    const amp = n => (ampMode === "saw" ? 1 / n : 1 / (n * n));
+
+    function pairDiss(f1, f2, l1, l2) {
+      const fmin = Math.min(f1, f2);
+      const s = DSTAR / (S1 * fmin + S2);
+      const df = Math.abs(f2 - f1);
+      return Math.min(l1, l2) * (Math.exp(-B1 * s * df) - Math.exp(-B2 * s * df));
+    }
+    function totalDiss(base, cents) {
+      const r = Math.pow(2, cents / 1200);
+      const ps = [];
+      for (let n = 1; n <= NPART; n++) {
+        ps.push([base * n, amp(n)]);
+        ps.push([base * r * n, amp(n)]);
+      }
+      let d = 0;
+      for (let i = 0; i < ps.length; i++)
+        for (let j = i + 1; j < ps.length; j++)
+          d += pairDiss(ps[i][0], ps[j][0], ps[i][1], ps[j][1]);
+      return d;
+    }
+
+    const MARKS = [
+        [266.87, "7/6"],　[315.64, "6/5"], [386.31, "5/4"], [498.04, "4/3"], [582.51, "7/5"],
+      [701.96, "3/2"], [884.36, "5/3"], [968.83, "7/4"], [1200, "2/1"]
+    ];
+    const sel = document.getElementById("dc-base");
+    const gridBtns = document.querySelectorAll("#dc-grid button");
+    const plotDiv = document.getElementById("dc-plot");
+    let gridMode = "none";
+    let plotApi = null;
+
+    function draw() {
+      const base = parseFloat(sel.value);
+      const xs = [], STEPC = 2;
+      let maxD = 0;
+      for (let c = 0; c <= 1200; c += STEPC) {
+        const d = totalDiss(base, c);
+        xs.push([c, d]);
+        if (c >= 20 && d > maxD) maxD = d;
+      }
+      const pts = xs.map(p => [p[0], p[1] / maxD]);
+
+      const p = Fig.plot(plotDiv, {
+        w: 680, h: 300, x: [0, 1200], y: [0, 1.08],
+        pad: { l: 46, r: 14, t: 14, b: 42 }
+      });
+      plotApi = p;
+
+      if (gridMode === "12") {
+        for (let c = 0; c <= 1200; c += 100)
+          p.vline(c, { stroke: "#d7d9e6", "stroke-width": 1 });
+      } else if (gridMode === "31") {
+        const st = 1200 / 31;
+        for (let i = 0; i <= 31; i++)
+          p.vline(i * st, { stroke: "#d7d9e6", "stroke-width": 1 });
+      } else if (gridMode === "41") {
+        const st = 1200 / 41;
+        for (let i = 0; i <= 41; i++)
+          p.vline(i * st, { stroke: "#d7d9e6", "stroke-width": 1 });
+      } else if (gridMode === "46") {
+        const st = 1200 / 46;
+        for (let i = 0; i <= 46; i++)
+          p.vline(i * st, { stroke: "#d7d9e6", "stroke-width": 1 });
+      }
+
+      p.polyline(pts, {});
+      MARKS.forEach(([c, lab]) => {
+        const d = totalDiss(base, c) / maxD;
+        p.dot(c, d, { r: 3, fill: "#8a6116" });
+        p.label(c, Math.min(d + 0.09, 1.06), lab, { fill: "#8a6116", "font-size": 10.5 });
+      });
+      p.axisX([0, 200, 400, 600, 800, 1000, 1200], v => v, "音程（¢）");
+      p.axisY([0, 0.5, 1], v => v, "相対的な不協和度");
+
+      // クリックで試聴
+      p.svg.style.cursor = "pointer";
+      p.svg.addEventListener("click", ev => {
+        const rect = p.svg.getBoundingClientRect();
+        const xpx = (ev.clientX - rect.left) / rect.width * 680;
+        const c = (xpx - p.opts.pad.l) / (680 - p.opts.pad.l - p.opts.pad.r) * 1200;
+        if (c < -20 || c > 1220) return;
+        const cc = Math.max(0, Math.min(1200, c));
+        const amps = [];
+        for (let n = 1; n <= NPART; n++) amps.push(amp(n));
+        XenAudio.playPartials(base, amps, { dur: 1.8, gain: 0.22 });
+        XenAudio.playPartials(XenAudio.freqFromCents(base, cc), amps, { dur: 1.8, gain: 0.22 });
+        document.getElementById("dc-hint").textContent =
+          "試聴：" + cc.toFixed(0) + "¢（下の音 " + base.toFixed(1) + " Hz・曲線と同じ音色）";
+      }, { once: false });
+    }
+
+    sel.addEventListener("change", draw);
+    gridBtns.forEach(b => b.addEventListener("click", () => {
+      gridBtns.forEach(x => x.classList.remove("on"));
+      b.classList.add("on");
+      gridMode = b.getAttribute("data-g");
+      draw();
+    }));
+    const ampBtns = document.querySelectorAll("#dc-amp button");
+    ampBtns.forEach(b => b.addEventListener("click", () => {
+      ampBtns.forEach(x => x.classList.remove("on"));
+      b.classList.add("on");
+      ampMode = b.getAttribute("data-a");
+      draw();
+    }));
+    draw();
+  })();
+})();
+</script>
+</body>
+</html>

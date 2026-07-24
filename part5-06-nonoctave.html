@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ⅴ-6 非オクターブ音律 — 微分音のグリモワール</title>
+<link rel="icon" href="./assets/data/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@600;700&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <button id="nav-toggle" aria-label="目次を開く"><span></span><span></span><span></span></button>
+  <a class="site-name" href="index.html">微分音のグリモワール</a>
+  <span class="topbar-section">第Ⅴ部 音律アトラス</span>
+</header>
+
+<div class="layout">
+  <aside id="sidebar" aria-label="目次"></aside>
+  <div id="sidebar-overlay"></div>
+
+  <main class="content">
+    <p class="eyebrow">第Ⅴ部 色々な音律 ── 音律アトラス　─　6</p>
+    <h1>非オクターブ音律 ── 2:1 を手放す</h1>
+
+    <div class="intuition">
+      <span class="layer-tag">直感レイヤー</span>
+      <p>アトラスの最後に、暗黙の前提を一枚剥がします。<br>ここまでの全ての音律は「オクターブで繰り返す」ことを疑いませんでした。しかし RTT の機械処理（第Ⅲ部）に 2:1 の特別扱いは組み込まれていません。つまり、音階の一周 <strong>period は選べるパラメータ</strong>です。周期を 3:1（tritave）に取り替えた Bohlen–Pierce、周期という概念ごと薄めて単一の歩幅だけで組む Carlos の α・β・γ スケールなど、オクターブ等価という、あまりに深く染み込んだ聴取習慣そのものを実験台に載せる領域です。</p>
+    </div>
+
+    <h2 id="sec-bp">Bohlen–Pierce ── トリターブの音楽</h2>
+
+    <p><strong>Bohlen–Pierce（BP）</strong>は、3:1、オクターブ＋純正完全5度、<strong>トリターブ（tritave）</strong> を等価関係に採用し、これを13等分する音律です。<br>（13edt・1歩＝\(1200\log_2 3^{\frac{1}{13}} = 146.3¢\)）<br>1970年代に Heinz Bohlen（結合音の考察から）、Kees van Prooijen、John R. Pierce がそれぞれ独立に到達しました。設計の核は<strong>奇数倍音のみの協和</strong>で、基本和音を 4:5:6 でなく <strong>3:5:7</strong> に取り、偶数倍音（＝オクターブ）を体系から外します。クラリネットのような奇数次のみの倍音主体の音色と相性が良いとされるのはこのためです。（音色と協和の理論はⅥ-3で）。</p>
+
+    <p>旋法の中心は9音の <strong>Lambda 音階</strong>（13歩中のステップ型 2 1 1 2 1 2 1 2 1）。<br>英語圏では音名 C D E F G H J A B（Op de Coul の提案）が使われ、名前は<strong>オクターブでなくトリターブで繰り返します</strong>。</p>
+
+    <div class="widget">
+      <p class="widget-title">BP を聴く（トリターブ＝C4 基準・上方 3:1 で折り返し）</p>
+      <div class="wrow">
+        <button class="btn" id="bp-chrom">13ed3 の「半音階」（1 tritave）</button>
+        <button class="btn" id="bp-lambda">Lambda 音階（2 1 1 2 1 2 1 2 1）</button>
+      </div>
+      <div class="wrow">
+        <button class="btn secondary" id="bp-triad">基本和音 3:5:7（0,6,10歩）</button>
+        <button class="btn secondary" id="bp-just">純正 3:5:7 と照合</button>
+        <button class="btn secondary" id="bp-oct">「オクターブ」を探して失敗する（8歩=1170.4¢）</button>
+      </div>
+      <p class="widget-note">3:5:7 の 13ed3 近似は 0, 6, 10歩（5/3：884.4→877.8¢で−6.5¢、7/3：1466.9→1463.0¢で−3.8¢）。<br>最後のボタンは BP の思想的な核心で、1200¢ に最も近い音（8歩・1170.4¢）は明確に「オクターブではない」とする立場です。<br><strong>2:1 の等価性が体系から本当に排除している</strong>ことを確認できます。<br>音色は<strong>三角波</strong>（奇数次倍音のみ）で鳴らしています。<br>偶数倍音を外し奇数倍音 3:5:7 を核とする BP の設計と素直に噛み合う音です。</p>
+    </div>
+
+    <h2 id="sec-carlos">Carlos の α・β・γ ── 周期なき均等歩</h2>
+
+    <p>Wendy Carlos がアルバム『Beauty in the Beast』（1986）のために設計した三つの音律は、さらにパワフルです。<strong>繰り返しの周期を決めない</strong>。単一の歩幅を選び、それをただ積む。<br>オクターブは体系のどこにも現れません。歩幅は 3/2・5/4・6/5 への二乗平均誤差を最小化して選ばれました。</p>
+
+    <div class="table-scroll">
+    <table>
+      <thead><tr><th>音律</th><th>歩幅</th><th>オクターブあたり</th><th>主要音程</th></tr></thead>
+      <tbody>
+        <tr><td><strong>α</strong>（alpha）</td><td class="num">78.0¢</td><td class="num">約15.39歩</td><td>短3度＝4歩・長3度＝5歩・5度＝9歩</td></tr>
+        <tr><td><strong>β</strong>（beta）</td><td class="num">63.8¢</td><td class="num">約18.81歩</td><td>5度＝11歩（＋15歩≈7/4）</td></tr>
+        <tr><td><strong>γ</strong>（gamma）</td><td class="num">35.1¢</td><td class="num">約34.19歩</td><td>5度＝20歩（ほぼ純正の三和音）</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>「オクターブ近辺」が<strong>整数にならない</strong>。ここがすべてです。<br>三和音は美しく鳴るのに、1オクターブ上の「同じ音」は存在しない。旋律が上行するたびに風景が少しずつずれていく感覚は、オクターブ等価がいかに強い知覚的習慣かを逆照射します。（γ は 34.188歩/oct で、31edo の1歩 38.7¢ に近い粒度の世界でもありますが）。</p>
+
+
+
+    <div class="widget">
+      <p class="widget-title">α・β・γ を聴く</p>
+      <div class="wrow">
+        <label>音律</label>
+        <span class="pillgroup" id="ca-sel">
+          <button data-s="78.0" class="on">α（78.0¢）</button>
+          <button data-s="63.8">β（63.8¢）</button>
+          <button data-s="35.1">γ（35.1¢）</button>
+        </span>
+      </div>
+      <div class="wrow">
+        <button class="btn" id="ca-scale">歩幅で上行（2オクターブ弱）</button>
+        <button class="btn secondary" id="ca-triad">長三和音（α:0-5-9／β:0-6-11／γ:0-11-20歩）</button>
+        <button class="btn secondary" id="ca-octtest">「オクターブ」に最も近い音を聞く</button>
+      </div>
+      <p class="widget-note">γ の三和音（0-11-20歩＝0・386.1・702.0¢）はほぼ純正です。にもかかわらずオクターブは α で 15歩（1170¢）か 16歩（1248¢）、β で 19歩（1212.2¢）、γ で 34歩（1193.4¢）——どれも 2:1 に着地しません。</p>
+    </div>
+      
+    <h2 id="sec-studie2">歴史上の非オクターブ ── シュトックハウゼン「Studie II」の 25ed5</h2>
+
+    <p>非オクターブ音律は現代 Xenharmonic コミュニティの発明ではありません。<br>名高い先例が、現代音楽作曲家 <strong>Karlheinz Stockhausen の《Studie II》（1954）</strong>です。電子音楽として初めて<strong>出版された総譜</strong>であり、そこで用いられた音高体系が <strong>25ed5</strong>（<strong>5:1 の比を25等分）</strong>という音律でした。（1歩 ＝ \(1200\log_2 5^{1/25} = 111.45¢\)）。5:1 は「2オクターブ＋長3度（5/4）」にあたる音程で、古い音楽学の文献では <em>twenty-fifth root of five</em> と呼ばれます。</p>
+
+    <p>Stockhausen の狙いは、正弦波を「純粋な素材」として、<strong>倍音列ではない間隔で5本重ねて新しい音色を合成する</strong>ことでした。（数 5 を全パラメータの基礎に据えるトータルセリエリズム的な設計思想。）25ed5 の1歩 111.45¢ は、12edo の半音 100¢ よりわずかに広い、けれども決定的に、この音律は<strong>オクターブでは決して閉じません</strong>。BP が奇数倍音（3:5:7）へ、Carlos 律が周期の放棄へ向かったのと同様、《Studie II》は<strong>「等価の周期を 2:1 から引き剥がす」という同じ一手</strong>を、しかも RTT の語彙が整備される半世紀も前に、作曲の実践として一応行っていたことになります。「等価な周期」を任意に選ぶという発想（次の精密レイヤー）の、最も早い音楽的具現のひとつです。</p>
+      
+    <details class="precise" open>
+      <summary>精密レイヤー ── RTT から見た非オクターブ、そして31との接点</summary>
+      <div class="precise-body">
+        <p>RTT の言葉では、これらは自然に位置づきます。BP は<strong>subgroup 3.5.7 の rank-1 律射</strong>（equave＝3）で、val \( \left\langle x \; 13 \; 19 \; 23 \right] \)（3→13, 5→19, 7→23 歩）が 245/243 や 3125/3087 型のコンマを消します。Carlos 音律は「period を持たない rank-1」＝実数直線上の等間隔格子で、目的関数（重みつき最小二乗）はⅢ-5 の TE とまったく同じ（<strong>optimization の一般論が、オクターブの有無と無関係に働く</strong>）好例です。equave を 3 以外に取る一般化（<strong>ed5</strong>＝edφ など）も同じシステムで扱えます。</p>
+        <p>41edo との接点をひとつ。BP の 13edt は1歩 146.3¢ ですが、これは 5\41 に非常に近い数値です。従って、13edt のvalに対して5倍した contorted な 65edt は 41edo をよく近似し、その patent valも 41edo に一致しています。勿論上述のコンマをすべて 41edo が消すことになります。</p>
+      </div>
+    </details>
+
+    <div class="keybox">
+      <span class="kb-label">この節の要点</span>
+      period は選べるパラメータ。<strong>BP＝tritave（3:1）の13等分</strong>、基本和音 3:5:7、Lambda 音階（2 1 1 2 1 2 1 2 1）、奇数倍音の音色と親和。<strong>Carlos α（78.0¢）・β（63.8¢）・γ（35.1¢）</strong>は周期を持たない均等歩で、三和音は鳴るがオクターブが存在しない。RTT の機械は equave の選択を含めてそのまま通用する。
+    </div>
+
+    <p>アトラスはここまでです。地図で「どこへ行けるか」は描けました。<br>残る大きな問いは「なぜそこが良く・悪く響くのか」。第Ⅵ部では、響きの科学の深部へ迫ります。</p>
+
+    <nav class="pager" id="pager"></nav>
+  </main>
+</div>
+
+<script src="assets/data/toc.js"></script>
+<script src="assets/data/glossary.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/audio.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+<script>
+(function () {
+  "use strict";
+  const C4 = 261.6255653;
+  const BP = 1200 * Math.log2(3) / 13;   // 146.304¢
+  const BPWAVE = "triangle";             // BP は奇数倍音（3:5:7）が核なので、奇数次のみの三角波で鳴らす
+
+  const bpSeq = arr => XenAudio.playSeq(arr.map(s => XenAudio.freqFromCents(C4, s * BP)), { dur: 0.34, gap: 0.06, wave: BPWAVE });
+  document.getElementById("bp-chrom").addEventListener("click", () =>
+    bpSeq([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]));
+  document.getElementById("bp-lambda").addEventListener("click", () =>
+    bpSeq([0, 2, 3, 4, 6, 7, 9, 10, 12, 13]));
+  document.getElementById("bp-triad").addEventListener("click", () =>
+    XenAudio.playFreqs([0, 6, 10].map(s => XenAudio.freqFromCents(C4, s * BP)), { dur: 2.6, wave: BPWAVE }));
+  document.getElementById("bp-just").addEventListener("click", () => {
+    XenAudio.playFreqs([C4, C4 * 5 / 3, C4 * 7 / 3], { dur: 1.5, wave: BPWAVE });
+    setTimeout(() => XenAudio.playFreqs([0, 6, 10].map(s => XenAudio.freqFromCents(C4, s * BP)), { dur: 1.8, wave: BPWAVE }), 1700);
+  });
+  document.getElementById("bp-oct").addEventListener("click", () => {
+    XenAudio.playFreqs([C4, C4 * 2 ], { dur: 1.5, wave: BPWAVE });
+    setTimeout(() => XenAudio.playFreqs([0, 8].map(s => XenAudio.freqFromCents(C4, s * BP)), { dur: 1.8, wave: BPWAVE }), 1700);
+  });
+
+  let ca = 78.0;
+  document.querySelectorAll("#ca-sel button").forEach(b =>
+    b.addEventListener("click", () => {
+      document.querySelectorAll("#ca-sel button").forEach(x => x.classList.remove("on"));
+      b.classList.add("on");
+      ca = parseFloat(b.getAttribute("data-s"));
+    }));
+  const caF = s => XenAudio.freqFromCents(C4, s * ca);
+  document.getElementById("ca-scale").addEventListener("click", () => {
+    const N = Math.ceil(2300 / ca);
+    const arr = [];
+    for (let i = 0; i <= N; i++) arr.push(caF(i));
+    XenAudio.playSeq(arr, { dur: 0.2, gap: 0});
+  });
+  document.getElementById("ca-triad").addEventListener("click", () => {
+    const tri = ca === 78.0 ? [0, 5, 9] : ca === 63.8 ? [0, 6, 11] : [0, 11, 20];
+    XenAudio.playFreqs(tri.map(caF), { dur: 2.6 });
+  });
+  document.getElementById("ca-octtest").addEventListener("click", () => {
+    const near = Math.round(1200 / ca); XenAudio.playFreqs([C4, caF(near)], { dur: 1.5 }), 1800;
+  });
+})();
+</script>
+</body>
+</html>

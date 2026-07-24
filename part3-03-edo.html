@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ⅲ-3 EDO ── rank-1、そして交差点 — 微分音のグリモワール</title>
+<link rel="icon" href="./assets/data/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+</head>
+<body>
+<header class="topbar">
+  <button id="nav-toggle" aria-label="目次を開く"><span></span><span></span><span></span></button>
+  <a class="site-name" href="index.html">微分音のグリモワール</a>
+  <span class="topbar-section">第Ⅲ部 音律を組み立てる</span>
+</header>
+
+<div class="layout">
+  <aside id="sidebar" aria-label="目次"></aside>
+  <div id="sidebar-overlay"></div>
+
+  <main class="content">
+    <p class="eyebrow">第Ⅲ部 音律を組み立てる　─　3</p>
+    <h1>EDO ── rank-1 の律、音律たちの交差点</h1>
+
+    <div class="intuition">
+      <span class="layer-tag">直感レイヤー</span>
+      <p>コンマを1本消すとミーントーンのような2本の音程から構築できる律射（rank 2の律射）の帯ができました。もう1本消すと、この帯はさらに畳まれて<strong>1本の環</strong>のようになり…オクターブを n 等分した EDOになります。つまり EDO は「消せるだけ消した」終着点です。<br>ではここで見方を反転させましょう。ひとつの EDO は多くのコンマを同時に消しています。ということは、<strong>ひとつの EDO は多くの rank-2 の律射の上に同時に載っていて種族の掛け持ちがある</strong>のではないか？<br>ミーントーンとしても、 würschmidt としても、slendric としても振る舞える。EDO は種族たちの<strong>交差点</strong>なのです。この見方が 31edo の多面性（第Ⅳ部）や音律アトラス（第Ⅴ部）の背骨になります。</p>
+    </div>
+
+    <h2 id="sec-rank1">rank 1 ── 煮詰めの終着点</h2>
+
+    <p>rank の勘定（前節）から 5-limit（素数3個）で独立なコンマを2本消すと rank 1。生成音程は1本だけになり、正則性からその整数倍が音律のすべての音程を与えるので、オクターブが生成音程の整数倍、つまり<strong>オクターブの等分</strong>になります。これが <strong>EDO</strong>（equal divisions of the octave）です。Ⅱ-5 の行列式の言葉では、消した2本のコンマの行列式の絶対値が分割数：81/80 と 128/125 で 12、81/80 と würschmidt で 31。そのように、<strong>周期性ブロックの壁を本当に 0 にしたものが EDO</strong>。</p>
+
+    <p>逆向きに言えば、n-edo の patent val \( \langle {n} , \lfloor {n} \log_2{3} \rceil , \lfloor {n} \log_2{5}, \rceil \cdots  ] \)  は、素数ごとの丸め誤差が互いに打ち消し合う多数のコンマを自動的に消しています。<br>どの EDO がどのコンマを消すか双方向に探索できる道具を用意しました。</p>
+
+    <div class="widget">
+      <p class="widget-title">コンマ ⇔ EDO 探索（5〜72edo・patent val・13-limit）</p>
+      <div class="wrow">
+        <label>向き</label>
+        <span class="pillgroup" id="ce-dir">
+          <button data-d="c2e" class="on">コンマ → 消す EDO</button>
+          <button data-d="e2c">EDO → 消すコンマ</button>
+        </span>
+      </div>
+      <div class="wrow" id="ce-row-comma">
+        <label for="ce-comma">コンマ</label>
+        <select id="ce-comma"></select>
+      </div>
+      <div class="wrow" id="ce-row-edo" style="display:none">
+        <label for="ce-edo">EDO</label>
+        <select id="ce-edo"></select>
+      </div>
+      <div class="wrow"><span class="wval" id="ce-out" style="min-width:100%">—</span></div>
+      <p class="widget-note">コンマは第Ⅱ部4の目録（＋25/24・250/243）から。たとえば 81/80 を選ぶと <strong>12, 19, 26, 31, 43, 50, 55…</strong> といったミーントーンの EDO のほか、5 や 7 のような小さな EDO、24・36・38 のような複製（12 や 19 の倍、5-limit では新しい音を足さないダブりのケース）も並びます。<br>これは「ミーントーンという rank-2 の帯の上に載っている EDO たち」のリストにほかなりません。EDO → コンマ の向きにすると、その EDO がどの種族の交差点かが分かります。</p>
+    </div>
+
+    <h2 id="sec-intersection">交差点としての EDO</h2>
+
+    <p>上の探索機で 31edo を引くと、81/80（ミーントーン）、393216/390625（würschmidt）、225/224（marvel）、1029/1024（slendric）、243/242（rastmic）……などが同時に消えていると分かります。<strong>rank-2 音律を「道」に喩えるなら、EDO はその道が交わる交差点です</strong>。同じ交差点に立つ者は、どの道を歩いてきたか（どの音律の文法で音楽を組むか）によって、同じ音たちをまったく違う地図で使うことになります。</p>
+    <div class="center-box">
+      <img src="https://us-east-1.linodeobjects.com/xenwiki/xenwiki_en/files/thumb/Pts-2-3-5-e2-twtop-tlin.jpg/1600px-Pts-2-3-5-e2-twtop-tlin.jpg?20180912072500" style="width: 50%;"/>
+    <p><a href="https://en.xen.wiki/w/File:Pts-2-3-5-e2-twtop-tlin.jpg">出典 https://en.xen.wiki/w/File:Pts-2-3-5-e2-twtop-tlin.jpg</a></p>
+    </div>
+
+    <p>この比喩は定量化できます。rank-2 音律は、それを通る2つの EDO の patent val の組で指定できるのです（例：ミーントーン → 12 &amp; 19、würschmidt → 31 &amp; 34、porcupine → 22 &amp; 29）。<br>この幾何は第Ⅴ部の地図帳で活躍します。ここでは「<strong>ひとつの EDO ＝ 複数の音律の同時実装</strong>」という多重性の原理だけ、はっきり旗を立てておきます（<span class="xref" data-file="part5-01-multiplicity.html">第Ⅴ部1</span>）。</p>
+    <details class="precise" open>
+      <summary>精密レイヤー ── 二つの EDO が共通して無視するコンマ</summary>
+      <div class="precise-body">
+        <p>5-limit における 19edo と 31edo の patent valを用意します。   
+        </p>
+        <p>$$\begin{matrix} \langle 19 & 31 & 44 ] \\ \langle 31 & 49 & 72 ] \end{matrix}$$</p>
+          <p>この二つの律射が無視するコンマは<br>\( 30 \times 72 - 44 \times 49 = 2160 - 2156 = 4\)<br>\(44 \times 31 - 19 \times 72 = 1364 - 1368 = {-4}\) <br>\(19 \times 49 - 30 \times 31 = 931 - 930 = 1\) </p>
+        <p>ここから得られるウェッジ積（外積）の成分は \([4 \quad -4 \quad 1 \rangle \) で、これは逆向きのシントニックコンマ（81/80）です。<br>ある EDO \(v\) があるコンマ \(c\) を消去するとき、数学的には内積がゼロになるのでした。\(v\cdot c=0\)つまり、「コンマ \(c\) が消去される」とは、コンマ \(c\) が EDO \(v\) の直交補空間（零空間）→ kernel に属していることを意味します。<br>ここで2つの異なる EDO の patent val （\(v_{A}\) と \(v_{B}\)）があるとすれば、「\(v_{A}\) と \(v_{B}\) の両方が張る平面」に垂直な方向が浮かび上がるというのが、ウェッジ積の幾何的性質です。<br>直感的に言えば、2つの平面（EDO）の交線（共通して消去する方向）を求める計算が、ウェッジ積そのもので、それがコンマの monzo の向きとなります。</p>
+      </div>
+        
+    </details>
+
+    <h2 id="sec-quality">EDO の性能をひと目で</h2>
+
+    <p>では、どの EDO が「良い」のでしょうか。もっとも素朴な物差し（主要な純正音程の近似誤差）を、5〜72 の全 EDO について計算して並べます。</p>
+
+    <div class="widget">
+      <p class="widget-title">EDO 別・最良近似誤差（絶対値）</p>
+      <div class="wrow">
+        <label>音程</label>
+        <span class="pillgroup" id="eq-int">
+          <button data-i="1.5" class="on">3/2</button>
+          <button data-i="1.25">5/4</button>
+          <button data-i="1.75">7/4</button>
+          <button data-i="1.375">11/8</button>
+          <button data-i="1.625">13/8</button>
+        </span>
+      </div>
+      <div id="eq-plot"></div>
+      <p class="widget-note">琥珀の点は特筆すべきedo。3/2 では 12・29・41・53が谷、5/4 では 28・31・59 が谷（53 や 34 も良好。19 は 5/4 単体では意外に浅い）、7/4 では 26・31・57 が深い谷になります。<strong>ひとつの音程だけ見ても音律の総合力は測れません。</strong><br>素数ごとの得意不得意をまとめて評価する方法（Tenney 重み・TE 誤差）は<span class="xref" data-file="part3-05-optimization.html">Ⅲ-5</span>で、さらに「すべての比を同時に」見る視点（リーマンゼータ関数との関係）は<span class="xref" data-file="part6-02-scale-he.html">第Ⅵ部</span>で扱います。</p>
+    </div>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── patent val だけが val ではない</summary>
+      <div class="precise-body">
+        <p>n-edo と言ったら、暗黙に patent val を仮定するのが通例ですが、素数の丸めを<strong>わざと</strong>1段ずらしたりした val が有用な場合があります。有名な例が 17edo の周波数比 5 です。patent では round(17 log₂5) = 39 ですが、これを 40 に取った val ⟨17 27 40]（<strong>wart 記法で 「17c」</strong>）は、5/4 を（誤差は大きいものの）ミーントーン風の文脈で整合的に扱いたいときに選ばれます。<br>wart 記法では、patent から2番目に良い近似へずらした素数をアルファベット（b=3, c=5, d=7…）で後置します。重要なのは、<strong>「どの val か」まで指定して初めて、EDO は音律理論の対象として確定する</strong>ということです。同じ 17 音の環でも、17（patent）と 17c は消すコンマの集合、〝交差点としての立地〟が異なります。ただし本書では断りのない限り patent val を使います。</p>
+        <p>もう一点、patent val の近似が粗い素数を含む場合、その EDO を<strong>subgroup</strong>（Ⅱ-1 精密レイヤー）で語る方が誠実なことがあります。たとえば 13edo は素数 2、3、5 では苦しいが、別の subgroup では見どころがあるという語り方です。小さな EDO の個性はこの視点で、第Ⅴ部5 で扱います。</p>
+      </div>
+    </details>
+
+    <div class="keybox">
+      <span class="kb-label">この節の要点</span>
+      EDO ＝ rank 1 の律射 ＝ コンマを（素数の個数 − 1）本消した終着点。周期性ブロックの壁による歪みを均等に分散したものが EDO で、分割数は壁の行列式。<strong>ひとつの EDO は多数のコンマを同時に消し、多数の rank-2 音律の交差点である</strong>（多重性の原理）。val の指定（patent か wart か）まで含めて種族は確定する。
+    </div>
+
+    <p>rank 2 の律射には generator があり、generator を積むと音階が生えてきます。その生え方には驚くほど整然とした法則がある。次節、MOS 音階を考えます。</p>
+
+    <nav class="pager" id="pager"></nav>
+  </main>
+</div>
+
+<script src="assets/data/toc.js"></script>
+<script src="assets/data/glossary.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/audio.js"></script>
+<script src="assets/figures.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+<script>
+(function () {
+  "use strict";
+  const PR = [2, 3, 5, 7, 11, 13];
+  const LOG = PR.map(p => Math.log2(p));
+  const patent = n => LOG.map(l => Math.round(n * l));
+  const dot = (m, v) => m.reduce((s, e, i) => s + e * v[i], 0);
+
+  /* コンマ目録（Ⅱ-4 ＋ 25/24, 250/243） */
+  const COMMAS = [
+    ["81/80 シントニック", [-4, 4, -1, 0, 0, 0]],
+    ["531441/524288 ピタゴラス", [-19, 12, 0, 0, 0, 0]],
+    ["32805/32768 スキスマ", [-15, 8, 1, 0, 0, 0]],
+    ["2048/2025 ディアスキスマ", [11, -4, -2, 0, 0, 0]],
+    ["128/125 ディエシス", [7, 0, -3, 0, 0, 0]],
+    ["648/625 大ディエシス", [3, 4, -4, 0, 0, 0]],
+    ["15625/15552 クライスマ", [-6, -5, 6, 0, 0, 0]],
+    ["25/24 クロマ", [-3, -1, 2, 0, 0, 0]],
+    ["250/243 ポーキュパインコンマ", [1, -5, 3, 0, 0, 0]],
+    ["393216/390625 ヴュルシュミット", [17, 1, -8, 0, 0, 0]],
+    ["64/63 セプティマル", [6, -2, 0, -1, 0, 0]],
+    ["225/224 マーヴェル", [-5, 2, 2, -1, 0, 0]],
+    ["1029/1024 ガメリスマ", [-10, 1, 0, 3, 0, 0]],
+    ["33/32 ウンデシマル四分音", [-5, 1, 0, 0, 1, 0]],
+    ["243/242 ラストマ", [-1, 5, 0, 0, -2, 0]],
+    ["144/143 グロスマ", [4, 2, 0, 0, -1, -1]]
+  ];
+
+  const cSel = document.getElementById("ce-comma");
+  COMMAS.forEach(([name], i) => {
+    const o = document.createElement("option");
+    o.value = i; o.textContent = name;
+    cSel.appendChild(o);
+  });
+  const eSel = document.getElementById("ce-edo");
+  for (let n = 5; n <= 72; n++) {
+    const o = document.createElement("option");
+    o.value = n; o.textContent = n + "edo";
+    if (n === 31) o.selected = true;
+    eSel.appendChild(o);
+  }
+
+  const out = document.getElementById("ce-out");
+  let dir = "c2e";
+
+  function update() {
+    if (dir === "c2e") {
+      const [name, monzo] = COMMAS[cSel.value];
+      const hits = [];
+      for (let n = 5; n <= 72; n++)
+        if (dot(monzo, patent(n)) === 0) hits.push(n);
+      out.innerHTML = name + " を消す EDO：<strong>" +
+        (hits.length ? hits.join(", ") : "（5〜72 にはありません）") + "</strong>";
+    } else {
+      const n = parseInt(eSel.value, 10);
+      const v = patent(n);
+      const hits = COMMAS.filter(([, m]) => dot(m, v) === 0).map(([nm]) => nm.split(" ")[0]);
+      out.innerHTML = n + "edo（⟨" + v.join(" ") + "]）が目録中で消すコンマ：<strong>" +
+        (hits.length ? hits.join("、 ") : "なし") + "</strong>";
+    }
+  }
+
+  document.querySelectorAll("#ce-dir button").forEach(b =>
+    b.addEventListener("click", () => {
+      document.querySelectorAll("#ce-dir button").forEach(x => x.classList.remove("on"));
+      b.classList.add("on");
+      dir = b.getAttribute("data-d");
+      document.getElementById("ce-row-comma").style.display = dir === "c2e" ? "" : "none";
+      document.getElementById("ce-row-edo").style.display = dir === "e2c" ? "" : "none";
+      update();
+    }));
+  cSel.addEventListener("change", update);
+  eSel.addEventListener("change", update);
+  update();
+
+  /* EDO 別誤差チャート */
+  const MARK = new Set([12, 17, 19, 22, 24, 26, 29, 31, 34, 36, 41, 43, 46, 50, 53, 55, 59, 65, 72]);
+  let curRatio = 1.5;
+
+  function drawErr() {
+    const target = 1200 * Math.log2(curRatio);
+    const pts = [];
+    for (let n = 5; n <= 72; n++) {
+      const step = 1200 / n;
+      const best = Math.round(target / step) * step;
+      pts.push([n, Math.abs(best - target)]);
+    }
+    const maxY = Math.max(...pts.map(p => p[1])) * 1.12;
+    const div = document.getElementById("eq-plot");
+    div.innerHTML = "";
+    const p = Fig.plot(div, {
+      w: 680, h: 280, x: [4, 73], y: [0, maxY],
+      pad: { l: 50, r: 12, t: 12, b: 42 }
+    });
+    pts.forEach(([n, e]) => {
+      p.polyline([[n, 0], [n, e]], { stroke: "#d7d9e6", "stroke-width": 2 });
+    });
+    pts.forEach(([n, e]) => {
+      p.dot(n, e, MARK.has(n) ? { r: 4, fill: "#8a6116" } : { r: 2.4, fill: "#3b4a9c" });
+      if (MARK.has(n)) p.label(n, Math.min(e + maxY * 0.07, maxY * 0.97), String(n), { fill: "#8a6116", "font-size": 10 });
+    });
+    p.axisX([10, 20, 30, 40, 50, 60, 70], v => v, "EDO");
+    p.axisY([0, Math.round(maxY / 2 * 10) / 10, Math.round(maxY * 10) / 10], v => v + "¢", "最良近似の誤差");
+  }
+  document.querySelectorAll("#eq-int button").forEach(b =>
+    b.addEventListener("click", () => {
+      document.querySelectorAll("#eq-int button").forEach(x => x.classList.remove("on"));
+      b.classList.add("on");
+      curRatio = parseFloat(b.getAttribute("data-i"));
+      drawErr();
+    }));
+  drawErr();
+})();
+</script>
+</body>
+</html>

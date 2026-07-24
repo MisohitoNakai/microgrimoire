@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ⅲ-6 微分音記譜法 — 微分音のグリモワール</title>
+<link rel="icon" href="./assets/data/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<style>
+@font-face {
+  font-family: "BravuraText";
+  src: url("https://cdn.jsdelivr.net/gh/steinbergmedia/bravura@master/redist/woff/BravuraText.woff2") format("woff2"),
+       url("https://cdn.jsdelivr.net/gh/steinbergmedia/bravura@master/redist/woff/BravuraText.woff") format("woff");
+  font-display: swap;
+}
+.smufl {
+  font-family: "BravuraText", serif;
+  font-size: 1.55em;
+  line-height: 1;
+  vertical-align: -0.12em;
+}
+.notetile {
+  display: inline-flex; flex-direction: column; align-items: center;
+  min-width: 3.1rem; padding: .45rem .3rem .4rem; margin: .14rem;
+  border: 1px solid var(--line, #d7d9e6); border-radius: .5rem;
+  background: #fff; cursor: pointer; user-select: none;
+}
+.notetile:hover { border-color: #3b4a9c; }
+.notetile .nm { font-weight: 700; font-size: .95rem; }
+.notetile .alt { font-size: .78rem; color: #565863; min-height: 1.3em; }
+.notetile .ct { font-size: .68rem; color: #9a9caa; font-family: var(--font-mono, monospace); }
+.notetile.nat { background: #f3f4fa; }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <button id="nav-toggle" aria-label="目次を開く"><span></span><span></span><span></span></button>
+  <a class="site-name" href="index.html">微分音のグリモワール</a>
+  <span class="topbar-section">第Ⅲ部 音律を組み立てる</span>
+</header>
+
+<div class="layout">
+  <aside id="sidebar" aria-label="目次"></aside>
+  <div id="sidebar-overlay"></div>
+
+  <main class="content">
+    <p class="eyebrow">第Ⅲ部 音律を組み立てる　─　6</p>
+    <h1>微分音記譜法 ── 音を紙に固定する技術</h1>
+
+    <div class="intuition">
+      <span class="layer-tag">直感レイヤー</span>
+      <p>理論がどれほど整っても、演奏者に渡せなければ音楽にするのは難しいまま。五線譜は12音を前提に進化してきた道具ですが、幸い、拡張の歴史も一世紀以上あります。<br>本節では実務でまず出会う4系統<br>① <strong>ミーントーン綴り＋Stein-Zimmermann 四分音記号</strong>（31edo の現在コミュニティで一般的）<br>② <strong>ups and downs</strong>（任意の EDO への汎用解）<br>③ <strong>Sagittal</strong>（コンマを記号にする体系派）<br>④ <strong>HEJI</strong>（純正律を厳密に書く実務標準）<br>これらを、実際の記号を表示しながら整理します。先に結論を言えば、 <strong>31edo は記譜の観点でも恵まれた音律</strong>です。ミーントーンだから通常の♯♭等がそのまま使え、追加は「ハーフシャープ／ハーフフラット」などで足ります。</p>
+    </div>
+
+    <h2 id="sec-31names">31edo の音名 ── ♯♭だけで31音が書ける</h2>
+
+    <p>31edo では全音＝5歩、♯／♭＝<strong>2歩</strong>の上下です（ミーントーンの半音構造・詳細は<span class="xref" data-file="part4-01-why31.html">第Ⅳ部1</span>）。<br>すると幹音7つ・♯系7つ・♭系7つ・𝄪系5つ・𝄫系5つとなり、合計ちょうど<strong>31</strong> です。<br>つまり<strong>通常の記譜だけで全ての音が一意に書けます</strong>。<br>C♯ と D♭ は<strong>別の音</strong>（1歩差＝約38.7¢）になり、いままでの日本語で言う「異名同音」（enharmonic-equivalence）が消えて綴りがそのまま音高になるという、12edo に慣れた身には新鮮な世界です。</p>
+
+    <p>もうひとつ、実務的には±1歩を<strong>四分音記号</strong>を転用して<br>〝ハーフシャープ〟「 <span class="smufl">&#xE282;</span> 」・〝ハーフフラット〟「 <span class="smufl">&#xE280;</span> 」<br>で書くやり方です。D𝄫 と書く代わりに C<span class="smufl">&#xE282;</span>（Cのハーフシャープ）と書く。同じ音の2つの名前です。下のパネルで31音すべてを確かめてみましょう。</p>
+
+    <div class="widget">
+      <p class="widget-title">31edo 音名パネル（クリックで試聴・C4 基準）</p>
+      <div id="np-panel"></div>
+      <p class="widget-note">上段＝ミーントーン的な綴り、中段＝四分音記号による別名（一部）、下段＝セント値。<br>灰色の地は幹音、ダブルフラット・ダブルシャープよりも、ハーフフラット・ハーフシャープなどを優先的に用いると、<strong>派生音できっちり埋まる</strong>のが31edoの綴りの妙です。</p>
+    </div>
+
+    <div class="center-box">
+      <img src="./assets/data/31EDO_wheel.png"/ style="width: 75%;">
+    <p>画像は筆者が作成</p>
+    </div>
+      
+    <details class="precise" open>
+      <summary>精密レイヤー ── 「異名同音」≠「エンハーモニック」</summary>
+      <div class="precise-body">
+        <p>「enharmonic」という用語自体には、本来「異名同音（名前が違って音が同じ）」という意味は一切ありません。この言葉の語源は、古代ギリシャの音楽理論家アリストクセノス（紀元前4世紀）の<strong>『ハルモニア原論』（Ἁρμονικῶν στοιχείων）</strong>における<strong>「エナルモニオン（ἐναρμόνιον）」</strong>にまでさかのぼります。当時の意味は、異名同音どころか、むしろ「微分音レベルを切り分ける、極めて緻密なテトラコルド（4音までの音階パーツ）」を指していました。</p>
+        <p>古代ギリシャ音楽において、メロディの基礎となる4音（テトラコルド）には3種類の 「属」（γένη）がありました。アリストクセノスはこれらを以下の3つに分類しています。</p>
+        <p><strong>ディアトノン（διάτονον）</strong>──<br>低音から「半音・全音・全音」の並び。（現代の音階の基礎）<br><strong>クロマティコン（χρωματικόν）</strong>──<br>低音から「半音・半音・短3度」の並び。<br><strong>エナルモニオン（ἐναρμόνιον）</strong>──<br>低音から「四分音・四分音・長3度」の並び。
+        </p>
+        <p>ルネサンス期以降、純正律や中全音律（＝ミーントーン）が使われるようになると、「C♯」と「D♭」は完全に違う音になりました。この2つの音の微妙な隙間のことを、当時は古代ギリシャの言葉を借りて「エンハーモニック・ディエシス」（enharmonic diesis）と呼ぶようになりました（コンマ 128/125 を「小ディエシス」と呼んだのはこの名残です）。<br>このエンハーモニック・ディエシスを区別するために物理的な鍵盤自体を例えば「C♯用黒鍵」と「D♭用黒鍵」に分割した「スプリット・キー」という特殊な鍵盤楽器が作られたほど、このエンハーモニック・ディエシスは切実な問題でした。
+        </p>
+        <p>17世紀末、Andreas Werckmeister らが提唱し始めた「ウェル・テンペラメント」が登場すると、すべての調が、それぞれ異なる独自のキャラクターを持ちながらも、一応演奏できるようになります。これにより、ひとつのエンハーモニックのペアを、鍵盤ひとつで共用することが初めて実用レベルで可能になりました。<br>ウェル・テンペラメントによって「1つの鍵盤で2つの意味を持たせる」という実用的な習慣が定着すると、調ごとの響きのバラつき（ウルフ）すらも無くし、「完全に自由に転調したい」・「多くの楽器でアンサンブルを成立させたい」という欲求が出て来ることになり、19世紀に向けて、1オクターブを単純に12等分した 12edo が主流となっていくのでした。</p>
+      </div>
+    </details>
+      
+    <h2 id="sec-updown">ups and downs ── 厳密さはさておき明快に書けるように</h2>
+
+    <p>5L 2s （第Ⅲ部3）が取れる EDO に一律に適用できる最小の拡張が Kite Giedraitis 氏による <strong>ups and downs 記法</strong>です。<br>規則は単純明快に<strong>記号 ^（up）／v（down）＝その EDO の最小の1歩</strong>とします。<br> あとは通常の♯♭と組み合わせます。<br>31edo なら ^C ＝ C の1歩上 ＝ Cハーフシャープ ＝ D𝄫。<br>22edo でも 41edo でも同じ雰囲気で通用するので、（ただし 22edo や 41edoでは ^C ＝ C の1歩上 ≠ Cハーフシャープ となりますが）EDO を渡り歩く議論（第Ⅴ部）では一旦は事実上の共通語です。ASCIIテキストで書けて、チャットや Wiki でそのまま使えるのも実務上の強みです。</p>
+
+    <h2 id="sec-principle">任意の edo の音を表したいとき</h2>
+
+    <p>edo のなかの音を書き表すときに、バックスラッシュ「\」を用いた記法は、音程を表す標準的な表記法となっています。<br> スラッシュ「/」との重要な違いは、その音程が「EDO の歩数」か「純正音程」かという点で、「3/2」と書いてあれば純正な完全5度を表し、「18\31」と書いてあれば 31edo の18歩（完全5度）です。</p>         
+
+    <h2 id="sec-sagittal">Sagittal ── コンマそのものを記号にする</h2>
+
+    <p><strong>Sagittal</strong>（George Secor &amp; David Keenan, 2004〜）は最も体系的な設計です。<br>中心思想は<strong>変化記号1つ＝コンマ1つ</strong>。矢の部品（フラグ）がコンマの素性を表し、純正律・任意 EDO・rank-2 律射を単一の記号体系で書けます。</p>
+    <p>主要な単シャフト記号を見てみましょう。</p>
+
+    <div class="table-scroll">
+    <table>
+      <thead><tr><th>記号（上げ／下げ）</th><th>名称</th><th>コンマ</th><th>約</th><th>31edo では</th></tr></thead>
+      <tbody>
+        <tr><td><span class="smufl">&#xE302;</span>　<span class="smufl">&#xE303;</span></td><td>5 コンマ（5C）</td><td>81/80</td><td>21.5¢</td><td><strong>0歩</strong>（消えている！）</td></tr>
+        <tr><td><span class="smufl">&#xE304;</span>　<span class="smufl">&#xE305;</span></td><td>7 コンマ（7C）</td><td>64/63</td><td>27.3¢</td><td>1歩</td></tr>
+        <tr><td><span class="smufl">&#xE30A;</span>　<span class="smufl">&#xE30B;</span></td><td>11 中ディエシス（11M）</td><td>33/32</td><td>53.3¢</td><td><strong>1歩（31edo の標準記号）</strong></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>見どころは1行目です。31edo で 5C 記号は<strong>不要</strong>です。81/80 が消去されているからです。<br><strong>記譜体系が音律の kernel をも正確に反映する</strong>というように、Ⅲ-2 の代数学がそのまま紙面に現れます。31edo の実用セットは、1歩＝<span class="smufl">&#xE30A;</span>、2歩＝♯という「混合フレーバー」（通常の♯♭と Sagittal 矢印の併用）が簡明です。<br>例： C — <span class="smufl">&#xE30A;</span>C — ♯C — ♯<span class="smufl">&#xE30A;</span>C — 𝄪C。</p>
+    
+      <p>すべての表記法は <a href="https://sagittal.org/">Sagittal 記号の公式ドキュメント</a>に総覧されています。 </p>
+
+    <h2 id="sec-heji">HEJI ── 純正律を厳密に書く</h2>
+
+    <p><strong>HEJI</strong>（Helmholtz–Ellis Just Intonation 記譜、Sabat &amp; von Schweinitz）は、どのコンマも無視せず<strong>純正律そのもの</strong>を書くためのスタンダードです。<br>設計は、通常の♯や♭などはピタゴラス音律（3-limit）を土台として、素数ごとのコンマ変化を記号で積んでいくというものです。</p>
+
+    <div class="table-scroll">
+    <table>
+      <thead><tr><th>記号</th><th>意味</th><th>コンマ</th><th>約</th></tr></thead>
+      <tbody>
+        <tr><td><span class="smufl">&#xE2C6;</span> <span class="smufl">&#xE2C7;</span> <span class="smufl">&#xE2C8;</span>　／　<span class="smufl">&#xE2C1;</span> <span class="smufl">&#xE2C2;</span> <span class="smufl">&#xE2C3;</span></td><td>♭・♮・♯にシントニックコンマ上げ／下げの矢印を一体化</td><td>81/80</td><td>21.5¢</td></tr>
+        <tr><td><span class="smufl">&#xE2DF;</span>　<span class="smufl">&#xE2DE;</span></td><td>セプティマルコンマ上げ／下げ</td><td>64/63</td><td>27.3¢</td></tr>
+        <tr><td><span class="smufl">&#xE2E3;</span>　<span class="smufl">&#xE2E2;</span></td><td>undecinmal 四分音上げ／下げ</td><td>33/32</td><td>53.3¢</td></tr>
+        <tr><td><span class="smufl">&#xE2E5;</span>　<span class="smufl">&#xE2E4;</span></td><td>トリデシマル四分音上げ／下げ</td><td>27/26</td><td>65.3¢</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>例：「E<span class="smufl">&#xE2C2;</span>」→純正長3度 5/4 の E は「E に矢印下げ <span class="smufl">&#xE2C2;</span>」（ピタゴラスの E から 81/80 だけ下げる）。<br>「B<span class="smufl">&#xE2DE;</span>♭」→第7倍音の B♭ は「B♭ に <span class="smufl">&#xE2DE;</span>」。<strong>音程の由来（どの素数から来たか）が記号列から読み取れる</strong>のが HEJI の美点で、Ⅱ部の格子の言葉がそのまま楽譜になります。</p>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── フォント</summary>
+      <div class="precise-body">
+        <p>本ページの記号はすべて <strong>SMuFL</strong>（Standard Music Font Layout）準拠のオープンソースフォント <strong>Bravura</strong>（Steinberg）で表示しています。SMuFL は音楽記号の Unicode 私用領域配置の標準で、Stein–Zimmermann 四分音記号（U+E280–）、HEJI（U+E2C0–）、Sagittal（U+E300–）を網羅します。HEJI には Sabat らによる参照フォント HEJI2 もあり、清書にはそちらが好まれますが、Web 表示は Bravura 一本で足ります。楽譜ソフトでは MuseScore 4、Dorico が Sagittal / HEJI 記号セットを標準搭載しており、31edo の入力はバグが多く残ってはいるものの、一応は MuseScore のプラグインや Dorico の調律システムで実用段階です（制作実務は<span class="xref" data-file="part7-02-midi.html">第Ⅶ部</span>）。</p>
+      </div>
+    </details>
+    <h2 id="sec-heji">color notation ── JIの音程を「言い表す」</h2>
+    <p>五線譜の外の記法をひとつ。<strong>color notation</strong>（こちらも Kite Giedraitis）は素数を「色」の言葉で呼ぶ体系です。<br>3-limit は wa（白）、5 の上下は yo（黄）／gu（緑）、7 は zo（青）／ru（赤）など。<br>5/4 は「yo 3度」、7/4 は「zo 7度」…。ASCII だけで素数の由来を語れるため、口頭・チャットでの音程談義に強く、Xenharmonic Wiki の随所で使われてるケースがあります。読めるようになっておくと海外コミュニティでの会話の風通しが良くなります。<br>日本語で解説したブログ記事もあるようです。<a href="https://hhatgarpkha.hatenablog.com/entry/color-notation">(参考記事：ウオロェデョイ埠頭)</a></p>
+
+    <div class="keybox">
+      <span class="kb-label">この節の要点</span>
+      31edo は♯♭＝2歩のミーントーン綴りで<strong>通常の記譜のまま31音が一意に書ける</strong>（C♯≠D♭）。<br>±1歩は四分音記号を転用。<br>ほかにも「^」／「v」（ups and downs）など。<br><strong>Sagittal</strong>記号はコンマを記号化する体系（31edo の1歩＝<span class="smufl">&#xE30A;</span>、5C 記号は不要）。<br><strong>HEJI</strong>＝ピタゴラス土台＋素数コンマ矢印で純正律を厳密に記譜。表示は SMuFL／Bravura で足りる。
+    </div>
+
+    <p>これで音律を組み立てる道具一式が揃いました。次はいよいよ、この道具で主役を解剖します。<br><strong>第Ⅳ部では、31平均律から微分音のミステリーを解き明かしていきます</strong>。</p>
+
+    <nav class="pager" id="pager"></nav>
+  </main>
+</div>
+
+<script src="assets/data/toc.js"></script>
+<script src="assets/data/glossary.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/audio.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+<script>
+(function () {
+  "use strict";
+  const C4 = 261.6256;
+  const HS = "\uE282";  // 半シャープ（Stein）
+  const HF = "\uE280";  // 半フラット（逆さフラット）
+
+  /* 31edo：幹音の歩数 */
+  const NAT = { C: 0, D: 5, E: 10, F: 13, G: 18, A: 23, B: 28 };
+  const ORDER = ["C", "D", "E", "F", "G", "A", "B"];
+
+  /* 正準の綴り：五度圏を D 中心に ±15（C 基準で −13 〜 +17）
+     G𝄫 … 𝄫系5・♭系7・幹音7・♯系7・𝄪系5 … A𝄪 でちょうど31音 */
+  const LETTERS = ["C", "G", "D", "A", "E", "B", "F"];
+  const ACC = a => a === 0 ? "" : a === 1 ? "♯" : a === 2 ? "𝄪" : a === -1 ? "♭" : "𝄫";
+  const names = new Array(31).fill(null);
+  for (let c = -13; c <= 17; c++) {
+    const letter = LETTERS[((c % 7) + 7) % 7];
+    const acc = Math.floor((c + 1) / 7);
+    names[((c * 18) % 31 + 31) % 31] = letter + ACC(acc);
+  }
+
+  /* 四分音の別名：幹音の ±1 歩 */
+  const alt = new Array(31).fill("");
+  ORDER.forEach(L => {
+    const up = (NAT[L] + 1) % 31, dn = (NAT[L] + 30) % 31;
+    alt[up] = alt[up] || L + HS;
+    alt[dn] = alt[dn] || L + HF;
+  });
+
+  const panel = document.getElementById("np-panel");
+  const natSet = new Set(Object.values(NAT));
+  for (let i = 0; i < 31; i++) {
+    const cents = i * 1200 / 31;
+    const tile = document.createElement("button");
+    tile.className = "notetile" + (natSet.has(i) ? " nat" : "");
+    tile.type = "button";
+    const a = alt[i]
+      ? '<span>' + alt[i][0] + '<span class="smufl">' + alt[i].slice(1) + "</span></span>"
+      : "";
+    tile.innerHTML =
+      '<span class="nm">' + names[i] + "</span>" +
+      '<span class="alt">' + a + "</span>" +
+      '<span class="ct">' + cents.toFixed(1) + "</span>";
+    tile.addEventListener("click", () =>
+      XenAudio.playFreqs([XenAudio.freqFromCents(C4, cents)], { dur: 1.1 }));
+    panel.appendChild(tile);
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ⅱ-3 コンマとジレンマ ── シントニックコンマとコンマポンプ — 微分音のグリモワール</title>
+<link rel="icon" href="./assets/data/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<style>
+  .drift-meter { display: flex; align-items: center; gap: .8rem; margin: .6rem 0; }
+  .drift-track { flex: 1; height: 1.1rem; background: var(--rule-soft); border-radius: 6px; position: relative; overflow: hidden; }
+  .drift-zero { position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: var(--ink-faint); }
+  .drift-needle { position: absolute; top: 0; bottom: 0; width: 8px; margin-left: -4px; background: var(--accent); border-radius: 3px; transition: left .3s; }
+  .drift-val { font-family: var(--font-mono); font-size: .9rem; min-width: 7em; color: var(--accent-dark); }
+  .pump-chord { font-family: var(--font-mono); font-size: .9rem; color: var(--ink-soft); min-height: 1.5em; }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <button id="nav-toggle" aria-label="目次を開く"><span></span><span></span><span></span></button>
+  <a class="site-name" href="index.html">微分音のグリモワール</a>
+  <span class="topbar-section">第Ⅱ部 純正律とその格子</span>
+</header>
+
+<div class="layout">
+  <aside id="sidebar" aria-label="目次"></aside>
+  <div id="sidebar-overlay"></div>
+
+  <main class="content">
+    <p class="eyebrow">第Ⅱ部 純正律とその格子　─　3</p>
+    <h1>コンマとジレンマ ── シントニックコンマとコンマポンプ</h1>
+
+    <div class="intuition">
+      <span class="layer-tag">直感レイヤー</span>
+      <p>前節の地図で見つけた「同名の分身」。<br>たとえば、5度を4回積んで作ったミと、長3度として取ったミ。楽譜の上ではどちらも「ミ」なのに、高さは約21.5セント（半音の5分の1）違います。この差が<strong>シントニックコンマ</strong>です。<br>たかが21セント、と思うかもしれません。しかしごく普通のコード進行を純正のまま弾き続けると、このコンマが1周ごとに積み重なって、<strong>曲全体の音程がずるずると下がっていきます</strong>。純正律の美しさの代償、このジレンマを、実際に鳴らして体験するのが本節です。</p>
+    </div>
+
+    <h2 id="sec-comma">二人のミ</h2>
+
+    <p>C から出発して、純正な材料だけで「ミ」を作る方法は二つあります。</p>
+
+    <p><strong>道その1（3の道）</strong>：完全5度を4回積む。C→G→D→A→E。比では \((3/2)^4 = 81/16\)、2オクターブ下げて <strong>81/64 ＝ 407.82¢</strong>。これがピタゴラス音律（2と3の組み合わせだけで出来る音律）で登場するピタゴラス長3度です。</p>
+
+    <p><strong>道その2（5の道）</strong>：純正長3度を直接1回取る。比で <strong>5/4 ＝ 386.31¢</strong>。</p>
+
+    <p>二つのミの差が、シントニックコンマです：</p>
+
+    <p>$$ \frac{81/64}{5/4} = \frac{81}{80} = \frac{3^4}{2^4 \cdot 5} \approx 21.51¢ $$</p>
+
+    <p>シントニックコンマは、トネッツで言えば、\((4, 0)\) と \((0, 1)\) の2点の差、すなわちベクトル \((4, -1)\)（3を4歩、5を−1歩）です。聴き比べてみましょう。</p>
+
+    <div class="widget">
+      <p class="widget-title">二人のミ（C4 ＝ 261.6 Hz の上で）</p>
+      <div class="wrow">
+        <button class="btn" id="e-just">5/4 のミ（386.3¢）＋ C</button>
+        <button class="btn secondary" id="e-pyth">81/64 のミ（407.8¢）＋ C</button>
+        <button class="btn secondary" id="e-both">二人のミを同時に</button>
+      </div>
+      <p class="widget-note">5/4 のミは C と溶け、81/64 のミは強くうなります（第Ⅰ部4の不協和曲線どおり）。<br>「同時に」では2つのミがぶつかり、約 4.1 Hz のうなり 21.5¢  の差が耳ではっきり分かります<br>（<a href="part1-05-jnd.html">Ⅰ-5</a>：同時提示なら JND はコンマよりずっと細かい）。</p>
+    </div>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── なぜ「コンマ」が避けられないか</summary>
+      <div class="precise-body">
+        <p>この衝突は偶然ではなく、算術の必然です。<br>\(2^a \times 3^b \times 5^c = 1\) が成り立つのは \(a=b=c=0\) のときだけ（素因数分解の一意性）<br>つまり<strong>異なる素数の冪どうしは決して一致しません</strong>。3 の道と 5 の道で「同じ音」に到達することは原理的に不可能で、近くまでは行けても必ず小さな端数が残ります。<br>この端数（1 に近い有理数として現れる小さな音程）を総称して<strong>コンマ</strong>と呼びます。<br>シントニックコンマはその筆頭であり、他にも多数の家族がいます（<a href="part2-04-commas.html">次節</a>）。コンマは本来「誤差」ではなく、<strong>素数たちの互いに素な性格そのものの現れ</strong>です。だからこそ、コンマへの態度の取り方（保存するか・消すか・消すにしろどれを消すか）が音律の設計思想になるのです（<span class="xref" data-file="part3-01-tempering.html">第Ⅲ部1</span>）。</p>
+      </div>
+    </details>
+
+    <h2 id="sec-pump">コンマポンプ ── ずり落ちる進行</h2>
+
+    <p>西洋音楽においてコンマが実害になる決定的な現場が<strong>コンマポンプ</strong>です。ごく普通の進行 <strong>C → Am → Dm → G → C</strong> を、共通音を保ちながらすべて純正の三和音で歌う（弾く）とします。各ステップの根音の移動は</p>
+
+    <p>$$ \underbrace{\tfrac{5}{6}}_{\text{C}\to\text{A}} \times \underbrace{\tfrac{4}{3}}_{\text{A}\to\text{D}} \times \underbrace{\tfrac{2}{3}}_{\text{D}\to\text{G}} \times \underbrace{\tfrac{4}{3}}_{\text{G}\to\text{C}} = \frac{80}{81} $$</p>
+
+    <p>——1周すると、C は元の C より<strong>ちょうどシントニックコンマぶん低い</strong>ところに着地します。どの和音も純正で美しいのに、全体はずり落ちていく。ア・カペラで合唱すると実際に起こりうる現象で、周回を重ねるほど沈んでいきます。体験してください。</p>
+
+    <div class="widget">
+      <p class="widget-title">コンマポンプ・マシン（C → Am → Dm → G → …）</p>
+      <div class="wrow">
+        <label>周回数</label>
+        <select id="pump-cycles">
+          <option value="1">1周</option>
+          <option value="2">2周</option>
+          <option value="4" selected>4周</option>
+          <option value="6">6周</option>
+        </select>
+        <button class="btn" id="pump-ji">純正律で再生</button>
+        <button class="btn secondary" id="pump-12">12edo で再生</button>
+        <button class="btn secondary" id="pump-31">31edo で再生</button>
+      </div>
+      <div class="drift-meter">
+        <span style="font-size:.82rem;color:var(--ink-soft)">C のずれ</span>
+        <div class="drift-track"><div class="drift-zero"></div><div class="drift-needle" id="pump-needle" style="left:50%"></div></div>
+        <span class="drift-val" id="pump-drift">0.0 ¢</span>
+      </div>
+      <div class="pump-chord" id="pump-chord"></div>
+      <p class="widget-note">純正律では1周ごとに −21.5¢ ずつ沈み、4周で −86¢——ほぼ半音落ちます。12edo と 31edo では同じ進行が<strong>ぴったり元の高さに戻ります</strong>。31edo で戻る理由はまさに「31 がシントニックコンマを消す（temper outする）律だから」<br>第Ⅲ部の中心概念の、これが最初の実演です。<br>なお、ほかに有名な 41edo や 53edo はこれを消すことができない音律だと知られています。</p>
+    </div>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── ポンプの構造と、解決策の分類</summary>
+      <div class="precise-body">
+        <p>上の進行を格子で追うと、根音は \((-1,1) \to (-2,\ 1) \to (-3,\ 1) \to (-4,\ 1) \) <br>進行が格子上で描く閉路のベクトル和が \((4,-1)\) （の整数倍）、つまりシントニックコンマの monzo（第Ⅲ部で正式化）に一致します。これがポンプの定義的性質です。<br>楽譜上（音名の世界）では閉じているのに、格子上（純正律の世界）では閉じていない進行、それがコンマポンプです。ポンプはコンマごとに存在し、西洋音楽的には 81/80 のポンプが最も日常的というだけです。</p>
+        <p>この問題への歴史的な解決策は三系統に分類できます。<br><strong>（a）適応純正律（adaptive JI）</strong>：和音ごとの純正は保ちつつ、共通音をこっそり微調整してドリフトを打ち消す。合唱・弦楽が実際にやっていることに近いです。<br><strong>（b）ピッチの固定供給（音律）</strong>：あらかじめコンマを消した音組織を使う。ミーントーンは 81/80 を全体に薄く塗り込んで消す設計で、31edo はその完成形の一つ（<span class="xref" data-file="part4-01-why31.html">第Ⅳ部</span>）。<br><strong>（c）ドリフトの受容</strong>：ずれ自体を音楽的素材とみなす現代的な立場。純正律音楽には、格子を固定して「調」の方を動かす発想もあります。<br>本書の主脈は（b）です。次章では「コンマを消す」ことの一般理論（Regular Temperament）に進みます。</p>
+      </div>
+    </details>
+
+    <h2 id="sec-stakes">ジレンマの正確な形</h2>
+
+    <p>純正律のジレンマを正確に言うと・・・<br><strong>有限個の固定ピッチで、すべての和音を純正にすることはできない</strong>。格子は無限に広がっており、音楽が格子上を際限なく移動する限り、どこかで「持っていないピッチ」が要求されるか、コンマぶんの妥協が要求されるかのどちらかです。<br>歴史的な鍵盤楽器は12〜十数個の固定ピッチしか持てないため、この問題はルネサンス以来、鍵盤調律の中心問題であり続けました。分割鍵盤（split keys）でピッチの在庫を増やす道、ウルフ（コンマぶんずれた5度）を辺境に追いやる道、そして<strong>コンマを面で消す</strong>道など。次節でコンマの家族全体を見渡したうえで、第Ⅲ部でこの「消す」のロジックに入ります。</p>
+
+    <div class="keybox">
+      <span class="kb-label">この節の要点</span>
+      シントニックコンマ 81/80 ≈ 21.51¢ は「3の道のミ」と「5の道のミ」の差。<br>素因数分解の一意性により、コンマの存在は<strong>算術的必然</strong>。<br>純正三和音のまま C→Am→Dm→G→C を回ると1周ごとに 81/80 沈む（コンマポンプ）。<br>12edo と 31edo は 81/80 を<strong>消している</strong>。
+    </div>
+
+    <nav class="pager" id="pager"></nav>
+  </main>
+</div>
+
+<script src="assets/data/toc.js"></script>
+<script src="assets/data/glossary.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/audio.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+<script>
+(function () {
+  "use strict";
+  const C4 = 261.6256;
+
+  /* --- 二人のミ --- */
+  document.getElementById("e-just").addEventListener("click", () =>
+    XenAudio.playFreqs([C4, C4 * 5 / 4], { dur: 2.4 }));
+  document.getElementById("e-pyth").addEventListener("click", () =>
+    XenAudio.playFreqs([C4, C4 * 81 / 64], { dur: 2.4 }));
+  document.getElementById("e-both").addEventListener("click", () =>
+    XenAudio.playFreqs([C4 * 5 / 4, C4 * 81 / 64], { dur: 3.0 }));
+
+  /* --- コンマポンプ ---
+     根音の移動: C→A 下短3度, A→D 上4度, D→G 下5度, G→C 上4度
+     3声部（開離配置に近い簡易ボイシング）で各律の音程を使う。 */
+  const SYSTEMS = {
+    ji: {
+      name: "純正律",
+      m3d: 5 / 6,        // 下短3度
+      p4u: 4 / 3,        // 上4度
+      p5d: 2 / 3,        // 下5度
+      M3: 5 / 4, m3: 6 / 5, P5: 3 / 2
+    },
+    e12: {
+      name: "12edo",
+      m3d: Math.pow(2, -3 / 12), p4u: Math.pow(2, 5 / 12), p5d: Math.pow(2, -7 / 12),
+      M3: Math.pow(2, 4 / 12), m3: Math.pow(2, 3 / 12), P5: Math.pow(2, 7 / 12)
+    },
+    e31: {
+      name: "31edo",
+      m3d: Math.pow(2, -8 / 31), p4u: Math.pow(2, 13 / 31), p5d: Math.pow(2, -18 / 31),
+      M3: Math.pow(2, 10 / 31), m3: Math.pow(2, 8 / 31), P5: Math.pow(2, 18 / 31)
+    }
+  };
+
+  const needle = document.getElementById("pump-needle");
+  const driftEl = document.getElementById("pump-drift");
+  const chordEl = document.getElementById("pump-chord");
+  const cyclesSel = document.getElementById("pump-cycles");
+  let timer = [];
+
+  function clearTimers() { timer.forEach(t => clearTimeout(t)); timer = []; }
+
+  function setDrift(cents) {
+    driftEl.textContent = (cents >= 0 ? "+" : "") + cents.toFixed(1) + " ¢";
+    const clamped = Math.max(-110, Math.min(110, cents));
+    needle.style.left = (50 + clamped / 110 * 48) + "%";
+  }
+
+  function play(sysKey) {
+    clearTimers();
+    XenAudio.stopAll();
+    const S = SYSTEMS[sysKey];
+    const cycles = parseInt(cyclesSel.value, 10);
+    const DUR = 1, GAP = 0.1;
+    let root = C4;
+    let step = 0;
+    const events = [];
+
+    events.push({ root, quality: "maj", label: "C" });
+    for (let k = 0; k < cycles; k++) {
+      root = root * S.m3d; events.push({ root, quality: "min", label: "Am" });
+      root = root * S.p4u; events.push({ root, quality: "min", label: "Dm" });
+      root = root * S.p5d; events.push({ root, quality: "maj", label: "G" });
+      root = root * S.p4u; events.push({ root, quality: "maj", label: "C" });
+    }
+
+    events.forEach((ev, i) => {
+      timer.push(setTimeout(() => {
+        const third = ev.quality === "maj" ? S.M3 : S.m3;
+        XenAudio.playFreqs([ev.root, ev.root * third, ev.root * S.P5], { dur: DUR });
+        chordEl.textContent = S.name + "　" + (i === 0 ? "開始" : "第" + i + "和音") + "：" + ev.label +
+          "　（根音 " + ev.root.toFixed(2) + " Hz）";
+        if (ev.label === "C") setDrift(1200 * Math.log2(ev.root / C4));
+      }, i * (DUR + GAP) * 1000));
+    });
+  }
+
+  document.getElementById("pump-ji").addEventListener("click", () => { setDrift(0); play("ji"); });
+  document.getElementById("pump-12").addEventListener("click", () => { setDrift(0); play("e12"); });
+  document.getElementById("pump-31").addEventListener("click", () => { setDrift(0); play("e31"); });
+})();
+</script>
+</body>
+</html>

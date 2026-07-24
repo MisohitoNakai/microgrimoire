@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ⅵ-5 MFと結合音 — 微分音のグリモワール</title>
+<link rel="icon" href="./assets/data/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+</head>
+<body>
+<header class="topbar">
+  <button id="nav-toggle" aria-label="目次を開く"><span></span><span></span><span></span></button>
+  <a class="site-name" href="index.html">微分音のグリモワール</a>
+  <span class="topbar-section">第Ⅵ部 響きの科学</span>
+</header>
+
+<div class="layout">
+  <aside id="sidebar" aria-label="目次"></aside>
+  <div id="sidebar-overlay"></div>
+
+  <main class="content">
+    <p class="eyebrow">第Ⅵ部 響きの科学　─　5</p>
+    <h1>ミッシングファンダメンタルと結合音</h1>
+
+    <div class="intuition">
+      <span class="layer-tag">直感レイヤー</span>
+      <p>HE（Ⅵ-1）の背後には「脳は音を倍音列に嵌めたがる」という前提がありました。この節はその前提の実体である<strong>ミッシング・ファンダメンタル</strong>（脳が作る「ないはずの基音」）と、<strong>結合音</strong>（耳が作る「ないはずの音」＝QDT・CDT）を扱います。<br>前者は中枢（脳）の、後者は末梢（蝸牛）の現象で、どちらも<strong>物理的に鳴っていない音を私たちは聴いている</strong>ことです。この二つが、なぜ純正比が特別かを、知覚の側から説明します。</p>
+    </div>
+
+    <h2 id="sec-virtual">ミッシング・ファンダメンタル ── 脳が補う基音</h2>
+
+    <p>倍音列 200, 300, 400, 500,… Hz（＝100 Hz の 2,3,4,5… 倍音）を、<strong>100 Hz 成分を除いて</strong>鳴らしても、多くの人は 100 Hz の<strong>低い基音</strong>を聴きます。これが「<strong>missing fundamental」（欠落基音、MF）</strong>です。脳は入ってきた部分音の集合から「これは 100 Hz を基音とする倍音列だ」と推論し、鳴っていない基音を知覚として作り出す。<br>Ernst Terhardt（1970年代）はこれを協和論の中心に据えました。<strong>和音の協和とは、その和音がどれだけ明瞭な単一の MF を喚起するか</strong>である、と。</p>
+
+    <p>HE（Ⅵ-1）はまさにこの Terhardt 的直観の定量化でした。「単一の倍音列に嵌める難しさ」＝ MF の曖昧さ ＝ エントロピー。純正比では MF が一意（低 HE）、外れた音程では複数の基音候補が競合（高 HE）。<strong>4:5:6:7 が 1/(4:5:6:7) より協和なのも、前者が明瞭な単一基音を喚起する（下に見えない 1 がある）のに対し、後者は喚起しにくいから</strong>（Ⅵ-1 の otonal/utonal 非対称）。</p>
+
+    <div class="widget">
+      <p class="widget-title">欠落基音を聴く</p>
+      <div class="wrow">
+        <button class="btn" id="vp-full">100 Hz を含む倍音列（100, 200,300,…,800）</button>
+        <button class="btn" id="vp-missing">基音を抜く（200,300,400,…,800）</button>
+      </div>
+      <div class="wrow">
+        <button class="btn secondary" id="vp-567">5:6:7 → 喚起される基音は？</button>
+        <span class="wval" id="vp-note"></span>
+      </div>
+      <p class="widget-note">2番目のボタンでも 100 Hz の低さを感じられれば、それが脳の作る MF です。<br>小型スピーカーだと物理的に低音が出ない為、1番目もMFで鳴ることがあります。<br>3番目は（500,600,700 Hz）だけを鳴らし、抜けた基音＝100 Hz が喚起されるかの実験です。</p>
+    </div>
+
+    <h2 id="sec-difference">結合音と差音 ── 蝸牛の非線形性が作る音</h2>
+
+    <p>もう一つの「ないはずの音」は末梢起源です。二音 \(f_1, f_2\)（\(f_1 \lt f_2\)）を鳴らすと、<strong>蝸牛（内耳）の外有毛細胞が持つ非線形性</strong>によって、元の刺激に無い周波数が生じます。これらを<strong>結合音（combination tones）</strong>と総称します。<br>重要なのは、これが単なる知覚の錯覚ではなく<strong>物理的に蝸牛内で発生する振動</strong>であり、その一部は逆向きに外耳道へ放射されて<strong>耳音響放射（otoacoustic emissions, OAE）</strong>としてマイクで<strong>実測できる</strong>ことです。「耳が音を出す」という、結合音は耳の能動的な非線形増幅の副産物なのです。</p>
+
+    <p>結合音のうち音楽的に重要な二つを、正しい用語で整理します。</p>
+
+    <div class="table-scroll">
+    <table>
+      <thead><tr><th>結合音</th><th>周波数</th><th>次数</th><th>特徴</th></tr></thead>
+      <tbody>
+        <tr><td><strong>二次差音（QDT）</strong><br>quadratic difference tone</td><td class="num">\(f_2 - f_1\)</td><td>2次</td><td>非線形の二次項から生じる。<br>音程が広いほど高い周波数になる。</td></tr>
+        <tr><td><strong>三次差音（CDT）</strong><br>cubic difference tone</td><td class="num">\(2f_1 - f_2\)</td><td>3次</td><td>三次項から生じる。\(f_1\) の近くに現れる。<br><strong>知覚されやすいのはこちらとするのが通説</strong>。</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>俗に「差音」と言うと \(f_2 - f_1\) だけを指しがちですが、聴覚研究では測定が容易な二つを区別し、 \(f_2 - f_1\) を<strong>二次差音（QDT）</strong>、\(2f_1 - f_2\) を<strong>三次差音（CDT）</strong>と呼び分けます。<strong>「一次差音」という語は用いません</strong>。<br>OAE の測定でも、CDT に対応する \(2f_1 - f_2\) の歪成分（DPOAE）が最も安定して記録され、臨床の聴覚検査にも使われています。知覚の面でも、\(f_2 - f_1\) より \(2f_1 - f_2\) のほうが低い刺激レベルで聴こえやすいことが報告されています。</p>
+
+    <p>結合音は協和と関わります。純正比では、生じる結合音が元の音や互いと単純な倍音関係に収まり、和音を濁さず（場合により補強し）ます。<br>たとえば 2:3（\(f_1{:}f_2 = 2{:}3\)、実周波数 \(2u, 3u\)）では QDT ＝ \(3u-2u = u\)、CDT ＝ \(2{\cdot}2u-3u = u\)であり、<strong>どちらも \(u\) に重なり</strong>、全体が \(u\) を基音とする倍音列に整列します。<br>複雑な比では結合音が無関係な周波数に散り、濁りの一因になります。
+
+    <div class="widget">
+      <p class="widget-title">結合音を聴く ── QDT・CDT を明示合成で可聴化</p>
+      <div class="wrow">
+        <label>下声 880 Hz 固定・上声を選ぶ（結合音を合成に加えて可聴化）</label>
+      </div>
+      <div class="wrow">
+        <button class="btn" id="df-32">純正完全5度 3/2</button>
+        <button class="btn" id="df-54">純正長3度 5/4</button>
+        <button class="btn" id="df-eq">12edo 長3度（1108.73Hz）</button>
+        <button class="btn" id="df-75">7/5</button>
+        <button class="btn" id="accphi">acoustic phi(711.9 Hz)</button>
+      </div>
+              <div class="wrow">
+        <button class="btn secondary" id="df-32o">純正完全5度 3/2</button>
+        <button class="btn secondary" id="df-54o">純正長3度 5/4</button>
+        <button class="btn secondary" id="df-eqo">12edo 長3度（1108.73Hz）</button>
+        <button class="btn secondary" id="df-75o">7/5</button>
+        <button class="btn secondary" id="accphio">acoustic phi(711.9 Hz)</button>
+      </div>
+      <div class="wrow"><span class="wval" id="df-note" style="min-width:100%"></span></div>
+      <p class="widget-note">上の藍色のボタンは二音に加え、<strong>QDT（\(f_2-f_1\)）と CDT（\(2f_1-f_2\)）を明示的に合成</strong>して鳴らします。<br>下の白色のボタンは二音だけなります。実際に結合音を体感しましょう。（再生環境の影響を受けます）<br>完全5度では QDT も CDT も 220 Hz に重なり和音を支えます。<br>12edo 長3度では結合音が中途半端な周波数になり、純正長3度との差が聴き取れます。</p>
+    </div>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── 二つの現象の切り分け</summary>
+      <div class="precise-body">
+        <p>MF（中枢）と結合音（末梢）は起源が別です。 <br>MF は<strong>音量に依らず</strong>、部分音の<strong>パターン認識</strong>から生じる中枢の推論だから小音量でも欠落基音は聴こえます。<br>結合音（QDT・CDT）は<strong>音量依存</strong>の末梢的な非線形歪みで、蝸牛外有毛細胞に由来し、OAE として物理測定できる実在の振動です。両者は混同されがちですが、協和への寄与は独立に効きます。<br>HE が定量化するのは前者（ MF の曖昧さ）、Ⅵ-3 の粗さや Ⅵ-4 の差音整列は主に後者・末梢寄りの現象です。</p>
+        <p>31edo の 長三和音（4:5:6）は、<br>(a) 明瞭な単一 MF を喚起し（HE 低）、<br>(b) 構成音の結合音（QDT・CDT）が基音の倍音に近く落ちる。<br>この二重の「基音への収束」が、31edo の<strong>安定感</strong>の知覚的な内訳です。<br>12edo の長三和音はこの収束が甘く、31edo では協和感が著しく高いということが MF ・結合音の言葉で裏づけられます。</p>
+      </div>
+    </details>
+
+    <div class="keybox">
+      <span class="kb-label">この節の要点</span>
+      <strong> MF </strong>＝脳が部分音パターンから作る欠落基音（中枢・音量非依存）。<br>Terhardt の協和論＝明瞭な単一 MF の喚起。HE はその定量化。<br><strong>結合音</strong>＝蝸牛外有毛細胞の非線形性が作る音（末梢・音量依存、OAE として実測可能）。<br><strong>QDT＝f₂−f₁（二次差音）、CDT＝2f₁−f₂（三次差音、知覚されやすいのは通説的にこちら）</strong>。<br>純正比では結合音も倍音列に整列し和音を支える。
+    </div>
+
+    <nav class="pager" id="pager"></nav>
+  </main>
+</div>
+
+<script src="assets/data/toc.js"></script>
+<script src="assets/data/glossary.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/audio.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+<script>
+(function () {
+  "use strict";
+  // 欠落基音
+  document.getElementById("vp-full").addEventListener("click", () =>
+    XenAudio.playFreqs([100, 200, 300, 400, 500, 600, 700, 800], { dur: 2.6 , wave:"sine" }, ));
+  document.getElementById("vp-missing").addEventListener("click", () =>
+    XenAudio.playFreqs([200, 300, 400, 500, 600, 700, 800], { dur: 2.6 , wave:"sine" }));
+  document.getElementById("vp-567").addEventListener("click", () => {
+    XenAudio.playFreqs([500, 600, 700], { dur: 2.6 , wave:"sine" });
+    document.getElementById("vp-note").textContent = "500, 600, 700Hz で 100 Hz が喚起されうる";
+  });
+
+  // 結合音（QDT = f2−f1, CDT = 2f1−f2 を明示合成）
+  function withCombo(f1, f2, label) {
+    const qdt = Math.abs(f2 - f1);
+    const cdt = Math.abs(2 * f1 - f2);
+    XenAudio.playFreqs([f1, f2, qdt, cdt], { dur: 2 , wave:"sine"});
+    document.getElementById("df-note").innerHTML =
+      label + "：QDT（f₂−f₁）＝ " + qdt.toFixed(1) + " Hz、CDT（2f₁−f₂）＝ " + cdt.toFixed(1) + " Hz";
+  };
+  function withSolo(f1, f2, label) {
+    XenAudio.playFreqs([f1, f2], { dur: 2 , wave:"sine"});
+    document.getElementById("df-note").innerHTML =
+      label +" → "+ f1.toFixed(1)  + " Hz、" + f2.toFixed(1)  + " Hz";
+  };
+  document.getElementById("df-32").addEventListener("click", () => withCombo(880, 1320, "純正5度 3/2"));
+  document.getElementById("df-54").addEventListener("click", () => withCombo(880, 1100, "純正長3度 5/4"));
+  document.getElementById("df-eq").addEventListener("click", () => withCombo(880, 880 * Math.pow(2, 4 / 12), "12edo 長3度"));
+  document.getElementById("df-75").addEventListener("click", () => withCombo(880, 880*7/5 , "7/5"));
+  document.getElementById("accphi").addEventListener("click", () => withCombo(880, 1423.86991, "1:φ"));
+  document.getElementById("df-32o").addEventListener("click", () => withSolo(880, 1320, "純正5度 3/2"));
+  document.getElementById("df-54o").addEventListener("click", () => withSolo(880, 1100, "純正長3度 5/4"));
+  document.getElementById("df-eqo").addEventListener("click", () => withSolo(880, 880 * Math.pow(2, 4 / 12), "12edo 長3度"));
+  document.getElementById("df-75o").addEventListener("click", () => withSolo(880, 880*7/5 , "7/5"));
+  document.getElementById("accphio").addEventListener("click", () => withSolo(880, 440 * ( 1 + Math.sqrt(5)) , "1:φ"));
+})();
+</script>
+</body>
+</html>

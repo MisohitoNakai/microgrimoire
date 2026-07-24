@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ⅱ-5 Fokker 周期性ブロック — 微分音のグリモワール</title>
+<link rel="icon" href="./assets/data/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<style>
+  .fb-node { fill: #d7d9e6; }
+  .fb-node.inside { fill: var(--accent); }
+  .fb-origin { fill: #8a6116; }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <button id="nav-toggle" aria-label="目次を開く"><span></span><span></span><span></span></button>
+  <a class="site-name" href="index.html">微分音のグリモワール</a>
+  <span class="topbar-section">第Ⅱ部 純正律とその格子</span>
+</header>
+
+<div class="layout">
+  <aside id="sidebar" aria-label="目次"></aside>
+  <div id="sidebar-overlay"></div>
+
+  <main class="content">
+    <p class="eyebrow">第Ⅱ部 純正律とその格子　─　5</p>
+    <h1>Fokker 周期性ブロック ── 格子から音階を切り出す</h1>
+
+    <div class="intuition">
+      <span class="layer-tag">直感レイヤー</span>
+      <p>格子は無限に広がっています。でも音楽に使う音は有限個です。<br>では、無限の地図のどこで「切る」か？<br>オランダの Fokker さんの答えはこうでした。<br><strong>コンマを壁にする</strong>。コンマは「ほとんど同じ音」への移動でしたから、コンマの向こう側は「こちら側の分身」だと思って畳んでしまえばいい。コンマを2本選んで平行四辺形の部屋を作ると、部屋の中の音の個数は自動的に決まります。<br>81/80 と 128/125 で切ると<strong>12音</strong>…半音階。<br>そして 81/80 と 393216/390625 で切ると、<strong>31音</strong>が現れます。</p>
+    </div>
+
+    <h2 id="sec-idea">壁としてのコンマ</h2>
+
+    <p>アイデアを 5-limit（平面格子）で述べます。コンマを2つ選び、そのベクトル \( \mathbf{u}_1, \mathbf{u}_2 \)（3 と 5 の歩数の組）を平行四辺形の2辺とします。この平行四辺形で平面を敷き詰めると、どの格子点もちょうど1枚のタイルに属します。1枚のタイルに含まれる格子点たち（原点 1/1 を含むタイルを取るのが普通）が<strong>周期性ブロック</strong>で、これをオクターブ内に並べると音階になります。壁を1枚越えた先の音は、選んだコンマぶんしか違わない「分身」として、部屋の中の代表で代用する、という思想です。</p>
+
+    <p>そして、<strong>部屋の中の音の個数は、2つのコンマベクトルの行列式の絶対値</strong>に等しいのです：</p>
+
+    <p>$$ N = \left| \det \begin{pmatrix} b_1 & c_1 \\ b_2 & c_2 \end{pmatrix} \right| $$</p>
+
+    <p>（\(b_i, c_i\) はコンマ \(i\) の 3・5 の指数。）壁の選び方が、音階の音数を決めます。実験してみましょう。</p>
+
+    <div class="widget">
+      <p class="widget-title">周期性ブロックの実験室（5-limit）</p>
+      <div class="wrow">
+        <label>コンマ1</label>
+        <select id="fb-u1">
+          <option value="4,-1" selected>81/80 シントニック（4, −1）</option>
+          <option value="8,1">2048/2025 スキスマ（8, 1）</option>
+          <option value="12,0">ピタゴラスコンマ（12, 0）</option>
+        </select>
+        <label>コンマ2</label>
+        <select id="fb-u2">
+          <option value="-1,2" selected>25/24 クロマ（−1, 2）</option>
+          <option value="0,-3">128/125 小ディエシス（0, −3）</option>
+          <option value="-1,5">3125/3072 magic comma（-1, 5）</option>
+          <option value="-5,6">15625/15552 kleisma（−5, 6）</option>
+          <option value="1,-8">393216/390625 würschmidt comma（1, −8）</option>
+        </select>
+      </div>
+      <div class="wrow">
+        <span class="wval" id="fb-count" style="min-width:100%">—</span>
+      </div>
+      <div id="fb-plot"></div>
+      <div class="wrow">
+        <button class="btn" id="fb-play">この音階を低い順に聴く</button>
+        <span class="wval" id="fb-scale" style="min-width:60%"></span>
+      </div>
+      <p class="widget-note">藍の点が部屋（中央の平行四辺形）に入った格子点＝音階の構成音、琥珀が 1/1。<strong>81/80 × 25/24 → 7音</strong>（純正律の全音階が出てきます）、<strong>81/80 × 128/125 → 12音</strong>（半音階）、そして <strong>81/80 × ヴュルシュミット → 31音</strong>。Fokker が31音のオルガンに至った数理の骨格が、この行列式です。25/24（クロマ）は厳密には「小さな半音」でコンマと呼ぶには大きめですが、壁（unison vector）としては同じ資格で使えます。</p>
+    </div>
+
+<div class="keybox" style="border-left-color:#c9973a">
+      <span class="kb-label" style="color:#8a6116">トレーニング ── 行列式の計算にトライ！</span>
+    <p>壁で囲まれる行列式の計算に実際にチャレンジしてみましょう。</p>
+    <p>シントニックコンマ \( ( 4 , -1 ) \) と小ディエシス \( ( 0 , -3 ) \) によってできる音の個数は、部屋の面積と一致します。これを行列式の絶対値で書き表すと</p>
+    <p style=text-align:center>$$\left| \det \begin{pmatrix} 4 & -1 \\ 0 & -3 \end{pmatrix} \right| $$</p>
+    <p>2×2の行列式の計算は、「右下斜めの掛け算 － 左下斜めの掛け算」ですので、</p>
+    <p style=text-align:center>$$\left|  4 \times {(-3)}  - 0 \times {(-1)}  \right| = \left| -12 \right| = 12 $$</p>
+    <p>となり、部屋の面積 12 が計算できます。</p>
+    <hr>
+    <p>Fokker 周期性ブロックでは 7-limit の3次元空間でもその体積として計算できます。</p>
+    <p>シントニックコンマ \( ( 4 , -1 , 0 ) \) <br> septimal kleisma  \( ( 2 , 2 , -1 ) \) <br>gamelisma \( ( 1 , 0 , 3 ) \)<br>によってできる音の個数も計算してみましょう。これを行列式の絶対値で書き表すと</p>
+    <p style=text-align:center>$$\left| \det \begin{pmatrix} 4 & -1 & 0 \\ 2 & 2 & -1 \\ 1 & 0 & 3 \end{pmatrix} \right| $$</p>
+    <p>この3×3の行列式の計算は「<a href="https://ja.wikipedia.org/wiki/%E3%82%B5%E3%83%A9%E3%82%B9%E3%81%AE%E6%96%B9%E6%B3%95">サラスの方法</a>」を用いて計算すると簡単です。右下斜め方向に数字を拾って掛け算して全部足し、左下斜め方向に数字を拾って掛け算して全部引きます。</p>
+    <p>$$\left| \{ 4 \times 2 \times 3 + {(-1)} \times {(-1)} \times 1 + 0 \times 2 \times 0 \} - \{ 0 \times 2 \times 1 + {(-1)} \times 2 \times 3 + 4 \times {(-1)} \times 0 \} \right| = \left| 25-({-6}) \right| = 31 $$</p>
+    <p>足し算や掛け算が多いですが、なんとか 31 が計算できました。</p>
+    </div>      
+      
+    <details class="precise" open>
+      <summary>精密レイヤー ── unison vector・行列式・ブロックの性格</summary>
+      <div class="precise-body">
+        <p>壁に使うベクトルを Fokker は <strong>unison vector</strong> と呼びました。「音組織上は同一視したい（unison とみなしたい）音程」の意で、上のとおり必ずしも極小のコンマである必要はありません。p-limit 一般では、素数の個数から 1 引いた本数（オクターブ畳み込み後の格子の次元ぶん）の unison vector を選び、その行列式の絶対値がブロックの音数になります。7-limit なら3本で、3次元から平行六面体が切り出されます。</p>
+        <p>ブロックには重要な性格が三つあります。<br><strong>（1）音数は決まるが、形は一意でない</strong>——同じコンマ対でも、平行四辺形の位置・形の取り方（そして境界上の点の扱い）で構成音は変わります。上の実験は原点中心の対称な取り方をしています。<br><strong>（2）ブロックは「閉じたふりをした純正律」である</strong>——内部の音程はすべて純正ですが、壁を跨ぐ関係（たとえば端の音から次の端の音への5度）はコンマぶんだけ歪んだ「ウルフ」になります。7音ブロックが純正律全音階、12音ブロックが古典的な純正律半音階の持つウルフをそのまま持つのはこのためです。<br><strong>（3）だから歪みを均一に分散させたくなる——</strong><br>壁のコンマを「そもそもゼロだった」ことにして、歪みを内部全体に薄く塗り広げれば（＝平均化すれば）、ウルフは消え、ブロックは本当に閉じる。この操作こそ<strong>テンパリング</strong>であり、 5-limit では 81/80 と würschmidt comma を両方ゼロにし、その歪みを均一に分散させた 31 音ブロックの姿が 31edo です（<span class="xref" data-file="part3-01-tempering.html">第Ⅲ部1</span>・<span class="xref" data-file="part3-03-edo.html">第Ⅲ部3</span>）。<br>前節の言い方に戻せば、<strong>ブロックの壁のコンマ集合＝その律がテンパーアウトするコンマ集合の候補</strong>です。</p>
+        <p>歴史的な注：周期性ブロックは Adriaan Daniël Fokker（物理学者・音楽理論家）が1969年に定式化しました。Fokker は 31edo 関連の運動に多大な貢献をしており、その歴史の詳細は<span class="xref" data-file="part4-03-history.html">第Ⅳ部3</span>で扱います。</p>
+      </div>
+    </details>
+
+    <h2 id="sec-bridge">第Ⅱ部の総括 ── 地図は描けた。次は折り方。</h2>
+
+    <p>第Ⅱ部で手に入れたものを並べます。<br>純正音程は素数の座標を持ち（Ⅱ-1）、その全体は格子として描ける（Ⅱ-2）。<br>格子上には「ほとんど一致」の場所〝コンマ〟が算術的必然として無数にあり（Ⅱ-3・Ⅱ-4）、<br>コンマを壁に選べば格子から有限の音階が切り出せる（本節）。<br>残る問題はただ一つ、壁際に残る歪み（ウルフ）です。壁を「なかったこと」にする、つまりコンマを消して格子を折り畳む、その一般理論が Regular Temperamentです。<br>第Ⅲ部で、いよいよ音律を<strong>組み立て</strong>ます。</p>
+
+    <div class="keybox">
+      <span class="kb-label">この節の要点</span>
+      コンマ（unison vector）を2本選ぶと平行四辺形の「部屋」ができ、<strong>音数＝行列式の絶対値</strong>。81/80 &amp; 25/24＝7音、81/80 &amp; 128/125＝12音、81/80 &amp; würschmidt comma ＝31音。<br>ブロックは「閉じたふりの純正律」で、壁際にウルフが残る。<br>壁のコンマを本当にゼロにする操作＝テンパリングが第Ⅲ部の要となります。
+    </div>
+
+    <nav class="pager" id="pager"></nav>
+  </main>
+</div>
+
+<script src="assets/data/toc.js"></script>
+<script src="assets/data/glossary.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/audio.js"></script>
+<script src="assets/figures.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+<script>
+(function () {
+  "use strict";
+  const NS = "http://www.w3.org/2000/svg";
+  const C4 = 261.6256;
+  const RANGE_A = 7, RANGE_B = 6;
+  const W = 740, H = 520;
+
+  const u1Sel = document.getElementById("fb-u1");
+  const u2Sel = document.getElementById("fb-u2");
+  const countEl = document.getElementById("fb-count");
+  const scaleEl = document.getElementById("fb-scale");
+  const plotDiv = document.getElementById("fb-plot");
+  let scaleCents = [];
+
+  function parseV(s) { return s.split(",").map(Number); }
+
+  function centsOf(a, b) {
+    let c = (a * 1200 * Math.log2(3) + b * 1200 * Math.log2(5)) % 1200;
+    c = ((c % 1200) + 1200) % 1200;
+    return c;
+  }
+
+  function draw() {
+    const v1 = parseV(u1Sel.value);
+    const v2 = parseV(u2Sel.value);
+    const det = v1[0] * v2[1] - v1[1] * v2[0];
+    if (det === 0) {
+      countEl.textContent = "この2本は平行です（行列式 0）。別の組を選んでください。";
+      plotDiv.innerHTML = "";
+      return;
+    }
+    const N = Math.abs(det);
+    countEl.textContent =
+      "行列式 = " + v1[0] + "×(" + v2[1] + ") − (" + v1[1] + ")×" + v2[0] +
+      " = " + det + "　→　ブロックの音数 N = " + N;
+
+    plotDiv.innerHTML = "";
+    const svg = document.createElementNS(NS, "svg");
+    svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+    svg.setAttribute("width", "100%");
+    plotDiv.appendChild(svg);
+
+    const cx = W / 2, cy = H / 2;
+    const scale = Math.min(
+      (W / 2 - 30) / (Math.abs(v1[0]) / 2 + Math.abs(v2[0]) / 2 + 2.5),
+      (H / 2 - 24) / (Math.abs(v1[1]) / 2 + Math.abs(v2[1]) / 2 + 2.5),
+      44
+    );
+    const px = (a, b) => [cx + a * scale, cy - b * scale];
+
+    // 平行四辺形（原点中心：±v1/2 ±v2/2）
+    const corners = [
+      [(-v1[0] - v2[0]) / 2, (-v1[1] - v2[1]) / 2],
+      [( v1[0] - v2[0]) / 2, ( v1[1] - v2[1]) / 2],
+      [( v1[0] + v2[0]) / 2, ( v1[1] + v2[1]) / 2],
+      [(-v1[0] + v2[0]) / 2, (-v1[1] + v2[1]) / 2]
+    ];
+    const poly = document.createElementNS(NS, "polygon");
+    poly.setAttribute("points",
+      corners.map(c => px(c[0], c[1]).join(",")).join(" "));
+    poly.setAttribute("fill", "rgba(59,74,156,0.08)");
+    poly.setAttribute("stroke", "#3b4a9c");
+    poly.setAttribute("stroke-width", "1.6");
+    svg.appendChild(poly);
+
+    // 逆行列で内外判定：(a,b) = s v1 + t v2, s,t ∈ [−1/2, 1/2)
+    const inv = (a, b) => [
+      ( v2[1] * a - v2[0] * b) / det,
+      (-v1[1] * a + v1[0] * b) / det
+    ];
+    const eps = 1e-9;
+    const inside = [];
+    for (let a = -RANGE_A * 2; a <= RANGE_A * 2; a++)
+      for (let b = -RANGE_B * 2; b <= RANGE_B * 2; b++) {
+        const [s, t] = inv(a, b);
+        if (s >= -0.5 - eps && s < 0.5 - eps && t >= -0.5 - eps && t < 0.5 - eps)
+          inside.push([a, b]);
+      }
+
+    // 表示範囲内の格子点を描く
+    const maxA = Math.ceil((W / 2 - 10) / scale);
+    const maxB = Math.ceil((H / 2 - 10) / scale);
+    const insideSet = new Set(inside.map(p => p.join(",")));
+    for (let a = -maxA; a <= maxA; a++)
+      for (let b = -maxB; b <= maxB; b++) {
+        const [x, y] = px(a, b);
+        const c = document.createElementNS(NS, "circle");
+        c.setAttribute("cx", x); c.setAttribute("cy", y);
+        const isIn = insideSet.has(a + "," + b);
+        const isO = a === 0 && b === 0;
+        c.setAttribute("r", isIn ? 6.5 : 3);
+        c.setAttribute("class", "fb-node" + (isIn ? " inside" : "") + (isO ? " fb-origin" : ""));
+        if (isO) { c.setAttribute("r", 7.5); c.setAttribute("class", "fb-origin"); }
+        svg.appendChild(c);
+      }
+
+    // 軸ラベル
+    const lx = document.createElementNS(NS, "text");
+    lx.setAttribute("x", W - 12); lx.setAttribute("y", cy - 8);
+    lx.setAttribute("text-anchor", "end");
+    lx.setAttribute("font-size", "12"); lx.setAttribute("fill", "#565863");
+    lx.textContent = "3 の歩数 →";
+    svg.appendChild(lx);
+    const ly = document.createElementNS(NS, "text");
+    ly.setAttribute("x", cx + 8); ly.setAttribute("y", 18);
+    ly.setAttribute("font-size", "12"); ly.setAttribute("fill", "#565863");
+    ly.textContent = "↑ 5 の歩数";
+    svg.appendChild(ly);
+
+    // 音階の計算
+    scaleCents = inside.map(([a, b]) => centsOf(a, b)).sort((x, y) => x - y);
+    if (inside.length !== N) {
+      // 判定の数値誤差の保険（通常は一致する）
+      countEl.textContent += "（描画範囲内で " + inside.length + " 点を検出）";
+    }
+    scaleEl.textContent = scaleCents.map(c => c.toFixed(0)).join(", ") + " ¢";
+  }
+
+  document.getElementById("fb-play").addEventListener("click", () => {
+    const freqs = scaleCents.map(c => XenAudio.freqFromCents(C4, c));
+    freqs.push(C4 * 2);
+    XenAudio.playSeq(freqs, { dur: Math.max(0.22, 0.5 - freqs.length * 0.006), gap: 0.05 });
+  });
+
+  u1Sel.addEventListener("change", draw);
+  u2Sel.addEventListener("change", draw);
+  draw();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ⅵ-6 協和の起源をめぐる論争 — 微分音のグリモワール</title>
+<link rel="icon" href="./assets/data/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@600;700&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+@font-face {
+  font-family: "BravuraText";
+  src: url("https://cdn.jsdelivr.net/gh/steinbergmedia/bravura@master/redist/woff/BravuraText.woff2") format("woff2"),
+       url("https://cdn.jsdelivr.net/gh/steinbergmedia/bravura@master/redist/woff/BravuraText.woff") format("woff");
+  font-display: swap;
+}
+.smufl { font-family: "BravuraText", serif; font-size: 1.5em; line-height: 1; vertical-align: -0.12em; }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <button id="nav-toggle" aria-label="目次を開く"><span></span><span></span><span></span></button>
+  <a class="site-name" href="index.html">微分音のグリモワール</a>
+  <span class="topbar-section">第Ⅵ部 響きの科学</span>
+</header>
+
+<div class="layout">
+  <aside id="sidebar" aria-label="目次"></aside>
+  <div id="sidebar-overlay"></div>
+
+  <main class="content">
+    <p class="eyebrow">第Ⅵ部 響きの科学　─　6</p>
+    <h1>協和の起源をめぐる論争</h1>
+
+    <div class="intuition">
+      <span class="layer-tag">直感レイヤー</span>
+      <p>ここまで協和の物理・数理モデル（粗さ・HE・結合音）を積み上げてきました。しかし根本的な問いが残ります。<strong>協和感は生得的（耳と脳の構造で決まる）か、学習的（文化で作られる）か</strong>。<br>この問いはいまだ決着していません。<br>倍音列に基づく普遍説と、統計的学習に基づく文化相対説が、近年の実験を巻き込んで拮抗しています。微分音を扱う私たちにとってこれは他人事ではありません。<br>もし協和が完全に学習のみなら「12edo に慣れた耳には 31edo は不利」、もし生得のみなら「31edo の純正比は文化を超えて効く」。<br>両説の間に立って、微分音の意味を真剣に考えます。</p>
+    </div>
+
+    <h2 id="sec-two-camps">二つの陣営</h2>
+
+    <p><strong>普遍説（psychoacoustic / harmonicity）</strong>——<br>協和は聴覚系の構造に根ざす、という立場。根拠は本部で見てきた臨界帯域の粗さ（Plomp–Levelt）、倍音列への嵌まりやすさ（Terhardt・HE）、差音の整列。<br>倍音列は<strong>声を含むあらゆる有声音源の物理</strong>であり、聴覚系はそれを処理するよう進化した、だから単純比の選好は生得的だ、と論じます。乳児が協和音を選好するという初期研究、ネコやマカクザルなど種を超えた選好の報告などがこちらの立場の論拠です。</p>
+
+    <p><strong>文化・学習説（statistical learning）</strong>——<br>協和感は、その文化の音楽（と音声）への<strong>曝露で学習される</strong>という立場。従前からこのような議論はありますが、この論争に一躍火を点けたのは McDermott ら（2016, Nature）でした。西洋音楽への接触が乏しいアマゾンの <strong>ツィマネ族</strong>が、<strong>協和・不協和の選好を示さない</strong>（両者を同程度に好む）としたものでした。<br>粗さの<strong>知覚</strong>はあるのに、それを<strong>不快と評価しない</strong>と主張しました。<br>続く Jacoby ら（2019, Current Biology）は、聴いた旋律を歌い返す課題でツィマネ族には<strong>オクターブ等価性が現れない</strong>と報告し主張しました。協和もオクターブも普遍ではないのではないか？<br>この二本の報告が、以後の研究を大きく動機づけました。</p>
+
+    <h2 id="sec-synthesis">論争の現在地 ── 二層モデルへ</h2>
+
+    <p>現在の穏当な判定はこうです。協和は少なくとも<strong>二層</strong>からなる。<br><strong>第1層</strong> ──聴覚的協和感──<br>粗さの知覚と、倍音列への嵌まりやすさ（harmonicity）にもとづく<strong>音の融合・分離</strong>は末梢と初期聴覚の構造に根ざし、普遍的で、臨界帯域は誰の耳にもある。<br><strong>第2層</strong>──音楽的協和感──<br>それを「快/不快」「協和/不協和」と<strong>評価</strong>する部分は、文化的学習で強く変調される。</p>
+
+    <p>この切り分けを決定づけたのは、意外にも<strong>火付け役だった McDermott らのチーム自身</strong>でした。McPherson ら（2020, Nature Communications）は、音の選好ではなく、二音を聴かせ、それが一つの音に溶けて聞こえるかどうかという<strong>音の融合感</strong>を尋ねたのです。結果、ツィマネ族も米国の非音楽家も、協和的とされる音のペアのほうを融合していると答え、その順序は<strong>オクターブ＞完全5度＞完全4度＞長3度</strong>などと、倍音列への近さから予測される通りでした。<br>合成音だけでなく歌唱音でも、オクターブが隣接音程より強く融合して聞かれる点は両群に共通しています。（ボストン Z=2.22, p=0.03／ツィマネ族 Z=4.31, p&lt;0.0001）にもかかわらず、<strong>協和への選好を示したのは米国の聴き手だけ</strong>でした。ツィマネ族は合奏の習慣が乏しく和声への接触が限られるため、この融合は多声音楽の経験からではなく、<strong>倍音性にもとづく音源分離の一般的な機構</strong>から来ていると考えられます。</p>
+
+    <p>つまり2016年の「協和を好まない」は、<strong>協和が知覚できない</strong>ことを意味していませんでした。第1層は働いていて、違っていたのは第2層、その知覚に快・不快を割り当てる判定の価値観のほうだったのです。「普遍か学習か」という問いが「<strong>どの層が普遍で、どの層が学習か</strong>」へと組み替わった瞬間で、二層モデルはここから自然に出てきました。ツィマネ族の一連の研究は、文化説の勝利でも敗北でもなく、<strong>層を切り分ける道具</strong>として最も大きな仕事をしたことになります。</p>
+
+    <p>この二層モデルは、本部の各モデルをきれいに位置づけます。<br>HE と MF（Ⅵ-1・5）は〝倍音列への嵌まり〟という第1層の核心を数理化しつつ、Sethares の粗さ（Ⅵ-3）・差音（Ⅵ-5）などは第1層と第2層にまたがっており、その<strong>重み</strong>（何を重視するか）も第2層＝学習の余地を残します。<br>実際 HE の基底集合や幅 \(s\) は聴き手依存の「事前分布」であり、文化で変わりうるパラメータです。</p>
+
+    <h2 id="sec-31">この論争の中の 31edo</h2>
+
+    <p>こうした協和の根源には微分音実践への含意が多くあります。</p>
+
+    <p><strong>第1層の観点</strong>では、31edo は明確に有利です。31edo の 7-limit の純正性は、倍音列音色に対して粗さの谷・HE の谷・差音の整列を<strong>同時に満たす</strong>ことになります（Ⅵ-2・3・5）。この協和は文化以前の、耳と脳の構造に根ざした部分に働きかけます。しかも先ほどの融合実験が示すとおり、倍音的な整合による音の溶け合いは文化を跨いで働くとなれば、31edo の純正に近い和音が「一つの響きに溶ける」感触は、聴き手の文化的背景にあまり依存しないと期待してよいわけです。</p>
+
+    <p><strong>第2層の観点</strong>では慎重さが要りますが、31edo には他の律射にない事情があります。31edo は<strong>ミーントーンの律射</strong>であり、西洋音楽的な全音階も五度圏も機能和声の文法もそのまま生きている（Ⅳ-6）。つまり<strong>12edo で訓練した第2層のほとんどを、そのまま流用できる</strong>。増六＝7/4 のような 7-limit の語彙でさえ、伝統的な増六の文法の内側から発掘されるものでした。第2層をゼロから作り直さねばならない律射に比べれば、これは相当に大きな利点です。（だからこそ、31edo で属七の和音を安易に 4:5:6:7 にしない日本での実践の風潮は一定の論拠があることになります。）</p>
+
+    <p>ただし流用できるということは、<strong>流用したぶんの束縛も引き継ぐ</strong>可能性があるということでもあります。私たちの多くは 12edo で第2層を訓練済みで、学習された期待を持っています。12edo で第2層の訓練が豊富な音楽家は 31edo の 386¢ の長3度は第1層では純正でも、第2層では最初「低く聞こえる」と感じられる可能性も排除できないということ。</p>
+
+    <p>興味深いのは、<strong>この束縛の強さに個人差がある</strong>ことです。<a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0135082">Bailes ら（2015）</a>は、西洋の音楽家10名と非音楽家10名に、12edo の協和音程・不協和音程・<strong>四分音</strong>の二音和音を聴かせ、脳波と主観評定を同時に取りました。好ましさは 協和 ＞ 不協和 ＞ 四分音 の順でしたが、決定的なのは交互作用です。<br><strong>音楽的訓練を受けた群は四分音を不協和音程よりも強く嫌った</strong>のに対し、<strong>非音楽家は両者を同程度に評価しました</strong>。<br>訓練は微分音の弁別能力を高めると同時に、<strong>拒絶反応も強めてしまった</strong>のです。第2層をよく訓練した耳ほど、カテゴリーの外にある音に厳しい。微分音の入口では、経験豊かな音楽家のほうが<strong>抵抗が大きいことすらありうる</strong>のです。実践上、覚えておく価値のある非直感的な事実です。この研究の脳科学的な詳細は <span class="xref" data-file="part6-07-brain.html">Ⅵ-7</span> で扱います。</p>
+
+      <p>逆から見れば、第2層は<strong>訓練されたぶんだけ変わる</strong>ということでもあります。微分音を含む音楽文化の側からの報告がそれを支持します。<br><a href="https://pubmed.ncbi.nlm.nih.gov/14681138/">Neuhaus（2003）</a>はヨーロッパ・タイ・トルコの音階を用いた異文化 ERP （脳波）研究で、文化的に馴染みのない音階でのピッチ期待違反に神経活動の差が出ることを示しました。<br><a href="https://journal.iftawm.org/wp-content/uploads/2022/02/Justus_AAWM_Vol_7_1.pdf">Timothy Justus（2019）</a>らの研究グループトルコ古典・民俗音楽の<strong>rast makam</strong>（C・D・E<span class="smufl">&#xE280;</span>・F・G・A・B<span class="smufl">&#xE280;</span>）を用いたプローブトーン実験では、トルコの聴き手がこのモードへの暗黙の知識を持つことが示されています。<br>ここからわかることは<strong>微分音の音階に対する期待構造は実在し、測定できる</strong>。第2層は 12edo 専用の器官ではないようです。さらに <a href="https://www.researchgate.net/publication/305999610_Perceiving_Boundaries_in_Unfamiliar_Turkish_Makam_Music_Evidence_for_Gestalt_Universals">Mungan（2017）</a>らのマカーム分節研究では、微分音構造を保ったまま提示された未知のトルコ・マカーム曲に対し、マカーム訓練者・非音楽家・西洋の聴き手のあいだで<strong>相当な一致</strong>が見られました。第2層において記憶や体験に根ざした聴覚表象的な手がかりとは、微分音音楽でも変わらず働くことの傍証となりうるものです。</p>
+
+    <p>そして、ここまではすべて「西洋音楽の延長としての 31edo」をどう見るかという話でした。しかし<strong>31edo の本領はむしろその先にあります</strong>。Ⅴ部で見たとおり、31edo は数多くの MOS 音階と正則律射が交差する<strong>結節点</strong>でした。つまりミーントーンだけでなく、ミラクル、オーウェル、モスラ、そして 11-limit の中立音程の体系までが 31edo の上を走っています。この地図の側から 31edo を使うとき、私たちは<strong>もはや西洋音楽の文法を大きくは流用していません</strong>。全音階でも五度圏でもない骨格の上に、聴き手が事前分布を持たない期待構造を組み立てることになる。ここでこそ 31edo は、<strong>第2層の可塑性を使って新しい音楽的意味を作る</strong>営みに本格的に踏み込みます。統計的学習説は悲観論（慣れないと無理）にも楽観論（慣れれば身につく）にも読めますが、個人差を考慮し、本書の意味は専ら後者の楽観論に賭けているものになります。</p>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── 誠実な留保</summary>
+      <div class="precise-body">
+        <p>三点、科学的な誠実さのために補足します。<br>（1）ツィマネ族研究には方法論的な議論もあります（サンプル、刺激、評価語の翻訳可能性など）。単一の研究で「協和は文化的」と断ずるのは行き過ぎで、追試と反証が続く<strong>活発な現在進行形の論争</strong>です。<br>（2）「普遍か学習か」は二者択一ではなく<strong>程度問題</strong>であり、ほぼ全ての現代の研究者が〝両方が寄与する〟ことにはほぼ同意し、争点はその<strong>配分</strong>と<strong>層の切り分け</strong>にシフトしています。<br>（3）本書の立場を明示します。本書は<strong>第1層の存在を作業仮説として採用</strong>します。でなければ純正律も HE も語れませんが、第2層＝文化的学習の巨大さも認めます。31edo の価値は「第1層で純正比に近く、第2層を流用する、あるいは新たに訓練する価値がある」ことにあり、<strong>「一概に 31edo は 12edo より客観的に優れている」とは主張しません</strong>。それは第2層の可塑性を無視した誤りです。第Ⅴ部の音律アトラスで繰り返し言及した「目的関数依存」の相対主義は、この協和論の相対主義と同じ精神です。</p>
+      </div>
+    </details>
+
+    <div class="keybox">
+      <span class="kb-label">この節の要点</span>
+      協和の起源は<strong>未決着の論争</strong>。普遍説（倍音列・粗さ・協和感 は生得）と文化説（統計的学習）が拮抗し、ここから<strong>二層モデル</strong>（普遍的な第1層＝粗さや倍音性による融合感、文化依存の第2層＝その評価、文化的学習）が出た。<br>31edo は<strong>第1層で有利</strong>なうえ、ミーントーンゆえ<strong>12edo の第2層をほぼ流用できる</strong>。ただし流用は束縛も引き継ぎうる。<br>Bailes ら（2015）が示すように<strong>訓練された耳ほど四分音への拒絶が強い</strong>。一方 Neuhaus・マカーム研究は微分音の期待構造が実在することを示す。<br>31edo が MOS・正則律射の結節点として使われるとき、第2層の可塑性の行使が本番になる。
+    </div>
+
+    <nav class="pager" id="pager"></nav>
+  </main>
+</div>
+
+<script src="assets/data/toc.js"></script>
+<script src="assets/data/glossary.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/audio.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+</body>
+</html>

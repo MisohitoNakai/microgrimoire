@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ⅱ-4 そのほかのコンマ — 微分音のグリモワール</title>
+<link rel="icon" href="./assets/data/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+</head>
+<body>
+<header class="topbar">
+  <button id="nav-toggle" aria-label="目次を開く"><span></span><span></span><span></span></button>
+  <a class="site-name" href="index.html">微分音のグリモワール</a>
+  <span class="topbar-section">第Ⅱ部 純正律とその格子</span>
+</header>
+
+<div class="layout">
+  <aside id="sidebar" aria-label="目次"></aside>
+  <div id="sidebar-overlay"></div>
+
+  <main class="content">
+    <p class="eyebrow">第Ⅱ部 純正律とその格子　─　4</p>
+    <h1>そのほかのコンマ ── 種族の肖像画</h1>
+
+    <div class="intuition">
+      <span class="layer-tag">直感レイヤー</span>
+      <p>シントニックコンマは氷山の一角です。<br>格子の上で「もう少しで一致するのに、しない」場所の数だけコンマがあり、それぞれに名前と性格があります。そして面白いのはここからで、<strong>どのコンマを「無いこと」にするかは、音律ごとに違います</strong>。<br>12平均律はシントニックコンマも小ディエシスも消すので G♯ と A♭ が同じ鍵へ。31平均律は小ディエシスを消さないので G♯ と A♭ が<strong>別の音</strong>として残る。コンマの目録は、そのまま音律たちの個性の目録なのです。</p>
+    </div>
+
+    <h2 id="sec-catalog">コンマ目録</h2>
+
+    <p>本書で以後登場する主要なコンマを一覧にします。「12edo」「31edo」の列は、そのコンマが各音律で<strong>何ステップに写るかを示しています。</strong><br>0 なら「その音律はこのコンマを消している（テンパーアウト）」、±1 以上なら「区別が生き残っている」。それらをその場で計算した値です（計算規則は下の精密レイヤー）。♪ は試聴で、モードを選べます。</p>
+
+    <div class="widget">
+      <p class="widget-title">コンマを聴く</p>
+      <div class="wrow">
+        <label>試聴モード</label>
+        <span class="pillgroup" id="cm-mode">
+          <button data-m="sim" class="on">同時（うなりで聴く）</button>
+          <button data-m="seq">順次（差として聴く）</button>
+        </span>
+        <span class="widget-note" style="margin:0">基音 440 Hz。小さいコンマは「同時」でうなりとして聴くのが確実です（Ⅰ-5）。</span>
+      </div>
+      <div class="table-scroll">
+      <table id="cm-table">
+        <thead><tr><th>名称</th><th>比</th><th>因数分解</th><th class="num">セント</th><th class="num">12edo</th><th class="num">31edo</th><th>♪</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      </div>
+    </div>
+
+    <h2 id="sec-stories">目録の読みどころ</h2>
+
+    <p><strong>ピタゴラスコンマ（23.46¢）</strong>——5度を12回積むと7オクターブを僅かに超える、3-limit 最古のコンマ。12edo はこれを消すことで「5度圏が閉じる」音律になっています。31edo では補正が強すぎて逆転します（−1 ステップ）。したがって、31edo の5度圏は 12 回では閉じず、31 回で初めて閉じます。</p>
+
+    <p><strong>小ディエシス 128/125（41.06¢）</strong>——長3度を3回積んだ音とオクターブの差。12edo はこれを消すので、C–E–G♯–B♯ の B♯ が C に戻り、<strong>G♯＝A♭</strong> という異名同音が成立します。31edo では 1 ステップ（38.7¢——ディエシスの実測値に肉薄！）として<strong>生き残り</strong>、G♯ と A♭ は別の鍵・別の響きになります。31edo の鍵盤に「黒鍵が割れている」見た目の理由がこれです（<span class="xref" data-file="part4-05-keyboard.html">第Ⅳ部5</span>）。</p>
+
+    <p><strong>septimal comma 64/63（27.26¢）</strong>——3の道の短7度 16/9 と自然7度 7/4 の差。12edo はこれを消すため、属七の第7音が「7/4 のつもり」と「16/9 のつもり」を兼任させられ、中途半端になります。31edo では 1 ステップとして区別され、<strong>「短7度」と「自然7度」を弾き分けられます</strong>。</p>
+
+    <p><strong>marvel comma 225/224（7.71¢）</strong>——5-limit の 225/128 と 7/4 の橋渡し。これを消すと、5-limit の語彙から 7-limit の響きへ滑らかに乗り換えられます。12edo も 31edo も消しており、31edo の 7-limit の増六の和音の強さの一因です。</p>
+
+    <p><strong>gamelisma 1029/1024（8.43¢）</strong>——8/7 を3回積むと 3/2 との間に残る端数。これを消すと「8/7 三つ＝3/2」というバリ島のガムラン的な骨格（Slendric、<span class="xref" data-file="part5-03-families.html">第Ⅴ部3</span>）が生まれます。31edo はこれを消す音律のひとつで、31 の多面性（<span class="xref" data-file="part4-02-faces.html">第Ⅳ部2</span>）の一枚です。</p>
+
+    <p><strong>rastma 243/242（7.14¢）</strong>——中立3度 11/9 を2回積むと 3/2 との間に残る端数。消せば「中立3度ふたつ＝完全5度」（Rastmic）。これも 31edo が消すコンマで、31edo のもうひとつの顔です。</p>
+
+    <p><strong>スキスマ 32805/32768（1.95¢）</strong>——シントニックコンマとピタゴラスコンマの差にあたる極めて小さいコンマ。人間の順次 JND を下回る音程で、これを消す Schismatic 系（<span class="xref" data-file="part5-03-families.html">第Ⅴ部3</span>・53edo など）は 5-limit をほぼ純正のまま扱えます。12edo は消しますが、31edo は消せません。ミーントーンとスキスマティックは 5 への到達経路が正反対（5度を狭める vs ほぼ純正に保つ）の好対照です。</p>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── ステップ数の計算規則（val の先取り）</summary>
+      <div class="precise-body">
+        <p>表の「12edo / 31edo」列は次の規則で計算しています。n-edo は各素数 \(p\) を「最寄りのステップ数」 \(v_p = \operatorname{round}(n \log_2 p)\) に写します。<br>12edo なら \( (v_2, v_3, v_5, v_7, v_{11}, v_{13}) = (12, 19, 28, 34, 42, 44) \)、<br>31edo なら \( (31, 49, 72, 87, 107, 115) \)。<br>コンマ \( 2^{e_2} \times 3^{e_3} \times 5^{e_5} \cdots \) の写り先は内積 \( \sum_p e_p v_p \) ステップです。<br>この「素数→ステップ数」の対応表こそ、第Ⅲ部で <strong>val</strong> ⟨12 19 28 …] と呼んで主役に据えるものです。そして<strong>「コンマが 0 ステップに写る」＝「その音律がコンマをテンパーアウトしている」</strong>という言い換えが、Regular Temperament 理論の入口の定義になります。ここでは patent val（各素数を独立に最良近似する val）のみを使っています。同じ n でも別の val を選ぶ流儀があること、その意味は第Ⅲ部で扱います。</p>
+        <p>もう一点、表の因数分解の指数の並び \((e_2, e_3, e_5, \dots)\) をそのまま縦に書いたものが monzo です。すなわち本節の表は、次章の言語（monzo と val の内積）を、名前を伏せてすでに運用しています。</p>
+      </div>
+    </details>
+
+    <h2 id="sec-meaning">コンマ目録＝音律の設計空間</h2>
+
+    <p>目録を眺めると、コンマには二つの顔があることが分かります。<br>ひとつは<strong>障害物</strong>としての顔：ポンプでピッチを引きずり、鍵盤の在庫を圧迫する。<br>もうひとつは<strong>資源</strong>としての顔：どれを消すかの選択が、そのまま音組織の個性になる。<br>81/80 を消せばミーントーンの世界、<br>32805/32768 を消せばスキスマティックの世界、<br>1029/1024 を消せばslendricの世界。<br>そして<strong>複数のコンマを同時に消す</strong>と何が起こるか？<br>たとえば 81/80 と 393216/390625 を両方消すと？<br>（答えは31edo になります。理由は<a href="part2-05-fokker.html">次節</a>と<span class="xref" data-file="part3-03-edo.html">第Ⅲ部3</span>で。）</p>
+
+    <div class="keybox">
+      <span class="kb-label">この節の要点</span>
+      コンマは多数多様。各音律は「どのコンマを 0 に写すか」で個性が決まる。12edo はピタゴラスコンマ・小ディエシス・64/63 などを消し、31edo はそれらを保存しつつ 81/80・225/224・1029/1024・243/242 を消す。<strong>コンマの選択＝音律の設計</strong>。
+    </div>
+
+    <nav class="pager" id="pager"></nav>
+  </main>
+</div>
+
+<script src="assets/data/toc.js"></script>
+<script src="assets/data/glossary.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/audio.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+<script>
+(function () {
+  "use strict";
+  const BASE = 440;
+  const V12 = [12, 19, 28, 34, 42, 44];
+  const V31 = [31, 49, 72, 87, 107, 115];
+  const PR = [2, 3, 5, 7, 11, 13];
+
+  /* [名称, 分子, 分母, monzo(e2..e13), 因数分解の表示] */
+  const COMMAS = [
+    ["ピタゴラスコンマ", 531441, 524288, [-19, 12, 0, 0, 0, 0], "3¹²/2¹⁹"],
+    ["シントニックコンマ", 81, 80, [-4, 4, -1, 0, 0, 0], "3⁴/(2⁴·5)"],
+    ["スキスマ", 32805, 32768, [-15, 8, 1, 0, 0, 0], "3⁸·5/2¹⁵"],
+    ["diaschisma", 2048, 2025, [11, -4, -2, 0, 0, 0], "2¹¹/(3⁴·5²)"],
+    ["小ディエシス", 128, 125, [7, 0, -3, 0, 0, 0], "2⁷/5³"],
+    ["大ディエシス", 648, 625, [3, 4, -4, 0, 0, 0], "2³·3⁴/5⁴"],
+    ["kleisma", 15625, 15552, [-6, -5, 6, 0, 0, 0], "5⁶/(2⁶·3⁵)"],
+    ["septimal comma", 64, 63, [6, -2, 0, -1, 0, 0], "2⁶/(3²·7)"],
+    ["marvel comma", 225, 224, [-5, 2, 2, -1, 0, 0], "3²·5²/(2⁵·7)"],
+    ["gamelisma", 1029, 1024, [-10, 1, 0, 3, 0, 0], "3·7³/2¹⁰"],
+    ["würschmidt comma", 393216, 390625, [17, 1, -8, 0, 0, 0], "2¹⁷·3/5⁸"],
+    ["undecimal 四分音", 33, 32, [-5, 1, 0, 0, 1, 0], "3·11/2⁵"],
+    ["rastma", 243, 242, [-1, 5, 0, 0, -2, 0], "3⁵/(2·11²)"],
+    ["grossma", 144, 143, [4, 2, 0, 0, -1, -1], "2⁴·3²/(11·13)"]
+  ];
+
+  let mode = "sim";
+  const pills = document.querySelectorAll("#cm-mode button");
+  pills.forEach(b => b.addEventListener("click", () => {
+    pills.forEach(x => x.classList.remove("on"));
+    b.classList.add("on");
+    mode = b.getAttribute("data-m");
+  }));
+
+  const dot = (m, v) => m.reduce((s, e, i) => s + e * v[i], 0);
+  const tbody = document.querySelector("#cm-table tbody");
+
+  COMMAS.forEach(([name, num, den, monzo, fact]) => {
+    const cents = 1200 * Math.log2(num / den);
+    const s12 = dot(monzo, V12);
+    const s31 = dot(monzo, V31);
+    const tr = document.createElement("tr");
+    const cell = s => s === 0
+      ? "<strong style='color:var(--accent-dark)'>0(消)</strong>"
+      : (s > 0 ? "+" : "") + s;
+    tr.innerHTML =
+      "<td>" + name + "</td>" +
+      "<td><code>" + num + "/" + den + "</code></td>" +
+      "<td><code>" + fact + "</code></td>" +
+      "<td class='num'>" + cents.toFixed(2) + "</td>" +
+      "<td class='num'>" + cell(s12) + "</td>" +
+      "<td class='num'>" + cell(s31) + "</td><td></td>";
+    const btn = document.createElement("button");
+    btn.className = "btn small secondary";
+    btn.textContent = "♪";
+    btn.setAttribute("aria-label", name + " を試聴");
+    btn.addEventListener("click", () => {
+      const f2 = BASE * num / den;
+      if (mode === "sim") XenAudio.playFreqs([BASE, f2], { dur: 3.0 });
+      else XenAudio.playSeq([BASE, f2], { dur: 0.9, gap: 0.15 });
+    });
+    tr.lastElementChild.appendChild(btn);
+    tbody.appendChild(tr);
+  });
+})();
+</script>
+</body>
+</html>

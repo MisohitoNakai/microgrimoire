@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>付録C 早見表・MOS-Tree — 微分音のグリモワール</title>
+<link rel="icon" href="./assets/data/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<style>
+@font-face { font-family:"BravuraText"; src:url("https://cdn.jsdelivr.net/gh/steinbergmedia/bravura@master/redist/woff/BravuraText.woff2") format("woff2"); font-display:swap; }
+.smufl { font-family:"BravuraText",serif; font-size:1.4em; vertical-align:-.1em; }
+#mostree text.nd { cursor: pointer; }
+#mostree g.node:hover circle { stroke-width: 3; }
+table.mx { border-collapse: collapse; font-size: .68rem; }
+table.mx th, table.mx td { border: 1px solid #e4e5ea; padding: 1px 3px; text-align: center; white-space: nowrap; }
+table.mx th.famname { text-align: left; position: sticky; left: 0; background: #faf9f5; z-index: 1; padding-right: 6px; }
+table.mx td.c31 { background: #fbf3e0; }
+table.mx th.h31 { background: #f0dcb0; }
+table.mx td.cell { cursor: pointer; }
+table.mx td.cell:hover { outline: 2px solid #3b4a9c; }
+table.mx td.star { color: #8a6116; font-weight: 700; }
+table.mx td.circ { color: #3b6f43; }
+table.mx td.tri { color: #999; }
+table.mx td.sup { color: #6a5aa8; }
+table.cm { border-collapse: collapse; font-size: .8rem; min-width: 700px; }
+table.cm th, table.cm td { border: 1px solid #e4e5ea; padding: .22rem .5rem; text-align: left; white-space: nowrap; }
+table.cm thead th { background: #faf9f5; font-size: .76rem; }
+table.cm tr.grp th { background: #eef0fa; color: #3b4a9c; font-size: .78rem; letter-spacing: .04em; }
+table.cm td.num { text-align: right; font-variant-numeric: tabular-nums; color: #565863; }
+table.cm td.fam { font-weight: 600; }
+.cm-comma { display: inline-block; cursor: pointer; border: 1px solid #dfe3f4; background: #eef0fa; color: #3b4a9c;
+  border-radius: .3rem; padding: .02rem .4rem; margin: .05rem .25rem .05rem 0; font-variant-numeric: tabular-nums; }
+.cm-comma:hover { background: #3b4a9c; color: #fff; border-color: #3b4a9c; }
+.cm-none { color: #999; }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <button id="nav-toggle" aria-label="目次を開く"><span></span><span></span><span></span></button>
+  <a class="site-name" href="index.html">微分音のグリモワール</a>
+  <span class="topbar-section">付録</span>
+</header>
+
+<div class="layout">
+  <aside id="sidebar" aria-label="目次"></aside>
+  <div id="sidebar-overlay"></div>
+
+  <main class="content">
+    <p class="eyebrow">付録　─　C</p>
+    <h1>早見表・マトリクス・MOS-Tree</h1>
+
+    <p>制作の傍らに置く実用資料です。</p>
+
+    <h2 id="sec-intervals">31edo 音程早見表（クリックで試聴）</h2>
+
+    <div class="widget">
+      <p class="widget-title">全31音程 ── 歩数・セント・日本語音程名・S–Z 音名・純正比・誤差（C 基準）</p>
+      <div class="table-scroll">
+        <table><thead><tr><th>歩</th><th>¢</th><th>日本語音程名</th><th>S–Z 音名</th><th>純正比</th><th>誤差</th><th></th></tr></thead>
+        <tbody id="iv-rows"></tbody></table>
+      </div>
+      <p class="widget-note">音源は C4＝261.6255653 Hz。日本語音程名・純正比・誤差は <a href="https://ja.xen.wiki/w/31%E5%B9%B3%E5%9D%87%E5%BE%8B" target="_blank" rel="noopener">Xenharmonic Wiki（日本語版）「31平均律」</a>の「音程と近似値」表に準拠。誤差は「31edo − 純正比」のセント差、★＝5¢以内。</p>
+    </div>
+
+    <h2 id="sec-commas">種族・連盟と消去コンマの対応表</h2>
+
+    <p>次のマトリクスに現れる 40 の律射（temperament）が、それぞれ<strong>どのコンマを消去して生まれるか</strong>の一覧です。<br>律射とは「格子のどの隙間を潰すか」の選択であり（<span class="xref" data-file="part3-01-tempering.html">Ⅲ-1</span>・<span class="xref" data-file="part5-01-multiplicity.html">Ⅴ-1</span>）、消去するコンマの集合（kernel）が律射の身元を決めます。<br><strong>種族（family）</strong>は 5-limit のコンマ（2.3.5 のみで書けるコンマ）から発する系統、<strong>連盟（clan）</strong>は素数5を含まないコンマから発する系統です。2つのコンマを消せば、そのぶん自由度が減って律射は細くなります（rank が下がります）。</p>
+
+    <div class="widget">
+      <p class="widget-title">律射 ── 消去コンマ ── 素数リミット・周期・POTE generator</p>
+      <div class="table-scroll" id="cm-wrap"></div>
+      <div class="wrow"><span class="wval" id="cm-info" style="min-width:100%">コンマをクリックすると、その大きさを2音のうなりとして試聴します。</span></div>
+      <p class="widget-note">セント値はコンマ比から算出。<strong>周期</strong>はオクターブを何等分した幅を繰り返しの単位とするか（1／1 はオクターブそのもの）。<strong>POTE gen</strong> は純正オクターブ条件下で最適化した generator です。<br>rank-3 の律射（marvel・starling）と、トライターヴ（3/1）を周期とする律射（sensamagic・gariboh・bohpier）は generator を1本に固定できないため「—」としています。</p>
+    </div>
+
+    <h2 id="sec-matrix">音律×EDO マスター相互参照マトリクス（拡大版）</h2>
+
+    <p>第Ⅴ部2のマトリクスを、40 の律射（種族・連盟）× 96 EDO（5〜100 を総覧）に拡大した詳細版です。<br>行には 5-limit の種族（family）と、素数5を含まないコンマから発する連盟（clan）〈Archytas・Semaphoresmic・Gamelismic・Rastmic・Sensamagic・Garibohなど〉を織り交ぜ、その主要な拡張〈superpyth, miracle, mothra, mohajira …〉も併載しました。<br>各セルは、その EDO がその律射を <strong>patent val で支持するか</strong>（コンマ kernel の消去を検査）と、支持する場合の generator 精度を示します。<br>★＝POTE generator に1¢以内・○＝5¢以内・△＝それ超・*付き ＝contorted（より小さい EDO の複製）<br> ◆ は、rank-3 の律射（marvel, starling）や連盟（sensamagic, gariboh, bohpier）のように <strong>generator を1本に固定できない</strong>ため、支持の有無だけを示すものです。<br>セルをクリックすると generator の歩数・セント・POTE比を表示し試聴します。31edo のみ列を琥珀色で強調しています。</p>
+
+    <div class="widget">
+      <p class="widget-title">マトリクス（横スクロール・セルクリックで詳細と試聴）</p>
+      <div class="table-scroll" id="mx-wrap"></div>
+      <div class="wrow"><span class="wval" id="mx-info" style="min-width:100%">セルをクリックすると詳細を表示します。</span></div>
+      <p class="widget-note">空欄＝その EDO はその音律を（patent val では）支持しない。<br>period が2以上の音律（srutal・augmented・diminished・blackwood・pajara）は、その period で割り切れる EDO のみに現れます。</p>
+    </div>
+
+    <h2 id="sec-prime-inv">素数倍音の転回音程のセント値</h2>
+
+    <p>各素数倍音を1オクターブ内に収めた（転回した）音程のセント値を小数3桁で示します。式は \(1200\,\log_2 r\)。31edo でこれらがどう近似されるかは上の音程早見表を参照してください。</p>
+
+    <div class="table-scroll">
+    <table>
+      <thead><tr><th>音程</th><th>由来（素数倍音）</th><th>\(1200\,\log_2 r\)（¢）</th><th>31edo 最近似</th></tr></thead>
+      <tbody id="pinv-rows"></tbody>
+    </table>
+    </div>
+
+    <h2 id="sec-mostree">MOS scale family tree ── MOS 音階の家系図</h2>
+
+    <p>MOS 音階は、<strong>1L1s を根とする二分木</strong>をなします。（<a href="https://en.xen.wiki/w/MOS_scale_family_tree" target="_blank" rel="noopener">Xenharmonic Wiki</a>）にも詳細な図があります。<br>下図で各ノードをクリックすると、そのステップパターンを試聴します。<br>琥珀色は31edo が実装する主要な MOS です。</p>
+
+    <div class="widget">
+      <p class="widget-title">MOS scale family tree（1L1s を根に xLys の二分木・クリックで試聴）</p>
+      <div class="table-scroll"><div id="mostree" style="min-width:1180px"></div></div>
+      <p class="widget-note">上（右の子）ほど小ステップが多く、下（左の子）ほど大ステップが多い方向。<strong>5L2s＝全音階</strong>（ステップ列 LLsLLLs 系）が中核で、31edo はその周辺の 5L2s・2L5s・3L4s・4L3s・5L7s などを MOS として持ちます。各ノードは xLys のラベルとステップ数 N＝x+y を示します。</p>
+    </div>
+
+    <nav class="pager" id="pager"></nav>
+  </main>
+</div>
+
+<script src="assets/data/toc.js"></script>
+<script src="assets/data/glossary.js"></script>
+<script src="assets/data/interval-names-ja.js"></script>
+<script src="assets/data/matrix-data.js"></script>
+<script src="assets/data/mostree-data.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/audio.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+<script>
+(function () {
+  "use strict";
+  const NS = "http://www.w3.org/2000/svg";
+  const C4 = 261.6255653;
+  const STEP = 1200 / 31;
+
+  /* ---- 音程早見表（日本語音程名つき） ---- */
+  const IN = window.INTERVAL_NAMES_JA;
+  const SZ = (function () {
+    const HS = "\uE282", HF = "\uE280";
+    const NAT = { C: 0, D: 5, E: 10, F: 13, G: 18, A: 23, B: 28 };
+    const nm = new Array(31).fill(null);
+    Object.entries(NAT).forEach(([L, s]) => { nm[s] = [L, ""]; });
+    Object.entries(NAT).forEach(([L, s]) => {
+      [[1, HS], [2, "\u266f"], [-1, HF], [-2, "\u266d"]].forEach(([d, sym]) => {
+        const t = ((s + d) % 31 + 31) % 31; if (!nm[t]) nm[t] = [L, sym];
+      });
+    });
+    return nm;
+  })();
+  const HS = "\uE282", HF = "\uE280";
+  function szHtml(k) {
+    const e = SZ[k]; if (!e) return "";
+    const [L, sym] = e;
+    if (sym === HS || sym === HF) return L + '<span class="smufl">' + sym + '</span>';
+    return L + sym;
+  }
+  const tb = document.getElementById("iv-rows");
+  IN.forEach(r => {
+    if (r.step === 31) return; // オクターブは0と重複表示しない
+    const star = (r.err !== null && Math.abs(r.err) <= 5) ? " ★" : "";
+    const errTxt = r.err === null ? "—" : (r.err >= 0 ? "+" : "") + r.err.toFixed(1) + star;
+    const tr = document.createElement("tr");
+    tr.innerHTML = "<td class='num'>" + r.step + "</td>" +
+      "<td class='num'>" + r.cent.toFixed(1) + "</td>" +
+      "<td>" + r.name + "</td>" +
+      "<td>" + szHtml(r.step) + "</td>" +
+      "<td class='num'>" + r.ratio + "</td>" +
+      "<td class='num'>" + errTxt + "</td>" +
+      "<td><button class='btn small' data-k='" + r.step + "'>聴</button></td>";
+    tb.appendChild(tr);
+  });
+  tb.addEventListener("click", ev => {
+    const b = ev.target.closest("button[data-k]");
+    if (!b) return;
+    XenAudio.playFreqs([C4, XenAudio.freqFromCents(C4, +b.getAttribute("data-k") * STEP)], { dur: 1.4 });
+  });
+
+  /* ---- 種族・連盟と消去コンマの対応表 ---- */
+  const MX = window.MATRIX;
+  (function buildCommaTable() {
+    const wrapC = document.getElementById("cm-wrap");
+    if (!wrapC || !MX) return;
+    const ORDER = ["種族", "種族拡張", "連盟", "連盟拡張", "rank3"];
+    const GRPJP = {
+      "種族": "種族（family）── 5-limit のコンマから発する系統",
+      "種族拡張": "種族の拡張 ── 種族に7-limit のコンマを重ねたもの",
+      "連盟": "連盟（clan）── 素数5を含まないコンマから発する系統",
+      "連盟拡張": "連盟の拡張 ── 連盟にもう1本コンマを重ねたもの",
+      "rank3": "rank-3 の関連律射 ── コンマ1本のみを消す上位の律射"
+    };
+    const cents = r => {
+      const m = /^(\d+)\/(\d+)$/.exec(r.trim());
+      return m ? 1200 * Math.log2(+m[1] / +m[2]) : null;
+    };
+    const keys = Object.keys(MX.fams);
+    let html = "<table class='cm'><thead><tr>" +
+      "<th>律射</th><th>消去コンマ（クリックで試聴）</th><th>素数リミット</th>" +
+      "<th>周期</th><th>POTE gen</th></tr></thead><tbody>";
+    ORDER.forEach(g => {
+      const rows = keys.filter(k => MX.fams[k].g === g);
+      if (!rows.length) return;
+      html += "<tr class='grp'><th colspan='5'>" + GRPJP[g] +
+        "　（" + rows.length + "律射）</th></tr>";
+      rows.forEach(k => {
+        const F = MX.fams[k];
+        const chips = String(F.c).split("・").map(p => {
+          const t = p.trim(), c = cents(t);
+          return c === null ? "<span class='cm-none'>" + t + "</span>"
+            : "<span class='cm-comma' data-c='" + c.toFixed(4) + "' data-r='" + t + "'>" +
+              t + "　" + c.toFixed(2) + "¢</span>";
+        }).join("");
+        const primes = (F.primes || []).join("·");
+        let per;
+        if (F.equave === 3) per = "3/1（トリターブ）";
+        else if (!F.perDiv) per = "<span class='cm-none'>—</span>";
+        else per = (F.perDiv === 1 ? "オクターブ" : "1/" + F.perDiv + " オクターブ（" + F.period + "¢）");
+        const gen = (F.pote === undefined || F.pote === null)
+          ? "<span class='cm-none'>—</span>" : F.pote.toFixed(3) + "¢";
+        html += "<tr><td class='fam'>" + F.jp + "</td><td>" + chips + "</td>" +
+          "<td class='num'>" + primes + "</td><td>" + per + "</td>" +
+          "<td class='num'>" + gen + "</td></tr>";
+      });
+    });
+    html += "</tbody></table>";
+    wrapC.innerHTML = html;
+
+    wrapC.addEventListener("click", ev => {
+      const el = ev.target.closest(".cm-comma");
+      if (!el) return;
+      const c = +el.getAttribute("data-c"), r = el.getAttribute("data-r");
+      const f2 = XenAudio.freqFromCents(C4, c);
+      XenAudio.playFreqs([C4, f2], { dur: 3.0 });
+      document.getElementById("cm-info").innerHTML =
+        "<strong>" + r + "＝" + c.toFixed(3) + "¢</strong>：" + C4.toFixed(2) + " Hz と " +
+        f2.toFixed(2) + " Hz を同時に鳴らしています。うなりは毎秒約 " +
+        Math.abs(f2 - C4).toFixed(2) + " 回。この幅を「無い」ことにするのが、この律射の消去です。";
+    });
+  })();
+
+  /* ---- 拡大マトリクス ---- */
+  const wrap = document.getElementById("mx-wrap");
+  (function buildMatrix() {
+    const famKeys = Object.keys(MX.fams);
+    let html = "<table class='mx'><thead><tr><th class='famname'>音律＼EDO</th>";
+    MX.edos.forEach(n => { html += "<th class='" + (n === 31 ? "h31" : "") + "'>" + n + "</th>"; });
+    html += "</tr></thead><tbody>";
+    famKeys.forEach(k => {
+      const F = MX.fams[k];
+      html += "<tr><th class='famname'>" + F.jp + "</th>";
+      MX.edos.forEach(n => {
+        const c = F.cells[n];
+        const is31 = n === 31 ? " c31" : "";
+        if (!c) { html += "<td class='" + (n === 31 ? "c31" : "") + "'></td>"; return; }
+        if (c.sup) {   // supportOnly（rank-3 や tritave 周期）：支持の有無のみ
+          html += "<td class='cell sup" + is31 + "' data-f='" + k + "' data-n='" + n + "'>\u25c6</td>";
+          return;
+        }
+        const cls = c.mark === "★" ? "star" : c.mark === "○" ? "circ" : "tri";
+        html += "<td class='cell " + cls + is31 + "' data-f='" + k + "' data-n='" + n + "'>" +
+          c.mark + (c.cont ? "*" : "") + "</td>";
+      });
+      html += "</tr>";
+    });
+    html += "</tbody></table>";
+    wrap.innerHTML = html;
+  })();
+  wrap.addEventListener("click", ev => {
+    const td = ev.target.closest("td.cell");
+    if (!td) return;
+    const k = td.getAttribute("data-f"), n = +td.getAttribute("data-n");
+    const F = MX.fams[k], c = F.cells[n];
+    if (c.sup) {   // supportOnly：generator を一意に決められない
+      const eq = F.equave === 3 ? "第12倍音（トライターブ 3/1）周期" : "";
+      document.getElementById("mx-info").innerHTML =
+        "<strong>" + F.jp + " × " + n + (F.equave === 3 ? "edt" : "edo") + "</strong>：この EDO は支持します（◆）。" +
+        "ただし " + (F.equave === 3 ? eq + "の律射で" : "rank-3 の関連律射で") +
+        "、generator を1本に固定できないため段階評価は付きません。　消去コンマ：" + F.c;
+      return;
+    }
+    const markTxt = c.mark === "★" ? "POTE比1¢以内" : c.mark === "○" ? "5¢以内" : "5¢超";
+    document.getElementById("mx-info").innerHTML =
+      "<strong>" + F.jp + " × " + n + "edo</strong>：generator " + c.gs + "\\" + n +
+      "（" + c.gc + "¢、POTE " + F.pote + "¢、差 " + (c.err >= 0 ? "+" : "") + c.err + "¢＝" + markTxt + "）" +
+      (c.cont ? "・contorted（* ＝より小さい EDO の複製）" : "") +
+      "　消去コンマ：" + F.c;
+    // generator を積んだ簡易音階を試聴
+    const per = F.period, gc = c.gc;
+    const seq = [];
+    for (let i = 0; i < 8; i++) seq.push(((i * gc) % per + per) % per);
+    seq.sort((a, b) => a - b); seq.push(per);
+    XenAudio.playSeq(seq.map(x => XenAudio.freqFromCents(C4, x)), { dur: 0.28, gap: 0.04 });
+  });
+
+  /* ---- 素数倍音の転回音程 ---- */
+  const PINV = [
+    { nm: "3/2", disp: "3/2（第3倍音の転回）", r: 3 / 2, edo: "18\\31＝696.774¢（−5.181）" },
+    { nm: "5/4", disp: "5/4（第5倍音の転回）", r: 5 / 4, edo: "10\\31＝387.097¢（+0.783）" },
+    { nm: "7/4", disp: "7/4（第7倍音の転回）", r: 7 / 4, edo: "25\\31＝967.742¢（−1.084）" },
+    { nm: "11/8", disp: "11/8（第11倍音の転回）", r: 11 / 8, edo: "14\\31＝541.935¢（−9.382）" },
+    { nm: "13/8", disp: "13/8（第13倍音の転回）", r: 13 / 8, edo: "22\\31＝851.613¢（+11.085）" }
+  ];
+  const pt = document.getElementById("pinv-rows");
+  PINV.forEach(p => {
+    const cents = 1200 * Math.log2(p.r);
+    const tr = document.createElement("tr");
+    tr.innerHTML = "<td class='num'>" + p.nm + "</td><td>" + p.disp + "</td>" +
+      "<td class='num'>" + cents.toFixed(3) + "</td><td class='num'>" + p.edo + "</td>";
+    pt.appendChild(tr);
+  });
+
+  /* ---- MOS scale family tree ---- */
+  const M = window.MOSTREE;
+  const box = document.getElementById("mostree");
+  const byId = {}; M.nodes.forEach(n => byId[n.id] = n);
+  // レイアウト：depth を y、同 depth 内の順序を x に
+  const byDepth = {};
+  M.nodes.forEach(n => { (byDepth[n.depth] = byDepth[n.depth] || []).push(n); });
+  const maxDepth = Math.max.apply(null, M.nodes.map(n => n.depth));
+  const W = 1180, rowH = 80, padT = 26, padB = 22;
+  const H = padT + padB + maxDepth * rowH;
+  const pos = {};
+  Object.keys(byDepth).forEach(d => {
+    const arr = byDepth[d];
+    arr.forEach((n, i) => {
+      pos[n.id] = { x: (i + 1) / (arr.length + 1) * W, y: padT + (+d) * rowH };
+    });
+  });
+  const svg = document.createElementNS(NS, "svg");
+  svg.setAttribute("viewBox", "0 0 " + W + " " + H); svg.setAttribute("width", "100%");
+  box.appendChild(svg);
+  // 辺
+  M.edges.forEach(([a, b]) => {
+    const pa = pos[a], pb = pos[b]; if (!pa || !pb) return;
+    const l = document.createElementNS(NS, "line");
+    l.setAttribute("x1", pa.x); l.setAttribute("y1", pa.y);
+    l.setAttribute("x2", pb.x); l.setAttribute("y2", pb.y);
+    l.setAttribute("stroke", "#c9cbd8"); l.setAttribute("stroke-width", 1);
+    svg.appendChild(l);
+  });
+  // ノード
+  const EDO31 = M.edo31 || [];
+  M.nodes.forEach(n => {
+    const p = pos[n.id]; if (!p) return;
+    const hot = EDO31.includes(n.label);
+    const g = document.createElementNS(NS, "g"); g.setAttribute("class", "node"); g.style.cursor = "pointer";
+    const rw = 54, rh = 34;
+    const rect = document.createElementNS(NS, "rect");
+    rect.setAttribute("x", p.x - rw / 2); rect.setAttribute("y", p.y - rh / 2);
+    rect.setAttribute("width", rw); rect.setAttribute("height", rh); rect.setAttribute("rx", 5);
+    rect.setAttribute("fill", hot ? "#f0dcb0" : "#eef0fa");
+    rect.setAttribute("stroke", hot ? "#8a6116" : "#3b4a9c"); rect.setAttribute("stroke-width", hot ? 1.6 : 1);
+    g.appendChild(rect);
+    const t1 = document.createElementNS(NS, "text");
+    t1.setAttribute("class", "nd"); t1.setAttribute("x", p.x); t1.setAttribute("y", p.y - 4);
+    t1.setAttribute("text-anchor", "middle"); t1.setAttribute("font-size", 10.5); t1.setAttribute("font-weight", 700);
+    t1.setAttribute("fill", "#1e1f24"); t1.textContent = n.label;
+    g.appendChild(t1);
+    const t2 = document.createElementNS(NS, "text");
+    t2.setAttribute("x", p.x); t2.setAttribute("y", p.y + 6);
+    t2.setAttribute("text-anchor", "middle"); t2.setAttribute("font-size", 7); t2.setAttribute("fill", "#565863");
+    t2.textContent = "N=" + n.N;
+    g.appendChild(t2);
+    if (n.name) {
+      const t3 = document.createElementNS(NS, "text");
+      t3.setAttribute("x", p.x); t3.setAttribute("y", p.y + 14);
+      t3.setAttribute("text-anchor", "middle"); t3.setAttribute("font-size", 6.5); t3.setAttribute("fill", "#8a6116");
+      t3.textContent = n.name.slice(0, 11);
+      g.appendChild(t3);
+    }
+    const title = document.createElementNS(NS, "title");
+    title.textContent = n.label + "（" + n.pat + "）" + (n.name ? " ＝ " + n.name : "");
+    g.appendChild(title);
+    g.addEventListener("click", () => {
+      // ステップパターンを試聴（L=大, s=小。31edo 換算で L=5歩, s=2歩を基本に、N音に正規化）
+      const pat = n.pat;
+      const L = 2, s = 1; // 相対比（L:s＝2:1）で1オクターブを配分
+      const total = pat.split("").reduce((a, ch) => a + (ch === "L" ? L : s), 0);
+      let acc = 0; const cents = [0];
+      pat.split("").forEach(ch => { acc += (ch === "L" ? L : s) / total * 1200; cents.push(acc); });
+      XenAudio.playSeq(cents.map(c => XenAudio.freqFromCents(C4, c)), { dur: 0.3, gap: 0.04 });
+    });
+    svg.appendChild(g);
+  });
+})();
+</script>
+</body>
+</html>

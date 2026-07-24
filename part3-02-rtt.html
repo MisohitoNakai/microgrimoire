@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ⅲ-2 RTT の言語 ── monzo・val・mapping — 微分音のグリモワール</title>
+<link rel="icon" href="./assets/data/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+</head>
+<body>
+<header class="topbar">
+  <button id="nav-toggle" aria-label="目次を開く"><span></span><span></span><span></span></button>
+  <a class="site-name" href="index.html">微分音のグリモワール</a>
+  <span class="topbar-section">第Ⅲ部 音律を組み立てる</span>
+</header>
+
+<div class="layout">
+  <aside id="sidebar" aria-label="目次"></aside>
+  <div id="sidebar-overlay"></div>
+
+  <main class="content">
+    <p class="eyebrow">第Ⅲ部 音律を組み立てる　─　2</p>
+    <h1>RTT の言語 ── monzo・val・mapping</h1>
+
+    <div class="intuition">
+      <span class="layer-tag">直感レイヤー</span>
+      <p>前節の「格子を畳む」を正確に扱うために、語彙を4つ覚えます。<br><strong>monzo</strong> は音程の住所（素数の指数を並べたベクトル）。<br><strong>val</strong> は「各素数を何ステップと数えるか」の対応表。<br>両者の内積を取ると「その音程は何ステップか」が出ます。valを数本束ねたものが <br><strong>mapping</strong>（畳み方の完全な指定）、そのとき 0 に潰れるコンマの集まりが <strong>kernel</strong>。<br>第Ⅱ部4のコンマ目録で、いま名前が付きます。名前が付けば、あとは線形代数です。</p>
+    </div>
+
+    <h2 id="sec-monzo">monzo ── 音程の住所</h2>
+
+    <p>p-limit の音程 \(q\) は素因数分解で一意に \( q = 2^{e_2} \times 3^{e_3} \times 5^{e_5} \cdots \) と書けます（Ⅱ-1）。この指数を並べた縦ベクトルを <strong>monzo</strong> と呼び、</p>
+
+    <p>$$ q = \frac{81}{80} = 2^{-4} \times 3^{4} \times  5^{-1} \;\longleftrightarrow\; \left|{-4}\; 4\; {-1}\right\rangle $$</p>
+
+    <p>のように \( |\cdots\rangle \) という左の片割れの記法で書きます。音程の周波数比の乗算はセントの加算であり monzo の加算、逆数は符号反転します。<br>Ⅰ-2 の「比は掛け、セントは足す」とⅡ-2 の「音程＝格子のベクトル」が、ここで正式な座標を得ました。名称は理論家 Joseph Monzo に因みます。コミュニティで合意された訳語がないため、本書では原語のまま用います（val も同様）。</p>
+
+    <h2 id="sec-val">val ── 素数の換算表</h2>
+
+    <p>次に、律射の側を書きます。例えば31edo は「素数 2 の周波数比を 31 ステップ、素数 3 を 49 ステップ、素数 5 を 72 ステップ……と数える」律射でした（Ⅱ-4 の計算規則）。この換算表を横ベクトルにしたものが <strong>val</strong> です：</p>
+
+    <p>$$ \langle 31\; 49\; 72 | $$ </p>
+
+    <p>音程が何ステップに写るかは、val と monzo の<strong>内積</strong>です：</p>
+
+    <p>$$ \langle 31\; 49\; 72 \,|\, {-4}\; 4\; {-1} \rangle = 31\cdot(-4) + 49\cdot 4 + 72\cdot(-1) = 0 $$</p>
+
+    <p>——見事。 31edo が 81/80 を消す（テンパーアウトする）ことの正式な表現です。<br>特にオクターブの等分音律では、各素数の周波数比を独立に最良近似した val<br>（\(v_p = \operatorname{round}(n \log_2 p)\)）を <strong>patent val</strong> と呼びます。同じ n-edo に対して patent 以外の（最も近似するステップ以外で） val をあえて選ぶ流儀もあり（次節）、「n-edo」という言葉より「どの val か」の方が情報としては正確です。</p>
+
+    <div class="widget">
+      <p class="widget-title">monzo × val 電卓</p>
+      <div class="wrow">
+        <label for="mv-ratio">音程（分数）</label>
+        <input type="text" id="mv-ratio" value="81/80" size="12" style="font-family:var(--font-mono)">
+        <label for="mv-val">val</label>
+        <select id="mv-val">
+          <option value="12">12edo ⟨12 19 28 34 42 44]</option>
+          <option value="19">19edo ⟨19 30 44 53 66 70]</option>
+          <option value="22">22edo ⟨22 35 51 62 76 81]</option>
+          <option value="31" selected>31edo ⟨31 49 72 87 107 115]</option>
+          <option value="41">41edo ⟨41 65 95 115 142 152]</option>
+          <option value="53">53edo ⟨53 84 123 149 183 196]</option>
+        </select>
+        <button class="btn" id="mv-go">計算</button>
+      </div>
+      <div class="wrow"><span class="wval" id="mv-out" style="min-width:100%">—</span></div>
+      <div class="wrow">
+        <button class="btn small secondary" id="mv-play-just" disabled>純正で聴く</button>
+        <button class="btn small secondary" id="mv-play-temp" disabled>この律射の近似で聴く</button>
+      </div>
+      <p class="widget-note">13-limit までの任意の分数を受け付けます。monzo・写像先のステップ数・セント値・純正比との誤差を表示し、聴き比べられます。コンマ（80/81 側でなく 81/80 側で入れてください）が 0 ステップに写るかどうかも一目で分かります。</p>
+    </div>
+
+    <h2 id="sec-mapping">mapping と kernel ── 畳み方の完全な指定</h2>
+
+    <p>EDO の val は1本で「すべての音程→ステップ数」を決めますが、完全5度とオクターブを用いて構築するミーントーンのような<strong>まだ煮詰めきっていない音律</strong>では、音程はオクターブと5度の<strong>2つ</strong>の生成音程の組み合わせに写ります。写り先が2成分になるので、換算表も2行必要です。</p>
+
+    <p>$$ M_{\text{meantone}} = \left\langle \begin{matrix}  1 & 1 & 0 \\ 0 & 1 & 4 \end{matrix} \right] \qquad \begin{aligned} 2 &\mapsto (1,0) = \text{oct} \\ 3 &\mapsto (1,1) = \text{oct+fif} \\ 5 &\mapsto (0,4) = 4 \text{fif} \end{aligned} $$</p>
+
+    <p>（ \( \text{fif} \) は完全5度、\( \text{oct} \) はオクターブ。）<br>このような val のようなものの束を <strong>mapping</strong>（写像行列）と呼びます。<br>行数（＝独立な生成音程の本数）がその律射の <strong>rank</strong> です。ミーントーンのようにオクターブと完全5度２個必要なら「rank 2」、EDO は1ステップの積み上げだけで、いくらでも音を網羅できるので「rank 1」、そして純正律そのものなど（何も消さない）は 5-limit ならオクターブ、完全5度、長3度の組み合わせなので、「rank 3」です。<br>生成音程のうちオクターブのように音階が一周する枠組みの音程（あるいはその等分）を <strong>period</strong>、残りを <strong>generator</strong> と呼び分けます。</p>
+
+    <p>mapping で 0 に写る monzo の集まり——消されるコンマの全体——が <strong>kernel</strong> です。ミーントーンの kernel は 81/80 の整数倍（monzo の整数倍）全体。ここで第Ⅱ部との対応が完成します：</p>
+
+    <div class="table-scroll">
+    <table>
+      <thead><tr><th>第Ⅱ部の言葉（幾何）</th><th>本節の言葉（代数）</th></tr></thead>
+      <tbody>
+        <tr><td>格子（Ⅱ-2）</td><td>\( \mathbb{Z}^n \)（monzo の空間）</td></tr>
+        <tr><td>コンマ（Ⅱ-3・4）</td><td>kernel の元</td></tr>
+        <tr><td>周期性ブロックの壁＝unison vector（Ⅱ-5）</td><td>kernel の基底の候補</td></tr>
+        <tr><td>格子を畳む（Ⅲ-1）</td><td>mapping を適用する（商を取る）</td></tr>
+        <tr><td>ブロックの音数＝行列式（Ⅱ-5）</td><td>kernel の指数（畳んだ後の周期あたり音数）</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── 代数的な正体と、rank の勘定</summary>
+      <div class="precise-body">
+        <p>正確に述べます。p-limit（素数 \(n\) 個）の音程の群は \(\mathbb{Z}^n\)（monzo）。<br><strong>val はその双対（群準同型 \( \mathbb{Z}^n \to \mathbb{Z}^1 \)）であり、mapping は準同型 \( \mathbb{Z}^n \to \mathbb{Z}^r \)</strong>（\(r\) = rank）です。律射とは、この準同型で格子を商 \( \mathbb{Z}^n / \ker M \) に潰す操作にほかなりません。<br>ブラケット記法 \( |\cdot\rangle, \langle\cdot| \) は物理のブラケットの借用で、内積 \( \langle v | m \rangle \) が「val を monzo に適用した値」を表します。</p>
+        <p>rank の勘定は次元定理そのものです。<strong>rank ＝ 素数の個数 − 独立に消したコンマの本数</strong>。<br>5-limit（3素数）でシントニックコンマ \( \left[ {-4}\; 4\; {-1} \right\rangle \)を消せば rank 2（ミーントーン）。さらに独立なコンマをもう1本（たとえばwürschmidt comma \( \left[ {17}\; {1}\; {-8} \right\rangle \)）を消せば rank 1、すなわち EDO に到達します（シントニックコンマ とwürschmidt commaの対が 31edo を指名することは、Ⅱ-5 の行列式が 31 になることで既に見ました。次節で正面から扱います）。<br>また、7-limit（4素数）で 81/80 と 225/224 の2本を消せば rank 2 の 7-limit ミーントーン（septimal meantone）となり、これも 31edo が得意とする世界です（<span class="xref" data-file="part4-02-faces.html">第Ⅳ部2</span>）。</p>
+        <p>2点、用語の注意。<br>（1）mapping の行の取り方（生成音程の選び方）には自由度があり、同じ種族を表す行列は複数あります。標準形（Hermite 正規形など）や、種族を一意に指名する不変量（wedgie）は<span class="xref" data-file="part3-05-optimization.html">Ⅲ-5</span>で触れます。<br>（2）本節の mapping はあくまで「何ステップ／何生成子ぶんか」という<strong>整数の勘定</strong>であり、生成音程が実際に何セントかという律射の<strong>調律</strong>の部分はまだ決めていません。（Ⅲ-1 の分離）。調律の決定はⅢ-5 の主題です。</p>
+      </div>
+    </details>
+
+    <h2 id="sec-names">名前をもった種族 ── kernel が個性を決める</h2>
+
+    <p>語彙が揃うと、第Ⅱ部4の「コンマ目録＝律射の設計空間」が正確な意味を持ちます。<strong>rank 2 の律射たちは、消すコンマ（kernel）で名指しできる</strong>のです。<br>5-limit では：81/80 を消せば<strong>ミーントーン</strong>、32805/32768 なら<strong>スキスマティック</strong>、15625/15552 なら<strong>kleismic（Hanson）</strong>、393216/390625 なら <strong>würschmidt</strong> 、250/243 なら <strong>porcupine</strong> ……。<br>それぞれの種族は generator も和声の文法も異なる、ひとつずつの「世界」です。主要な世界の地図帳は<span class="xref" data-file="part5-01-multiplicity.html">第Ⅴ部</span>で描きます。</p>
+
+    <div class="keybox">
+      <span class="kb-label">この節の要点</span>
+      <strong>monzo</strong>＝音程の素数指数ベクトル。<br><strong>val</strong>＝素数→ステップの換算表（双対ベクトル）、内積＝写像。<br><strong>mapping</strong>＝valの束（rank 本の生成音程への写像）。<br><strong>kernel</strong>＝0 に潰れるコンマの寄せ集め。<br><strong>rank ＝ 素数の個数 − 消したコンマの本数</strong>。<br>種族の指定＝ kernel の指定であり、調律（セント値）はまだ別の自由度として残る。
+    </div>
+
+    <nav class="pager" id="pager"></nav>
+  </main>
+</div>
+
+<script src="assets/data/toc.js"></script>
+<script src="assets/data/glossary.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/audio.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+<script>
+(function () {
+  "use strict";
+  const A3 = 220;
+  const PR = [2, 3, 5, 7, 11, 13];
+  const VALS = {
+    "12": [12, 19, 28, 34, 42, 44],
+    "19": [19, 30, 44, 53, 66, 70],
+    "22": [22, 35, 51, 62, 76, 81],
+    "31": [31, 49, 72, 87, 107, 115],
+    "41": [41, 65, 95, 115, 142, 152],
+    "53": [53, 84, 123, 149, 183, 196]
+  };
+
+  function factorize(n) {
+    const m = [0, 0, 0, 0, 0, 0];
+    for (let i = 0; i < PR.length; i++) {
+      while (n % PR[i] === 0) { n /= PR[i]; m[i]++; }
+    }
+    return n === 1 ? m : null;
+  }
+
+  const out = document.getElementById("mv-out");
+  const bJust = document.getElementById("mv-play-just");
+  const bTemp = document.getElementById("mv-play-temp");
+  let cur = null;
+
+  function calc() {
+    const txt = document.getElementById("mv-ratio").value.trim();
+    const m = txt.match(/^(\d+)\s*\/\s*(\d+)$/);
+    if (!m) { out.textContent = "「分子/分母」の形式で入力してください（例 81/80）。"; return; }
+    const num = parseInt(m[1], 10), den = parseInt(m[2], 10);
+    if (!(num > 0 && den > 0)) { out.textContent = "正の整数で入力してください。"; return; }
+    const fn = factorize(num), fd = factorize(den);
+    if (!fn || !fd) { out.textContent = "周波数比に 13-limit を超える素因数が含まれています（2,3,5,7,11,13 のみ対応）。"; return; }
+    const monzo = fn.map((e, i) => e - fd[i]);
+    const n = document.getElementById("mv-val").value;
+    const val = VALS[n];
+    const steps = monzo.reduce((s, e, i) => s + e * val[i], 0);
+    const justC = 1200 * Math.log2(num / den);
+    const tempC = steps * 1200 / parseInt(n, 10);
+    const err = tempC - justC;
+    // 末尾のゼロを省いた monzo 表示
+    let last = monzo.length - 1;
+    while (last > 0 && monzo[last] === 0) last--;
+    const mstr = "| " + monzo.slice(0, last + 1).join(" ") + " ⟩";
+    out.innerHTML =
+      num + "/" + den + " ＝ " + mstr +
+      "　→　" + n + "edo で <strong>" + steps + " ステップ</strong>" +
+      "（" + tempC.toFixed(2) + "¢、純正 " + justC.toFixed(2) + "¢、誤差 " +
+      (err >= 0 ? "+" : "") + err.toFixed(2) + "¢" +
+      (steps === 0 ? "　——<strong>テンパーアウト</strong>" : "") + "）";
+    cur = { r: num / den, tempC };
+    bJust.disabled = bTemp.disabled = false;
+  }
+
+  document.getElementById("mv-go").addEventListener("click", calc);
+  document.getElementById("mv-ratio").addEventListener("keydown", ev => {
+    if (ev.key === "Enter") calc();
+  });
+  document.getElementById("mv-val").addEventListener("change", () => { if (cur) calc(); });
+
+  bJust.addEventListener("click", () => {
+    if (cur) XenAudio.playFreqs([A3, A3 * cur.r], { dur: 2.2 });
+  });
+  bTemp.addEventListener("click", () => {
+    if (cur) XenAudio.playFreqs([A3, XenAudio.freqFromCents(A3, cur.tempC)], { dur: 2.2 });
+  });
+})();
+</script>
+</body>
+</html>

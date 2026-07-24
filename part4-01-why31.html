@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ⅳ-1 なぜ31か — 微分音のグリモワール</title>
+<link rel="icon" href="./assets/data/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<style>
+@font-face {
+  font-family: "BravuraText";
+  src: url("https://cdn.jsdelivr.net/gh/steinbergmedia/bravura@master/redist/woff/BravuraText.woff2") format("woff2"),
+       url("https://cdn.jsdelivr.net/gh/steinbergmedia/bravura@master/redist/woff/BravuraText.woff") format("woff");
+  font-display: swap;
+}
+.smufl { font-family: "BravuraText", serif; font-size: 1.5em; line-height: 1; vertical-align: -0.12em; }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <button id="nav-toggle" aria-label="目次を開く"><span></span><span></span><span></span></button>
+  <a class="site-name" href="index.html">微分音のグリモワール</a>
+  <span class="topbar-section">第Ⅳ部 31平均律</span>
+</header>
+
+<div class="layout">
+  <aside id="sidebar" aria-label="目次"></aside>
+  <div id="sidebar-overlay"></div>
+
+  <main class="content">
+    <p class="eyebrow">第Ⅳ部 31平均律　─　1</p>
+    <h1>なぜ31か ── システムの解剖</h1>
+
+    <div class="intuition">
+      <span class="layer-tag">直感レイヤー</span>
+      <p>第Ⅳ部は本書の中枢、<strong>オクターブを31等分する音律</strong>を解剖します。たかが31等分、されど31等分。しかし、これによって得られる<strong>38.7¢</strong>刻みは決して軽率な値ではありません。ミーントーンで消えずに残った最後の粒<strong>ディエシス（C♯とD♭の差）がそのまま1歩</strong>になったのです。<br>完全5度をわずか 5.2¢ 犠牲にするだけで、長3度はほぼ純正（+0.8¢）、そして12音の世界では手の届かなかった<strong>第7倍音（−1.1¢）</strong>までが鍵盤に載る。「1/4コンマ・ミーントーンの完成形」であり「7-limit への扉」でもある。それが 31edo です。</p>
+    </div>
+      
+    <div class="center-box">
+      <img src="./assets/data/31EDO_wheel.png"/ style="width: 100%;">
+    <p>画像は筆者が作成</p>
+    </div>
+    <h2 id="sec-anatomy">基本解剖</h2>
+
+    <p>1歩 \(= 1200/31 = 38.7097¢\)。主要な音程の在り処と精度を、まとめて聴ける形で示します。</p>
+
+    <div class="widget">
+      <p class="widget-title">主要音程の在り処 ── 31edo と純正の聴き比べ</p>
+      <div class="table-scroll">
+      <table>
+        <thead><tr><th>音程</th><th>純正比</th><th>31edo</th><th>セント</th><th>誤差</th><th></th></tr></thead>
+        <tbody id="iv-rows"></tbody>
+      </table>
+      </div>
+      <p class="widget-note">「聴」ボタン：純正か理想値 → 31edo の順で同じ音程を鳴らします。<br>完全5度の −5.2¢ は12edo（−2.0¢）より大きいものの、ミーントーンの発想（Ⅲ-1）どおり<strong>その犠牲が3度と7度に化けている</strong>のが数字から読めます。<br>11/8 だけは −9.4¢ と粗く、「使えるが純正とはやや言い難い」中立音程の材料。この扱いはⅣ-6でもう一度考えます。</p>
+        <p class="widget-note">音程名は<a href="http://ja.xen.wiki/w/31%E5%B9%B3%E5%9D%87%E5%BE%8B">ja.xen.wiki/31平均律</a>から参照。</p>
+    </div>
+
+    <h2 id="sec-primes">素数ごとの成績表</h2>
+
+    <p>patent val ⟨31 49 72 87 107 115] による各素数の誤差：</p>
+
+    <div class="table-scroll">
+    <table>
+      <thead><tr><th>素数</th><th>3</th><th>5</th><th>7</th><th>11</th><th>13</th></tr></thead>
+      <tbody>
+        <tr><th>ステップ</th><td class="num">49</td><td class="num">72</td><td class="num">87</td><td class="num">107</td><td class="num">115</td></tr>
+        <tr><th>誤差</th><td class="num">−5.19¢</td><td class="num"><strong>+0.78¢</strong></td><td class="num"><strong>−1.08¢</strong></td><td class="num">−9.38¢</td><td class="num">+11.08¢</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>成績の輪郭がはっきりしています。<br><strong>5 と 7 が抜群、3 は許容範囲、11 と 13 は粗い</strong>。つまり31は <strong>7-limit までは堅い音律</strong>です。<br>ミーントーンの3度の美学思想（素数5）を最大限活かしつつ、第7倍音の和声（素数7）の両方を、実用精度で同時に提供する。この「5 と 7 の同時的な良さ×ミーントーン思想」こそ、無数の EDO の中で31が特別視されてきた核心です。歴史的には Christiaan Huygens が1691年にこの7の近似の良さを指摘しています。（<span class="xref" data-file="part4-03-history.html">Ⅳ-3</span>）</p>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── 一貫性（consistency）という保証</summary>
+      <div class="precise-body">
+        <p>EDO の音程を「各音程を個別に最良近似」して使うと、和音の中で辻褄が合わなくなることがあります（例えば周波数比 n/d の最良近似 ≠ 素因数の組み合わせで得られる最良近似）。この事故が<strong>起きない</strong>ことの保証が一貫性（consistency）です。<br>q-odd-limit のすべての音程について、patent val による写像が個別に最良近似と一致するとき、その EDO は q-odd-limit で一貫的といいます。<br><strong>31edo は 11-odd-limit まで一貫的</strong>（13 で破綻：例えば 13/9 の個別最良近似『16ステップ』と val 経由の値『17ステップ』がずれます）。<br>実務上の意味は明快で、<strong>11-limit までの和音は「ステップの足し算」だけで組んでよく、近似の辻褄は自動的に合う</strong>ということです。4:5:6:7:9:11 の六和音（0, 10, 18, 25, 31+20, 31+14 歩）さえ、部品の算術だけで正しく組み上がります。</p>
+        <p>もうひとつの見方として、31edo の val は 5-limit で 12 と 19 の和は<br>\( \left\langle 12 \; 19 \; 28 \right] + \left\langle 19 \; 30 \; 44 \right] = \left\langle 31 \; 49 \; 72 \right] \)です。<br>12（3が得意・5がまあまあ）と 19（5がそこそこ・3がそこそこ）の得意分野を平均した位置に31が立つというように、第Ⅴ部で使う「EDO の系譜」の読み方の、最初の実例となっています。</p>
+      </div>
+    </details>
+
+    <h2 id="sec-diesis">ディエシス ── 31の「最小の意味単位」</h2>
+
+    <p>1歩＝38.7¢ には名前があります。その名も『<strong>ディエシス</strong>』。ミーントーンで C♯ と D♭ の間に残るコンマ（128/125、Ⅱ-4）「小ディエシス」の差分が、31では明確に1歩です。本書の記譜ではこの1歩を、コミュニティで今や一般的な Stein–Zimmermann 記号のハーフシャープ「<span class="smufl">&#xE282;</span>」・ハーフフラット「<span class="smufl">&#xE280;</span>」で書きます（第Ⅳ部の標準とします。詳細は<span class="xref" data-file="part4-05-keyboard.html">Ⅳ-5</span>）。C の1歩上は C<span class="smufl">&#xE282;</span>、1歩下は C<span class="smufl">&#xE280;</span>。</p>
+
+    <div class="widget">
+      <p class="widget-title">ディエシスの階段 ── 全音を5分割して歩く</p>
+      <div class="wrow">
+        <button class="btn" id="dz-walk">C → D をディエシスで歩く（C・C<span class="smufl">&#xE282;</span>・C♯・D♭・D<span class="smufl">&#xE280;</span>・D）</button>
+        <button class="btn secondary" id="dz-12">12edo の半音階と比較（C・C♯・D）</button>
+      </div>
+      <p class="widget-note">全音（5歩）の内部に4つの中間音。<br>この「全音を五分割」という感覚は、実は14世紀初頭のマルケット・ダ・パドヴァが夢見たものでもあります（Ⅳ-3）。</p>
+    </div>
+
+    <div class="keybox">
+      <span class="kb-label">この節の要点</span>
+      31edo：1歩＝38.71¢＝<strong>ディエシス</strong>。<br>完全5度 −5.2¢ の犠牲で長3度 +0.8¢・第7倍音 −1.1¢ を獲得する <strong>7-limit の音律</strong>。<br><strong>11-odd-limit まで一貫的</strong>＝11-limit の和音はステップの算術だけで正しく組める。<br>±1歩の記譜は Stein–Zimmermann 記号（ハーフシャープ「<span class="smufl">&#xE282;</span>」・ハーフフラット「<span class="smufl">&#xE280;</span>」）。
+    </div>
+
+    <nav class="pager" id="pager"></nav>
+  </main>
+</div>
+
+<script src="assets/data/toc.js"></script>
+<script src="assets/data/glossary.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/audio.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+<script>
+(function () {
+  "use strict";
+  const C4 = 261.6255653;
+  const STEP = 1200 / 31;
+
+  const ROWS = [
+    ["完全5度", "3/2", 3 / 2, 18],
+    ["完全4度", "4/3", 4 / 3, 13],
+    ["長3度", "5/4", 5 / 4, 10],
+    ["短3度", "6/5", 6 / 5, 8],
+    ["増6度", "7/4", 7 / 4, 25],
+    ["増2度", "7/6", 7 / 6, 7],
+    ["減4度", "9/7", 9 / 7, 11],
+    ["中立3度", "11/9", 11 / 9, 9],
+    ["中立7度", "11/6", 11 / 6, 27],
+    ["長4度", "11/8", 11 / 8, 14],
+    ["全音（大全音と小全音の中庸）", "9/8·10/9 の中間", Math.sqrt(9 / 8 * 10 / 9), 5],
+    ["全音階的半音", "16/15", 16 / 15, 3],
+    ["半音階的半音", "25/24", 25 / 24, 2]
+  ];
+
+  const tb = document.getElementById("iv-rows");
+  ROWS.forEach(([name, ratio, r, steps], idx) => {
+    const just = 1200 * Math.log2(r);
+    const edo = steps * STEP;
+    const err = edo - just;
+    const tr = document.createElement("tr");
+    tr.innerHTML =
+      "<td>" + name + "</td><td class='num'>" + ratio + "</td>" +
+      "<td class='num'>" + steps + "歩</td>" +
+      "<td class='num'>" + edo.toFixed(2) + "¢</td>" +
+      "<td class='num'>" + (err >= 0 ? "+" : "") + err.toFixed(2) + "¢</td>" +
+      "<td><button class='btn small' data-i='" + idx + "'>聴</button></td>";
+    tb.appendChild(tr);
+  });
+  tb.addEventListener("click", ev => {
+    const b = ev.target.closest("button[data-i]");
+    if (!b) return;
+    const [, , r, steps] = ROWS[+b.getAttribute("data-i")];
+    const seq = [
+      [C4, C4 * r],
+      [C4, XenAudio.freqFromCents(C4, steps * STEP)]
+    ];
+    XenAudio.playFreqs(seq[0], { dur: 1.3 });
+    setTimeout(() => XenAudio.playFreqs(seq[1], { dur: 1.3 }), 1500);
+  });
+
+  const stepSeq = arr => XenAudio.playSeq(arr.map(s => XenAudio.freqFromCents(C4, s * STEP)), { dur: 0.5, gap: 0.08 });
+  document.getElementById("dz-walk").addEventListener("click", () => stepSeq([0, 1, 2, 3, 4, 5]));
+  document.getElementById("dz-12").addEventListener("click", () =>
+    XenAudio.playSeq([C4, XenAudio.freqFromCents(C4, 100), XenAudio.freqFromCents(C4, 200)], { dur: 0.5, gap: 0.08 }));
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ⅰ-1 音・振動・対数的ピッチ・うなり — 微分音のグリモワール</title>
+<link rel="icon" href="./assets/data/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+</head>
+<body>
+<header class="topbar">
+  <button id="nav-toggle" aria-label="目次を開く"><span></span><span></span><span></span></button>
+  <a class="site-name" href="index.html">微分音のグリモワール</a>
+  <span class="topbar-section">第Ⅰ部 土台</span>
+</header>
+
+<div class="layout">
+  <aside id="sidebar" aria-label="目次"></aside>
+  <div id="sidebar-overlay"></div>
+
+  <main class="content">
+    <p class="eyebrow">第Ⅰ部 土台：音・周波数・知覚　─　1</p>
+    <h1>音・振動・対数的ピッチ・うなり</h1>
+
+    <div class="intuition">
+      <span class="layer-tag">直感レイヤー</span>
+      <p>音は空気の細かい振動で、1秒間に何回振動するかが「高さ」を決めます。この回数（周波数）は倍・倍で聞くのが人間の耳の癖で、2倍になるたび「同じ音名の一段上」＝オクターブに聞こえます。そして、高さがほんのわずかに違う2つの音を同時に鳴らすと、音量が「ワンワン」と揺れる<strong>うなり</strong>が生まれます。うなりは耳が持つ最も精密な物差しです。<br>この節では、この3つ「周波数」「オクターブ」「うなり」を実際に鳴らして確かめます。</p>
+    </div>
+
+    <h2 id="sec-freq">音の高さは周波数</h2>
+
+    <p>音は媒質（ふつうは空気）の圧力の振動として伝わります。振動が1秒間に繰り返される回数を<strong>周波数</strong>と呼び、単位は Hz（ヘルツ）です。周波数が高いほど、音は高く聞こえます。人間が「ピッチ（音の高さ）」として聞き取れる範囲は、おおよそ 20 Hz から 20 kHz のうち、旋律として明瞭に機能するのはせいぜい 27 Hz〜4 kHz 程度です。合奏の基準として広く使われる A4 は 440 Hz です。</p>
+
+    <div class="widget">
+      <p class="widget-title">周波数を聴く</p>
+      <div class="wrow">
+        <label for="fx-slider">周波数</label>
+        <input type="range" id="fx-slider" min="0" max="1000" value="600">
+        <span class="wval" id="fx-readout">440.0 Hz</span>
+        <span class="wval" id="fx-note">A4</span>
+      </div>
+      <div class="wrow">
+        <button class="btn" id="fx-play">鳴らす</button>
+      </div>
+      <p class="widget-note">スライダーは対数目盛（55〜1760 Hz）です。同じ幅の移動が「同じ音程」に聞こえることに注意してください。<br>これが次項の伏線です。音名は 12edo 基準（A4=440）の参考表示です。</p>
+    </div>
+
+    <h2 id="sec-pure">純音と複合音</h2>
+
+    <p>もっとも単純な音は、単一の正弦波からなる<strong>純音</strong>です。<br>純音は自然界にはほとんど存在しない「実験室の音」ですが、聴覚の性質を切り分けて調べる基本素材になります。一方、楽器の音や声など現実の楽音は、多数の正弦波成分（<strong>部分音</strong>）の重ね合わせでできた<strong>複合音</strong>です。<br>部分音の構成こそが音色の正体であり、その典型的な並び方が<a href="part1-03-harmonics.html">倍音列（第Ⅰ部3）</a>です。</p>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── 純音・周期性・ピッチの対応物</summary>
+      <div class="precise-body">
+          <p>純音は \( x(t) = A \sin(2\pi f t + \theta) \) と書けます。<br>振幅 \(A\) はおおむねラウドネスに、周波数 \(f\) はピッチに対応しますが、初期位相 \(\theta\) は単独では知覚に<strong>あまり</strong>寄与しません。複合音が周期 \(T\) をもつ（＝波形が \(T\) ごとに繰り返す）とき、その成分は基本周波数 \(f_0 = 1/T\) の整数倍に限られ（フーリエ級数）、ピッチは通常 \(f_0\) に対応して聞こえます。重要な注意として、<strong>ピッチは物理量ではなく知覚量</strong>です。「ピッチ＝基本周波数」は多くの場合よい近似ですが、成分の欠けた音や非整数次成分をもつ音では乖離が生じます。その代表例であるミッシングファンダメンタル（基本音が物理的に存在しないのにそのピッチが聞こえる現象）は<span class="xref" data-file="part6-05-virtual-pitch.html">第Ⅵ部5</span>で扱います。</p>
+      </div>
+    </details>
+
+    <h2 id="sec-log">ピッチは対数的</h2>
+
+    <p>ここからが、本書全体を支える最初の急所です。耳は周波数の「差」ではなく「比」を聞きます。110 Hz→ 220 Hz の隔たり（差 110 Hz）と、880 Hz→ 1760 Hz の隔たり（差 880 Hz）は、物理的な差は2倍違うのに、<strong>同じ大きさの音程</strong>（どちらもオクターブ）に聞こえます。等しい比が等しい音程に聞こえる。これを「ピッチ知覚は（周波数に対して）対数的である」と言います。</p>
+
+    <p>この性質があるからこそ、音程は周波数で表すのが自然になり、比を扱いやすくするための対数の物差し（セント）が生まれます（<a href="part1-02-cents.html">次節</a>）。旋律を移調しても同じ旋律に聞こえるのは、すべての音の比が保たれるからです。</p>
+
+    <div class="widget">
+      <p class="widget-title">「等しい比＝等しい音程」を聴く</p>
+      <div class="wrow">
+        <button class="btn" id="log-a">A：110 → 220 Hz（差 110 Hz）</button>
+        <button class="btn" id="log-b">B：880 → 1760 Hz（差 880 Hz）</button>
+        <button class="btn secondary" id="log-c">C：880 → 990 Hz（差 110 Hz）</button>
+      </div>
+      <p class="widget-note">A と B は物理的な差が違うのに同じ音程（オクターブ）に聞こえ、A と C は物理的な差が同じなのに違う音程（C は全音程度）に聞こえます。</p>
+    </div>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── 「対数的」の範囲と留意点</summary>
+      <div class="precise-body">
+        <p>厳密には、ピッチ知覚の対数性は<strong>音楽的な音域（おおよそ 60 Hz〜4 kHz）における音程の等価性</strong>について言える経験則です。心理物理学には周波数と「ピッチの大きさ」を直接対応づけようとする mel 尺度のような別系統の尺度もあり、こちらは低域で対数から外れます。ただし旋律・和声・移調といった音楽的文脈で問題になるのは音程（比）の等価性であり、本書で扱う範囲では「等比＝等音程」を安心して土台にできます。また超高域・超低域ではオクターブ感自体が崩れ、純音の高域では聴感上のオクターブが 2:1 よりわずかに広めに好まれる「オクターブ伸長（octave stretch）」も知られています。またピアノ調律の伸長（stretch tuning）には弦の非調和性という別の要因も絡みます。これは実弦の物理の話として第Ⅰ部3の末尾で触れます。</p>
+      </div>
+    </details>
+
+    <h2 id="sec-octave">オクターブと等価性</h2>
+
+    <p>周波数比 1:2 の音程が<strong>オクターブ</strong>です。オクターブ離れた2音を人は「同じ音名の音」：同じピッチクラスとみなします。この<strong>オクターブ等価性</strong>は多くの音楽文化に共有され、音組織を「1オクターブぶんの円環」に畳んで考えることを可能にします。トップページの円環が31分割されていたのは、まさにこの円環（オクターブ）を31等分するのが31平均律だからです。</p>
+
+    <p>そして重要なのは、耳が 1:2 という比に対して<strong>驚くほど厳密</strong>だということです。1:2 からわずか10¢（1%未満）ずらしただけで、響きの「溶け方」がはっきり変わります。確かめてみましょう。</p>
+
+    <div class="widget">
+      <p class="widget-title">1:2 の精密さを聴く</p>
+      <div class="wrow">
+        <button class="btn" id="oct-just">ちょうど 1:2（220 + 440 Hz）</button>
+        <button class="btn secondary" id="oct-off">1:2 から +10¢（220 + 442.5 Hz）</button>
+      </div>
+      <p class="widget-note">前者は1本の音のように溶け、後者はゆっくりした揺れ（うなり）が浮かびます。この揺れの正体が次項の主題です。</p>
+    </div>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── 等価性の根拠と限界</summary>
+      <div class="precise-body">
+        <p>オクターブ等価性の根拠は複合的です。<br>（1）音響的：1:2 の複合音どうしは部分音が完全に重なる部分集合関係になり、干渉が最小になる。<br>（2）生理的：聴神経の発火の時間パターン（位相固定）が単純な整数比で整合する。<br>（3）文化的：等価性の「強さ」は文化・訓練により変動するという報告もある。（協和の起源をめぐる論争と合わせて<span class="xref" data-file="part6-06-consonance.html">第Ⅵ部6</span>）。<br>なお本書では以後、断りなく「音程」と言うときはオクターブに畳んだ音程（0〜1200¢）を指すことがあります。オクターブそのものを分割の対象としない音律（Bohlen-Pierce など）は<span class="xref" data-file="part5-06-nonoctave.html">第Ⅴ部6</span>で扱います。</p>
+      </div>
+    </details>
+
+    <h2 id="sec-beats">うなり ── 耳の物差し</h2>
+
+    <p>周波数がわずかに異なる2つの音を同時に鳴らすと、音量が周期的に強弱する<strong>うなり</strong>が聞こえます。うなりの速さは単純で、<strong>1秒あたり |f₁ − f₂| 回</strong>。2音の差がそのまま揺れの回数になります。差が 1 Hz なら1秒に1回、ワン……ワン……と揺れます。</p>
+
+    <div class="widget">
+      <p class="widget-title">うなりを聴く・見る</p>
+      <div class="wrow">
+        <button class="btn" id="beat-toggle">再生</button>
+        <label for="beat-delta">周波数差</label>
+        <input type="range" id="beat-delta" min="0" max="200" value="30">
+        <span class="wval" id="beat-readout">Δ = 3.0 Hz</span>
+      </div>
+      <div class="wrow">
+        <span class="wval" id="beat-info">220 Hz ＋ 223.0 Hz → うなり 3.0 回/秒</span>
+      </div>
+      <div id="beat-plot"></div>
+      <p class="widget-note">図は2音の合成波形（藍）とその包絡（点線）。差を大きくしていくと、うなりはしだいに速い「揺れ」から粗い「ザラつき」へ変わり、やがて2つの音に分離して聞こえます。この連続的な変化こそ、<a href="part1-04-psychoacoustics.html">第Ⅰ部4（粗さと臨界帯域）</a>の主題です。</p>
+    </div>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── うなりの数理と調律実務</summary>
+      <div class="precise-body">
+        <p>等振幅の2つの正弦波の和は、三角関数の和積公式により</p>
+        <p>$$ \sin(2\pi f_1 t) + \sin(2\pi f_2 t) = 2\cos\!\Big(2\pi \frac{f_1 - f_2}{2} t\Big)\,\sin\!\Big(2\pi \frac{f_1 + f_2}{2} t\Big) $$</p>
+        <p>と変形できます。すなわち平均周波数 \((f_1+f_2)/2\) の搬送波が、周波数 \(|f_1-f_2|/2\) の包絡で振幅変調された形です。包絡は1周期に2回極大をとるため、聴感上のうなりの頻度は \(|f_1 - f_2|\) 回/秒になります。</p>
+        <p><strong>調律実務との接続</strong>：うなりは純音どうしだけでなく、複合音の<strong>部分音どうし</strong>の間にも生じます。これが調律師の耳の物差しです。例えば C4（261.63 Hz）と、12edo の完全5度上 G4（392.00 Hz）を考えます。C4 の第3倍音は 784.88 Hz、G4 の第2倍音は 783.99 Hz。両者の差 0.89 Hz が、この5度を鳴らしたときに聞こえる約 0.9 回/秒のうなりです。純正な 3/2（この場合 G ≈ 392.44 Hz）に合わせればうなりは止まります。12edo の5度が純正から −1.955¢ しかずれていないのに、うなりとしてははっきり聴取できます。<br><strong>うなりを介した聴取は、単独の音高の聞き分け（<a href="part1-05-jnd.html">第Ⅰ部5</a>）よりはるかに精密</strong>なのです。微分音の議論で「同時に鳴らせばコンマは聞こえる」と言われる根拠がここにあります。</p>
+        <div class="wrow">
+          <button class="btn small" id="beat-fifth-12">12edo の5度（C4+G4）を聴く</button>
+          <button class="btn small secondary" id="beat-fifth-just">純正 3/2 の5度を聴く</button>
+        </div>
+      </div>
+    </details>
+
+    <div class="keybox">
+      <span class="kb-label">この節の要点</span>
+      音の高さは周波数（Hz）に対応するが、耳は差ではなく<strong>比</strong>を聞く（対数的ピッチ）。比 2:1＝オクターブは「同じ音」に畳まれ、音組織は円環になる。わずかな周波数差は<strong>うなり |f₁−f₂| Hz</strong> として聞こえ、耳の最も精密な物差しとして働く。
+    </div>
+
+    <p>次節では、「比を聞く耳」のための物差し〝セント〟を導入し、音程の計算術を固めます。</p>
+
+    <nav class="pager" id="pager"></nav>
+  </main>
+</div>
+
+<script src="assets/data/toc.js"></script>
+<script src="assets/data/glossary.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/audio.js"></script>
+<script src="assets/figures.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+<script>
+(function () {
+  "use strict";
+
+  /* --- 周波数エクスプローラ（対数スライダー 55–1760 Hz） --- */
+  const fxSlider = document.getElementById("fx-slider");
+  const fxRead = document.getElementById("fx-readout");
+  const fxNote = document.getElementById("fx-note");
+  function fxFreq() {
+    const t = fxSlider.value / 1000;         // 0..1
+    return 55 * Math.pow(2, t * 5);          // 55 * 2^(0..5) = 55..1760
+  }
+  function fxUpdate() {
+    const f = fxFreq();
+    fxRead.textContent = f.toFixed(1) + " Hz";
+    fxNote.textContent = XenAudio.noteName(f);
+  }
+  fxSlider.addEventListener("input", fxUpdate);
+  fxUpdate();
+  document.getElementById("fx-play").addEventListener("click", () => {
+    XenAudio.playFreq(fxFreq(), { dur: 1.0 });
+  });
+
+  /* --- 等比＝等音程デモ --- */
+  document.getElementById("log-a").addEventListener("click", () => XenAudio.playSeq([110, 220], { dur: 0.7 }));
+  document.getElementById("log-b").addEventListener("click", () => XenAudio.playSeq([880, 1760], { dur: 0.7 }));
+  document.getElementById("log-c").addEventListener("click", () => XenAudio.playSeq([880, 990], { dur: 0.7 }));
+
+  /* --- オクターブの精密さ --- */
+  document.getElementById("oct-just").addEventListener("click", () =>
+    XenAudio.playFreqs([220, 440], { dur: 2.4 }));
+  document.getElementById("oct-off").addEventListener("click", () =>
+    XenAudio.playFreqs([220, XenAudio.freqFromCents(440, 10)], { dur: 2.4 }));
+
+  /* --- うなり：持続2音＋波形図 --- */
+  const BASE = 400;
+  let beatV1 = null, beatV2 = null;
+  const beatBtn = document.getElementById("beat-toggle");
+  const beatSlider = document.getElementById("beat-delta");
+  const beatRead = document.getElementById("beat-readout");
+  const beatInfo = document.getElementById("beat-info");
+  const plotDiv = document.getElementById("beat-plot");
+
+  function delta() { return beatSlider.value / 5; }   // 0..40 Hz
+
+  let raf = null;
+  function drawBeat() {
+    raf = null;
+    const d = delta();
+    const W = Math.max(0.15, Math.min(1.2, 3 / Math.max(d, 2.5)));
+    const N = 2400;
+    const pts = [];
+    for (let i = 0; i <= N; i++) {
+      const t = i / N * W;
+      const y = (Math.sin(2 * Math.PI * BASE * t) + Math.sin(2 * Math.PI * (BASE + d) * t)) / 2;
+      pts.push([t, y]);
+    }
+    const p = Fig.plot(plotDiv, {
+      w: 680, h: 220, x: [0, W], y: [-1.15, 1.15],
+      pad: { l: 40, r: 12, t: 10, b: 38 }
+    });
+    p.polyline(pts, { "stroke-width": 1.1 });
+    // 包絡 ±|cos(πΔt)|
+    if (d > 0.01) {
+      const env = [], envN = [];
+      for (let i = 0; i <= 400; i++) {
+        const t = i / 400 * W;
+        const e = Math.abs(Math.cos(Math.PI * d * t));
+        env.push([t, e]); envN.push([t, -e]);
+      }
+      p.polyline(env,  { stroke: "#8a6116", "stroke-width": 1.4, "stroke-dasharray": "5 4" });
+      p.polyline(envN, { stroke: "#8a6116", "stroke-width": 1.4, "stroke-dasharray": "5 4" });
+    }
+    const xt = [];
+    for (let t = 0; t <= W + 1e-9; t += W / 4) xt.push(t);
+    p.axisX(xt, v => v.toFixed(2), "時間（秒）");
+    p.axisY([-1, 0, 1], v => v, "");
+  }
+  function scheduleDraw() { if (!raf) raf = requestAnimationFrame(drawBeat); }
+
+  function beatUpdate() {
+    const d = delta();
+    beatRead.textContent = "Δ = " + d.toFixed(1) + " Hz";
+    beatInfo.textContent = BASE + " Hz ＋ " + (BASE + d).toFixed(1) +
+      " Hz → うなり " + d.toFixed(1) + " 回/秒";
+    if (beatV2) beatV2.setFreq(BASE + d);
+    scheduleDraw();
+  }
+  beatSlider.addEventListener("input", beatUpdate);
+
+  beatBtn.addEventListener("click", () => {
+    if (beatV1) {
+      beatV1.stop(); beatV2.stop();
+      beatV1 = beatV2 = null;
+      beatBtn.textContent = "再生";
+      beatBtn.classList.remove("secondary");
+    } else {
+      beatV1 = XenAudio.hold(BASE, { gain: 0.18 , wave:"sine" });
+      beatV2 = XenAudio.hold(BASE + delta(), { gain: 0.18 , wave:"sine" });
+      beatBtn.textContent = "停止";
+      beatBtn.classList.add("secondary");
+    }
+  });
+  beatUpdate();
+
+  /* --- 調律実務の例：12edo の5度 vs 純正 3/2 --- */
+  const C4 = 261.6256;
+  document.getElementById("beat-fifth-12").addEventListener("click", () =>
+    XenAudio.playFreqs([C4, C4 * Math.pow(2, 7 / 12)], { dur: 3.2 }));
+  document.getElementById("beat-fifth-just").addEventListener("click", () =>
+    XenAudio.playFreqs([C4, C4 * 3 / 2], { dur: 3.2 }));
+})();
+</script>
+</body>
+</html>

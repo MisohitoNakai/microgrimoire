@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ⅰ-5 音高弁別閾（JND） — 微分音のグリモワール</title>
+<link rel="icon" href="./assets/data/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<style>
+  .cmp-bars { margin: 1.2rem auto; }
+  .cmp-row { display: flex; align-items: center; gap: .7rem; margin: .35rem 0; }
+  .cmp-label { min-width: 13.5em; font-size: .86rem; color: var(--ink-soft); text-align: right; }
+  .cmp-track { flex: 1; background: var(--rule-soft); border-radius: 5px; height: 1.05rem; position: relative; }
+  .cmp-fill { position: absolute; left: 0; top: 0; bottom: 0; background: var(--accent); border-radius: 5px; }
+  .cmp-fill.amber { background: #c9973a; }
+  .cmp-val { min-width: 4.5em; font-family: var(--font-mono); font-size: .84rem; color: var(--accent-dark); }
+  #jnd-stage { min-height: 3.2em; }
+  #jnd-fb { font-weight: 600; }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <button id="nav-toggle" aria-label="目次を開く"><span></span><span></span><span></span></button>
+  <a class="site-name" href="index.html">微分音のグリモワール</a>
+  <span class="topbar-section">第Ⅰ部 土台</span>
+</header>
+
+<div class="layout">
+  <aside id="sidebar" aria-label="目次"></aside>
+  <div id="sidebar-overlay"></div>
+
+  <main class="content">
+    <p class="eyebrow">第Ⅰ部 土台：音・周波数・知覚　─　5</p>
+    <h1>音高弁別閾（JND）── 31edo は細かすぎないか</h1>
+
+    <div class="intuition">
+      <span class="layer-tag">直感レイヤー</span>
+      <p>「オクターブを31等分なんて、細かすぎて聞き分けられないのでは？」<br>微分音の話をすると必ず出る疑問です。答えを先に言えば、<strong>訓練していない耳でも、続けて鳴る2音なら十数セントの差は聞き取れ、31平均律の1歩（約39¢）は余裕で聞こえる差</strong>です。しかも同時に鳴らせば、うなりを使ってさらに細かい差まで分かります。この節では、人の耳の解像度「弁別閾（JND）」の相場を押さえ、最後に自分の耳をその場で測ります。</p>
+    </div>
+
+    <h2 id="sec-def">弁別閾とは</h2>
+
+    <p><strong>JND</strong>（just noticeable difference・丁度可知差異）は、2つの刺激の違いに気づける最小の差のことです。音高については「続けて鳴らした2音の高さの違いが分かる最小のセント差」として測るのが基本形です。<br>音楽・微分音の文脈でこの数字が重要なのは、音律間の差（コンマや近似誤差）が<strong>聞こえる差なのかどうか</strong>の判定基準になるからです。</p>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── 相場と、値を動かす要因</summary>
+      <div class="precise-body">
+        <p>音高の JND は単一の定数ではなく、条件で大きく動きます。目安として、中音域（500 Hz〜2 kHz）・十分な長さ（200 ms 以上）・十分な音量の純音を<strong>順に</strong>聴き比べる課題では、周波数比にしておよそ 0.2〜1%（セントに直して<strong>約 3〜17¢</strong>）の範囲に多くの測定が収まります。訓練された聴取者や音楽家は下限側（数セント）に寄り、好条件の実験室では 1¢ 台の報告もあります。値を動かす主な要因は次のとおりです。</p>
+        <ul>
+          <li><strong>周波数域</strong>：中音域が最も鋭く、低域（100 Hz 以下）と高域（4 kHz 以上）では急激に粗くなる。</li>
+          <li><strong>持続時間</strong>：短い音ほど閾は上がる（数十 ms の音では大きく悪化）。</li>
+          <li><strong>訓練</strong>：音楽訓練で数倍改善しうる。微分音の聴取自体も訓練になる。</li>
+          <li><strong>提示方法</strong>：<strong>同時</strong>に鳴らせば、うなり（<a href="part1-01-sound.html#sec-beats">Ⅰ-1</a>）や粗さを手掛かりにでき、順次提示よりはるかに細かい差（条件次第で 1¢ 未満）が検出できる。調律師が和音で合わせるのはこのためです。</li>
+          <li><strong>文脈</strong>：旋律・和声の文脈があると、カテゴリ知覚（音程を「種類」で聞く癖）が働き、単発の弁別とは別の振る舞いをする。</li>
+        </ul>
+        <p>本書の以後の議論では、保守的に「<strong>順次なら 5〜10¢ 程度、同時ならそれよりずっと細かい</strong>」を作業仮説とします。</p>
+      </div>
+    </details>
+
+    <h2 id="sec-scale">微分音の物差しに重ねる</h2>
+
+    <p>この相場を、本書に登場する主要な「小さな差」と並べてみます。バーは 12edo の半音（100¢）を全幅とした比率です。</p>
+
+    <div class="cmp-bars" id="cmp-bars"></div>
+
+    <p>読み取れることは三つ。<br>第一に、<strong>31edo の 1 ステップ（38.7¢）は JND の 4〜8 倍</strong>もある、はっきり聞こえる音程差で、「細かすぎて無意味」という心配は不要です。<br>第二に、12edo の長3度が純正 5/4 から外れている量（13.7¢）は順次でも聞き取れる域にあり、同時に鳴らせばうなりとして明瞭で、<strong>12edo の「濁り」は知覚可能な実在</strong>です。<br>第三に、シントニックコンマ（21.5¢、<span class="xref" data-file="part2-03-syntonic.html">第Ⅱ部3</span>）のようなコンマ級の差は、単発では微妙でも文脈と同時性の助けを借りれば十分聞こえる。だからこそ、コンマを「どう処理するか」が音律設計の中心問題になるのです（第Ⅲ部）。</p>
+
+    <h2 id="sec-test">自分の耳を測る</h2>
+
+    <p>では、あなたの順次弁別の閾を測ってみましょう。2つの音が続けて鳴ります。<strong>2音目が高いか低いか</strong>を答えてください。正解が続くと差が狭まり、間違えると広がります。約 20〜30 回の回答で推定値が出ます。</p>
+
+    <div class="widget">
+      <p class="widget-title">聴き分けテスト（順次・純音）</p>
+      <div class="wrow">
+        <button class="btn" id="jnd-start">テスト開始</button>
+        <button class="btn small secondary" id="jnd-replay" disabled>もう一度聴く</button>
+        <span class="wval" id="jnd-progress"></span>
+      </div>
+      <div id="jnd-stage">
+        <div class="wrow">
+          <button class="btn secondary" id="jnd-up" disabled>2音目が高い</button>
+          <button class="btn secondary" id="jnd-down" disabled>2音目が低い</button>
+          <span id="jnd-fb"></span>
+        </div>
+      </div>
+      <div class="wrow"><span class="wval" id="jnd-result" style="min-width:100%"></span></div>
+      <p class="widget-note">静かな環境・ヘッドフォン推奨。基準音はテストごとにランダムに移動します（音の記憶ではなく差の聴取を測るため）。この簡易テストは実験室水準の測定ではありません。再生環境・疲労・偶然で数セントは揺れます。それでも 31edo の1歩があなたの閾の何倍上にあるかを実感するには十分です。</p>
+    </div>
+
+    <h2 id="sec-sowhat">土台の総括 ── ここから微分音theoryへ</h2>
+
+    <p>第Ⅰ部で据えた土台を一枚にまとめます。<br>耳は比を聞き（Ⅰ-1）、<br>比はセントで足し算になる（Ⅰ-2）。<br>楽音は倍音列を内蔵し、純正音程はその内部関係である（Ⅰ-3）。<br>有限の分解能をもつ耳にとって、倍音の衝突の少ない小整数比は「くぼみ」として特別である（Ⅰ-4）。<br>そしてその特別さを支える差の多く（コンマ、近似誤差、31edo のステップ）は、<strong>人間の弁別能力の内側にある、聞こえる差</strong>である（本節）。</p>
+
+    <p>ならば次の問いは必然。特別な純正音程だけで音楽を組めばよいのではないか？<br>実際にそれを試みるのが純正律であり、そこには美しい格子構造と、<strong>コンマ</strong>という名の深刻なジレンマが待っています。第Ⅱ部の主題です。</p>
+
+    <div class="keybox">
+      <span class="kb-label">この節の要点</span>
+      順次の音高 JND はおおよそ 3〜17¢（条件依存）、同時ならうなりでさらに精密。<br><strong>31edo の 1 ステップ（38.7¢）は明瞭に聞こえる差</strong>であり、12edo の長3度の誤差（13.7¢）も知覚可能。コンマ級の差の可聴性こそが、音律設計という営みの存在理由。
+    </div>
+
+    <nav class="pager" id="pager"></nav>
+  </main>
+</div>
+
+<script src="assets/data/toc.js"></script>
+<script src="assets/data/glossary.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/audio.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+<script>
+(function () {
+  "use strict";
+
+  /* --- 比較バー --- */
+  const ITEMS = [
+    ["スキスマ（32805/32768）", 1.95, false],
+    ["12edo の5度の誤差", 1.96, false],
+    ["順次 JND の下限（訓練有）", 3, true],
+    ["12edo の長3度の誤差", 13.69, false],
+    ["順次 JND の上限（未訓練）", 17, true],
+    ["シントニックコンマ（81/80）", 21.51, false],
+    ["31edo の 1 ステップ", 38.71, false],
+    ["12edo の半音", 100, false]
+  ];
+  const wrap = document.getElementById("cmp-bars");
+  ITEMS.forEach(([label, val, isJnd]) => {
+    const row = document.createElement("div");
+    row.className = "cmp-row";
+    const lab = document.createElement("span");
+    lab.className = "cmp-label"; lab.textContent = label;
+    const track = document.createElement("div");
+    track.className = "cmp-track";
+    const fill = document.createElement("div");
+    fill.className = "cmp-fill" + (isJnd ? " amber" : "");
+    fill.style.width = Math.min(100, val).toFixed(2) + "%";
+    track.appendChild(fill);
+    const v = document.createElement("span");
+    v.className = "cmp-val"; v.textContent = val.toFixed(2) + "¢";
+    row.appendChild(lab); row.appendChild(track); row.appendChild(v);
+    wrap.appendChild(row);
+  });
+
+  /* --- 適応的階段法テスト --- */
+  const startBtn = document.getElementById("jnd-start");
+  const replayBtn = document.getElementById("jnd-replay");
+  const upBtn = document.getElementById("jnd-up");
+  const downBtn = document.getElementById("jnd-down");
+  const fb = document.getElementById("jnd-fb");
+  const prog = document.getElementById("jnd-progress");
+  const result = document.getElementById("jnd-result");
+
+  const MAX_TRIALS = 30, TARGET_REV = 8;
+  let level, trial, correctStreak, reversals, lastDir, running;
+  let curBase, curSign;
+
+  function playPair() {
+    curBase = 380 + Math.random() * 140;                 // 380–520 Hz にロービング
+    curSign = Math.random() < 0.5 ? 1 : -1;
+    const f2 = XenAudio.freqFromCents(curBase, curSign * level);
+    XenAudio.playFreq(curBase, { dur: 0.55, gain: 0.28 });
+    XenAudio.playFreq(f2, { dur: 0.55, when: 0.8, gain: 0.28 });
+  }
+
+  function updateProg() {
+    prog.textContent = "試行 " + trial + " ／ 差 " + level.toFixed(1) + "¢";
+  }
+
+  function begin() {
+    level = 40; trial = 1; correctStreak = 0;
+    reversals = []; lastDir = null; running = true;
+    result.textContent = ""; fb.textContent = "";
+    [upBtn, downBtn, replayBtn].forEach(b => b.disabled = false);
+    startBtn.textContent = "最初からやり直す";
+    updateProg();
+    playPair();
+  }
+
+  function finish() {
+    running = false;
+    [upBtn, downBtn, replayBtn].forEach(b => b.disabled = true);
+    const tail = reversals.slice(-6);
+    let est = null;
+    if (tail.length >= 3) {
+      est = Math.exp(tail.reduce((s, v) => s + Math.log(v), 0) / tail.length);
+    }
+    if (est) {
+      const ratio = 38.71 / est;
+      result.textContent =
+        "推定閾値 ≈ " + est.toFixed(1) + "¢（簡易測定）。" +
+        "31edo の 1 ステップ（38.7¢）は、この約 " + ratio.toFixed(1) + " 倍です。";
+      // 結果をバーに追加
+      const row = document.createElement("div");
+      row.className = "cmp-row";
+      row.innerHTML =
+        '<span class="cmp-label"><strong>あなたの測定値</strong></span>' +
+        '<div class="cmp-track"><div class="cmp-fill amber" style="width:' +
+        Math.min(100, est).toFixed(2) + '%"></div></div>' +
+        '<span class="cmp-val">' + est.toFixed(1) + "¢</span>";
+      wrap.appendChild(row);
+      row.scrollIntoView({ block: "nearest" });
+    } else {
+      result.textContent = "試行数が足りませんでした。もう一度どうぞ。";
+    }
+    prog.textContent = "";
+  }
+
+  function answer(saidUp) {
+    if (!running) return;
+    const correct = (saidUp && curSign > 0) || (!saidUp && curSign < 0);
+    fb.textContent = correct ? "正解" : "不正解";
+    fb.style.color = correct ? "#0f6e56" : "#a32d2d";
+
+    let dir = null;
+    if (correct) {
+      correctStreak++;
+      if (correctStreak >= 2) {           // 2-down-1-up（正答率約71%に収束）
+        correctStreak = 0;
+        dir = "down";
+        level = Math.max(0.8, level * 0.63);
+      }
+    } else {
+      correctStreak = 0;
+      dir = "up";
+      level = Math.min(100, level * 1.6);
+    }
+    if (dir && lastDir && dir !== lastDir) reversals.push(level);
+    if (dir) lastDir = dir;
+
+    trial++;
+    if (reversals.length >= TARGET_REV || trial > MAX_TRIALS) { finish(); return; }
+    updateProg();
+    setTimeout(playPair, 650);
+  }
+
+  startBtn.addEventListener("click", begin);
+  replayBtn.addEventListener("click", () => { if (running) playPair(); });
+  upBtn.addEventListener("click", () => answer(true));
+  downBtn.addEventListener("click", () => answer(false));
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ⅶ-3 プラグインと音源 — 微分音のグリモワール</title>
+<link rel="icon" href="./assets/data/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+pre.code { background: #f6f6f2; border: 1px solid #e0e0d6; border-radius: 6px; padding: .8rem 1rem; overflow-x: auto; font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: .84rem; line-height: 1.5; }
+pre.code .cm { color: #8a8a76; }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <button id="nav-toggle" aria-label="目次を開く"><span></span><span></span><span></span></button>
+  <a class="site-name" href="index.html">微分音のグリモワール</a>
+  <span class="topbar-section">第Ⅶ部 実践</span>
+</header>
+
+<div class="layout">
+  <aside id="sidebar" aria-label="目次"></aside>
+  <div id="sidebar-overlay"></div>
+
+  <main class="content">
+    <p class="eyebrow">第Ⅶ部 実践　─　3</p>
+    <h1>プラグインと音源</h1>
+
+    <div class="intuition">
+      <span class="layer-tag">直感レイヤー</span>
+      <p>音律を届ける層（前節）が整えば、次は<strong>実際に音を出す音源</strong>です。<br>31edo で使える音源には二系統あります：<br><strong>①内蔵で音律を切り替えられるシンセ</strong>（<code>.scl</code> を直接読む、または MTS-ESP client）と、<br><strong>②MTS-ESP／MPE 経由で外からリチューンされる汎用音源</strong>。<br>前者は設定が手軽、後者は手持ちの音源資産をある程度活かせます。ここでは代表的な選択肢と、音色設計上の勘所（Ⅵ-3 の対応原理の実践）を押さえます。</p>
+    </div>
+
+    <h2 id="sec-native">内蔵で音律対応する音源</h2>
+
+      <p>どの音源がどういった方法に対応しているかは <a href="https://en.xen.wiki/w/List_of_microtonal_software_plugins" target="_blank" rel="noopener">Xenharmonic wiki の対応プラグイン一覧</a>が随時更新していますが、内蔵で音律対応するシンセの中で、微分音制作の入口として<strong>2026年現在もっとも薦めやすいのは <a href="https://vital.audio/">Vital</a></strong> です。無料。UI の視認性が高く、ウェーブテーブル合成の即応的なビジュアル、MPE・マイクロチューニング（<code>.scl/.kbm/.tun</code> 読み込み）への素直な対応が、初学者の「まず鳴らして確かめる」を大きく助けます。近年はこの見やすさと機能の充実から、微分音コミュニティでも入門用の第一候補として挙げられることが増えました。</p>
+
+    <p>かつて入門の定番とされた <strong>Surge XT</strong>（無料・オープンソース）も、<code>.scl/.kbm</code> 直読・MTS-ESP client を備えた高機能な音源で、いまも有効な選択肢ではあります。ただし操作系の学習コストがやや高く、近年は Vital など後発のシンセに入門用途の主役を譲りつつあるのが実情です。<br>ほかに <strong>Serum 2</strong>、<strong>Pigments</strong>（Arturia）、<strong>Bitwig</strong> 内蔵の各種デバイスも微分音に対応します。ソフトシンセの多くは MTS-ESP client 化が進んでおり、「対応音源リスト」は ODDSound のサイトで随時更新されています。</p>
+
+    <p>サンプラー系では、<a href="https://www.uvi.net/falcon">UVI Falcon</a> が<code>.scl</code>/<code>.kbm</code>/<code>.tun</code>にお対応しており、生楽器音色を31edo で鳴らせます。ただしサンプルは元の音高から離れるほどフォルマントが不自然になるため、12edoからかけ離れた音律はサンプルの再配置を必要とすることがあります。<strong>マルチサンプルの密度</strong>に気を付ける必要があります。<br>また <strong>Kontakt 6</strong> はスクリプトで微分音化することができますが、 Kontakt 7、8に続きスクリプトの扱いが縮小傾向にあり、Xenharmonic の英語コミュニティや Reddit の掲示板 r/microtonal でも批判が相次いでいます。
+    
+      <p>ピアノ音源では <a href="https://www.modartt.com/pianoteq_overview">Pianoteq シリーズ</a>が<code>.scl</code>と<code>.kbm</code>およびMTS-ESP対応で動作も軽い物理モデリングシンセシスですので、非常に好評です。</p>
+      
+    <h2 id="sec-timbre">音色設計 ── 対応原理を実務に</h2>
+
+    <p>Ⅵ-3 の Sethares 対応原理は、ここで実践的な指針になります。<strong>31edo は倍音列音色で最も澄む</strong>ため、7-limit 和音のクリアさを引き出したいなら、倍音の整った音色（きれいなのこぎり・矩形）が向きます。逆に、意図的にざらついた質感が欲しい場合、<strong>倍音をやや非調和にずらした音色</strong>が有用かもしれません。<br>「ポップに抜ける31edo」を狙うなら、まず倍音のクリアな音色で純正比の気持ちよさを土台にするのがもっとも扱いやすいでしょう。</p>
+
+    <h2 id="sec-workflow-fit">DAW との相性</h2>
+
+    <p>DAW 側は、<a href="https://www.reaper.fm/"><strong>Reaper</strong></a> が微分音制作で大人気です。チャンネル別のノート色分け、柔軟な MIDI ルーティング、スクリプト（ReaScript）による自動化、ショートカットキーのカスタマイズが、本書のチャンネル鍵盤方式（Ⅶ-6）と好相性だからです。<br><strong>Bitwig</strong> は MPE とマイクロチューニングのネイティブ対応が厚く、搭載音源で、<strong>Ableton Live</strong> も近年の12以降のバージョンで音律機能（<code>.ascl</code>ファイルで管理）とMPEを強化しています。どの DAW でも、設定はほとんど音源側に依存するので、微分音自体は一応運用可能です。</p>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── 選定の優先順位と落とし穴</summary>
+      <div class="precise-body">
+        <p>実務的な優先順位を示します。<br><strong>(1) まず Vital</strong>で環境を最小構成で立ち上げ、微分音が鳴ることを確認する。<br><strong>(2) 手持ち音源を活かす</strong>なら、それに対応する静的ファイル、または動的チューニングを確認し、対応していれば Master／コントローラ側の設定だけで微分音化。<br><strong>(3) 非対応の音源</strong>はいっそ諦めて対応音源に置き換える。</p>
+          <p>注意点もあります。<br>（1）<strong>ベンドレンジ不一致</strong>に注意。MPEの場合、Master と音源で±の半音数を揃える。<br>（2）<strong>ポルタメント／グライド</strong>が有効にしたい場合は音域をあきらめて音源を1つにする。31edo のために音源を複数起動すると、連携が取れずポルタメントが機能しない。<br>（3）<strong>オートチューン系エフェクト</strong>は12edo を仮定して音高を「矯正」しかねないので、トラックには通さない。<br>（4）<strong>基準ピッチに注意。</strong>12edoではない場合、C4=261.6255653Hz であっても A4=440Hz ではないことがある。どの音が何 Hz 基準で設定されているのか確認する。<br>疑ったらまずこの4点を確認します。</p>
+      </div>
+    </details>
+
+    <div class="keybox">
+      <span class="kb-label">この節の要点</span>
+      音源は<strong>Vital</strong>に<code>.tun</code> 直読が最も効率的。<br>サンプラー音源は<strong>Falcon</strong>が便利。<br>DAW は Reaper（色分け・スクリプト）が好相性。注意すべき落とし穴はベンドレンジ不一致・グライド・12前提のピッチ補正エフェクト、基準ピッチ値。
+    </div>
+
+    <nav class="pager" id="pager"></nav>
+  </main>
+</div>
+
+<script src="assets/data/toc.js"></script>
+<script src="assets/data/glossary.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/audio.js"></script>
+</body>
+</html>

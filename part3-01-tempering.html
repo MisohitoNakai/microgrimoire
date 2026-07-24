@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ⅲ-1 テンパリングの発想 — 微分音のグリモワール</title>
+<link rel="icon" href="./assets/data/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+</head>
+<body>
+<header class="topbar">
+  <button id="nav-toggle" aria-label="目次を開く"><span></span><span></span><span></span></button>
+  <a class="site-name" href="index.html">微分音のグリモワール</a>
+  <span class="topbar-section">第Ⅲ部 音律を組み立てる</span>
+</header>
+
+<div class="layout">
+  <aside id="sidebar" aria-label="目次"></aside>
+  <div id="sidebar-overlay"></div>
+
+  <main class="content">
+    <p class="eyebrow">第Ⅲ部 音律を組み立てる　─　1</p>
+    <h1>テンパリングの発想 ── コンマを塗り広げる</h1>
+
+    <div class="intuition">
+      <span class="layer-tag">直感レイヤー</span>
+      <p>第Ⅱ部の結論としては、純正律の格子には「ほとんど同じ」音の分身（コンマ）が無数にあり、限りある個数の鍵盤に押し込めると、どこかに大きな歪み（ウルフ）が残る。<br>テンパリングの発想とは<strong>歪みを一か所に押し付けるのをやめて、たくさんの音程に薄く塗り広げる</strong>。完全5度を全部ほんの少しだけ狭くすれば、4つ積んだときの誤差がちょうどコンマ 1 個ぶん吸収され、「二人のミ」がひとりに合体します。ウルフを分散させることによる、分身の統合によって、格子が畳まれ、鍵盤が閉じるのです。</p>
+    </div>
+
+    <h2 id="sec-idea">ミーントーンという発明</h2>
+
+    <p>具体例から入ります。問題はシントニックコンマ 81/80 つまり「完全5度4つ −2オクターブ」（81/64）と「純正長3度」（5/4）の 21.5¢ の差でした（<a href="part2-03-syntonic.html">Ⅱ-3</a>）。</p>
+
+    <p>ここで、<strong>完全5度をひとつあたり 1/4 コンマ（約 5.38¢）だけ狭くする</strong>ことにします。すると4つ積んだ誤差は \(4 \times \frac{1}{4} = 1\) コンマになり、 81/64 だった場所がちょうど 5/4 に着地します。狭めた完全5度は</p>
+
+    <p>$$ \frac{3}{2} \Big/ \left(\frac{81}{80}\right)^{\frac{1}{4}} = 5^{\frac{1}{4}} \approx 696.58¢ $$</p>
+
+    <p>——これが<strong>1/4コンマ・ミーントーン</strong>の完全5度です。完全5度の犠牲は 5.4¢（12edo の完全5度の犠牲 2.0¢ よりは大きいが、許容範囲）、そのかわり長3度は<strong>厳密に純正</strong>。「二人のミ」問題は消滅し、コンマポンプも発生しません。歪みを塗り広げる量は 1/4 でなくてもかまいません。スライダーで「コンマの塗り方」を連続的に変えて、完全5度と長3度、短3度のトレードオフを聴いてみましょう。</p>
+
+    <div class="widget">
+      <p class="widget-title">コンマを塗り広げる（完全5度の調節と、その帰結）</p>
+      <div class="wrow">
+        <label for="tm-frac">完全5度を狭める量</label>
+        <input type="range" id="tm-frac" min="0" max="400" value="250" step="1">
+        <span class="wval" id="tm-frac-read"></span>
+      </div>
+      <div class="wrow">
+        <button class="btn small secondary" data-f="0">ピタゴラス（0）</button>
+        <button class="btn small secondary" data-f="0.0909">≈12edo（1/11）</button>
+        <button class="btn small secondary" data-f="0.1667">1/6 コンマ</button>
+        <button class="btn small secondary" data-f="0.2409">≈31edo</button>
+        <button class="btn small secondary" data-f="0.25">1/4 コンマ</button>
+        <button class="btn small secondary" data-f="0.3333">1/3 コンマ</button>
+          <button class="btn small secondary" data-f="0.3356">≈19edo</button>
+      </div>
+      <div class="table-scroll">
+      <table>
+        <tbody>
+          <tr><th>完全5度（生成音程）</th><td class="num" id="tm-p5"></td><td class="num" id="tm-p5e"></td></tr>
+          <tr><th>長3度（完全5度4つ − 2 oct）</th><td class="num" id="tm-m3"></td><td class="num" id="tm-m3e"></td></tr>
+          <tr><th>短3度（完全5度 − 長3度）</th><td class="num" id="tm-mi3"></td><td class="num" id="tm-mi3e"></td></tr>
+
+        </tbody>
+      </table>
+      </div>
+      <div class="wrow">
+        <button class="btn" id="tm-triad">この音律で長三和音を聴く</button>
+        <button class="btn" id="tm-triad-minor">この音律で短三和音を聴く</button>
+        <button class="btn secondary" id="tm-just">純正 4:5:6 と聴き比べ</button>
+        <button class="btn secondary" id="tm-just-minor">純正 9:12:15 と聴き比べ</button>
+      </div>
+      <p class="widget-note">0（ピタゴラス）では3度がうなり、1/4 コンマで3度が完全に澄む代わりに完全5度の曇りが最大になります。<strong>≈31edo（0.2409 コンマ）が 1/4 コンマのすぐ隣</strong>にあることに注目——31edo は実質的に「1/4コンマ・ミーントーンが閉じたもの」であり、これが第Ⅳ部の伏線です。12edo は 1/11 コンマ・ミーントーンに相当します。</p>
+    </div>
+
+    <h2 id="sec-regular">「規則的」ということ、そして四つの言葉</h2>
+
+    <p>いま行った操作の本質は、個々の音を場当たり的に動かすことではありません。<br><strong>「完全5度」という音程そのものの寸法を、格子全体で一律に決め直した</strong>のです。C–G も G–D も D–A も、すべて同じ 696.58¢。このように、<strong>同じ種類の音程には格子上の位置によらず必ず同じ寸法を割り当てる</strong>、言い換えれば、〝純正律の音程を実際の音へ写す規則（写像）が格子全体で一貫している〟ような体系を<strong>正則律射</strong>（regular temperament）と呼ぶことにします。正則性のご利益は、Ⅰ-2 以来の「音程の算術」がそのまま生き残ることです：長3度は常に完全5度4つぶん、どの調に移っても同じ計算が通用する。</p>
+
+    <div class="keybox" style="border-left-color:#c9973a">
+      <span class="kb-label" style="color:#8a6116">用語の峻別 ── temperament と tuning</span>
+        <p>本書では、歴史的に同じ「音律」と訳されていた語などを、わざと造語まで行って<strong>訳し分け</strong>ます。</p><hr>
+
+      <p>① <strong>律射（temperament）</strong>──<br><strong>どのコンマを消して格子をどう畳むか</strong>という<strong>構造の決定が施されている音程の規定の総称</strong>。純正音程を実音へ写す「写像（mapping）」が行われています。1/4 コンマ・1/6 コンマ・31edo の 696.77¢ などは、同じシントニックコンマ差を同一視されるように、<em>写像</em>を経て、何らかの方法で<em>歪み（ウルフ）の塗り広げ</em>を行っています。<br>
+      ② <strong>音律（tuning system）</strong>──<br>調律全体の総称。純正音程の写像の有無にかかわらず、音程を定義したものをいいます。<br>具体例でいうと、写像を経ていない純正律などは「音律」ではありますが「律射」ではありません。<br>
+      ③ <strong>種族（family）</strong>──<br><strong>どのコンマを消して格子をどう畳むか</strong>という<strong>構造の決定</strong>。ミーントーン・schismatic・miracle などの<em>名前</em>はこの層に属します。詳細な区別は<a href="part5-01-multiplicity.html">Ⅴ-1</a>で再び訪れます。<br>
+      ④ <strong>調律（tuning）</strong>──<br>畳んだあとで<strong>生成音程に実際のセント値を与える</strong>こと。1/4 コンマ・1/6 コンマ・31edo の 696.77¢ などは、<em>同じ音律（ミーントーン）の異なる調律</em>です。<br>
+      標語で言えば<strong>種族は「どの音を同じとみなすか」、調律は「それをどれほどの音程に均すか」</strong>。</p><hr><p>第Ⅲ部はこの③と④の二層を一貫して区別し、前者を Ⅲ-2〜4（val・mapping・EDO）で、後者を Ⅲ-5（最適化）で扱います。</p>
+
+        
+    </div>
+
+    <p>対比として、歴史上の<strong>ウェル・テンペラメント</strong>（Werckmeister、Kirnberger など）は、完全5度ごとに狭め方を変える<strong>不規則な</strong>体系でした。同じ「完全5度」でも位置によって寸法が違う、すなわち写像が一貫しないため、正則律射ではありません。すべての調がまあまあ問題なく演奏可能になるかわりに、調ごとに3度や完全5度の色合いが変わることから、バロック期の「調性格論」の物理的基盤でもあります。不規則な体系は魅力的な話題ですが、理論の一般化が難しいため、本書は正則律射の理論（Regular Temperament Theory, RTT）を幹に据えます。</p>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── テンパリングの正確な言い直し</summary>
+      <div class="precise-body">
+        <p>いまの操作を第Ⅱ部の言葉で言い直すと、次の三段になります。</p>
+        <p><strong>（1）消すコンマを選ぶ。</strong>例えば 81/80。<br><strong>（2）そのコンマを恒等（0¢）とみなして、格子を畳む。</strong>81/80 のベクトル \((4,-1)\) だけ離れた格子点をすべて同一視する。トネッツが円筒に丸まるところを想像してください。5-limit の平面格子（rank 2 ＋オクターブ）による \( \mathbb{R}^3 \) は、畳まれて<strong>1本の生成音程（完全5度）とオクターブだけで張られる帯</strong> \( \mathbb{R}^2 \)に影として現れます。<br><strong>（3）畳んだ後の各音程に、実数のセント値を割り当てる。</strong>ここで初めて「完全5度を何セントにするか」という律射の自由度が現れます。1/4 コンマ、1/6 コンマ、31edo の 696.77¢…など、これらはすべて<strong>同じ畳み方（＝同じ種族：ミーントーン）の異なる律射</strong>です。</p>
+        <p>この<strong>種族（どのコンマを消すか＝格子の畳み方）と調律（畳んだ後の寸法決め）は別の決定である</strong>ことが RTT の根本思想です。<br>（2）の畳み方を代数の言葉（val・monzo・kernel・mapping）で記述するのが<a href="part3-02-rtt.html">次節</a>、（3）の寸法決めを最適化として扱うのが<span class="xref" data-file="part3-05-optimization.html">Ⅲ-5</span>です。なお（2）で消すコンマを増やしていくと（3）の自由度が減り、最終的に生成音程が1本（オクターブの等分）\( \mathbb{R}^1 \) まで煮詰まったものが EDO（<span class="xref" data-file="part3-03-edo.html">Ⅲ-3</span>）です。</p>
+      </div>
+    </details>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── 歴史的な注：実践が理論に先行した</summary>
+      <div class="precise-body">
+        <p>ミーントーンは16世紀の鍵盤奏者の実践から生まれました。Pietro Aron（1523）は「3度が純正に響くように完全5度を少し狭める」調律を記述し、のちに Gioseffo Zarlino (1571) が 1/4 コンマ・ミーントーンを記述し、 Francisco de Salinas が 2/7 コンマ・1/3 コンマなどの変種を論じます。 後に Fabio Colonna (1618) が「1/4コンマ・ミーントーンを31音まで延長するとほぼ閉じる」ことを厳密に示します。（<span class="xref" data-file="part4-03-history.html">第Ⅳ部3</span>）。<br>つまり<strong>コンマを消すという操作は、理論化される何世紀も前から耳によって発見されていた</strong>のです。RTT はこの実践の集積を、任意の素数リミット・任意のコンマ集合へ一般化する現代（2000年代・Xenharmonic コミュニティ）の枠組みです。</p>
+      </div>
+    </details>
+
+    <div class="keybox">
+      <span class="kb-label">この節の要点</span>
+      テンパリングとは<strong>コンマを 0 とみなして格子を畳み、歪みを多数の音程へ薄く塗り広げる</strong>こと。<strong>音律の畳み方：種族（family）</strong>と<strong>畳んだ後の寸法、調律値（tuning）</strong>は別の決定で、この分離が RTT の根本思想。<br>ミーントーンは 81/80 を消す音律で、1/4 コンマ・1/6 コンマ・31edo・19edo はその異なる調律。<br>正則性とは、同じ音程には位置によらず同じ寸法を割り当てる（写像が一貫する）こと。
+    </div>
+
+    <p>「畳む」を厳密に扱うには、格子とその写像を書き表す言語が要ります。<br>次節で RTT の語彙〝monzo、val、mapping、kernel、rank〟を一気に見ていきます。</p>
+
+    <nav class="pager" id="pager"></nav>
+  </main>
+</div>
+
+<script src="assets/data/toc.js"></script>
+<script src="assets/data/glossary.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/audio.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+<script>
+(function () {
+  "use strict";
+  const C4 = 261.6256;
+  const JUST_P5 = 1200 * Math.log2(3 / 2);
+  const JUST_M3 = 1200 * Math.log2(5 / 4);
+  const JUST_m3 = 1200 * Math.log2(6 / 5);
+  const COMMA = 1200 * Math.log2(81 / 80);
+
+  const slider = document.getElementById("tm-frac");
+  const read = document.getElementById("tm-frac-read");
+  const els = {
+    p5: document.getElementById("tm-p5"), p5e: document.getElementById("tm-p5e"),
+    m3: document.getElementById("tm-m3"), m3e: document.getElementById("tm-m3e"),
+    mi3: document.getElementById("tm-mi3"), mi3e: document.getElementById("tm-mi3e")
+  };
+
+  const frac = () => slider.value / 800;   // 0 〜 0.4 コンマ
+
+  function fmtErr(x) {
+    const s = (x >= 0 ? "+" : "") + x.toFixed(2) + "¢";
+    return "<code>" + s + "</code>";
+  }
+
+  function update() {
+    const f = frac();
+    const p5 = JUST_P5 - f * COMMA;
+    const M3 = 4 * p5 - 2400;
+    const m3 = p5 - M3;
+    read.textContent = f.toFixed(4) + " コンマ（完全5度 " + p5.toFixed(2) + "¢）";
+    els.p5.textContent = p5.toFixed(2) + "¢";
+    els.p5e.innerHTML = "純正比 " + fmtErr(p5 - JUST_P5);
+    els.m3.textContent = M3.toFixed(2) + "¢";
+    els.m3e.innerHTML = "純正比 " + fmtErr(M3 - JUST_M3);
+    els.mi3.textContent = m3.toFixed(2) + "¢";
+    els.mi3e.innerHTML = "純正比 " + fmtErr(m3 - JUST_m3);
+  }
+  slider.addEventListener("input", update);
+  update();
+
+  document.querySelectorAll("[data-f]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      slider.value = Math.round(parseFloat(btn.getAttribute("data-f")) * 800);
+      update();
+    });
+  });
+
+  document.getElementById("tm-triad").addEventListener("click", () => {
+    const f = frac();
+    const p5 = JUST_P5 - f * COMMA;
+    const M3 = 4 * p5 - 2400;
+    XenAudio.playFreqs([
+      C4,
+      XenAudio.freqFromCents(C4, M3),
+      XenAudio.freqFromCents(C4, p5)
+    ], { dur: 2.8 });
+  });
+  document.getElementById("tm-triad-minor").addEventListener("click", () => {
+    const f = frac();
+    const p5 = JUST_P5 - f * COMMA;
+    const m3 = -3 * p5 + 2400;
+    XenAudio.playFreqs([
+      C4,
+      XenAudio.freqFromCents(C4, m3),
+      XenAudio.freqFromCents(C4, p5)
+    ], { dur: 2.8 });
+  });
+  document.getElementById("tm-just").addEventListener("click", () =>
+    XenAudio.playFreqs([C4, C4 * 5 / 4, C4 * 3 / 2], { dur: 2.8 }));
+  document.getElementById("tm-just-minor").addEventListener("click", () =>
+    XenAudio.playFreqs([C4, C4 * 6 / 5, C4 * 3 / 2], { dur: 2.8 }));
+})();
+</script>
+</body>
+</html>

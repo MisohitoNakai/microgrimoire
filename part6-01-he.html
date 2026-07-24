@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ⅵ-1 Harmonic Entropy — 微分音のグリモワール</title>
+<link rel="icon" href="./assets/data/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+</head>
+<body>
+<header class="topbar">
+  <button id="nav-toggle" aria-label="目次を開く"><span></span><span></span><span></span></button>
+  <a class="site-name" href="index.html">微分音のグリモワール</a>
+  <span class="topbar-section">第Ⅵ部 響きの科学</span>
+</header>
+
+<div class="layout">
+  <aside id="sidebar" aria-label="目次"></aside>
+  <div id="sidebar-overlay"></div>
+
+  <main class="content">
+    <p class="eyebrow">第Ⅵ部 響きの科学　─　1</p>
+    <h1>Harmonic Entropy ── 響きの「曖昧さ」を測る</h1>
+
+    <div class="intuition">
+      <span class="layer-tag">直感レイヤー</span>
+      <p>ここから本書の理論的な最深部に入ります。<br>最初の主役は <strong>Harmonic Entropy（HE、調和エントロピー）</strong>なぜ 3/2 は澄み、その隣の 32/21 は濁るのかなど、情報理論で説明するモデルです。<br>核心の直感はこうです。二つの音を聴くとき、脳はそれを<strong>より単純な整数比に当てはめよう</strong>とします。3/2 のようにぴたりと嵌まれば、解釈は一意で迷いがない。少しずれた音では、「3/2 かな？　いや 32/21 かも？」と<strong>複数の解釈が競合</strong>する。<br>この<strong>解釈の曖昧さの量</strong>を、情報理論の「エントロピー」で測ったのが HE です。協和とは低エントロピー、不協和とは高エントロピー。こうして「響きの気持ちよさ」を、初めて連続的な数値曲線として描けるようになります。</p>
+      <p>「エントロピー」は音楽家には耳慣れない言葉でしょう。そこでこの節は、<strong>エントロピーとは何か</strong>から丁寧に積み上げます。急がず、情報理論の基礎から始めましょう。</p>
+    </div>
+
+    <h2 id="sec-entropy">準備 ── エントロピーとは「予測のつかなさ」</h2>
+
+    <p>エントロピーは、もともと物理学の言葉（乱雑さの尺度）ですが、1948年に Claude Shannon が<strong>情報理論</strong>のために定義し直しました。Shannon のエントロピーが測るのは、ひとことで言えば<strong>「結果を知る前の、予測のつかなさ」</strong>です。</p>
+
+    <p>例で掴みましょう。表裏が半々のコインを投げるとき、結果はまったく予測できません。→エントロピーは最大。<br>いっぽう、99% 表が出るイカサマコイン年と知っていれば、ほぼ「表」と予測でき、当たってもさほど情報は増えません。→エントロピーは低い。<br><strong>確率が一点に集中しているほどエントロピーは低く、選択肢に均等に散らばっているほど高い</strong>。これがすべての基礎です。</p>
+
+    <p>数式で書きます。起こりうる結果 \(i\) の確率を \(p_i\) とすると、<strong>Shannon エントロピー</strong>は</p>
+
+    <p>$$ H = -\sum_i p_i \log p_i $$</p>
+
+    <p>対数の底を2に取れば単位は <strong>ビット</strong>（何回の「はい/いいえ」質問で結果を特定できるか）。<br> \(-\log p_i\) は「結果 \(i\) が起きたと知ったときに得る情報量」（珍しい結果ほど情報が大きい）で、\(H\) はその<strong>期待値（平均情報量）</strong>です。<br>半々コインは \(H = -(0.5\log_2 0.5 + 0.5\log_2 0.5) = 1\) ビット、<br>イカサマコインは \(H \approx 0.08\) ビット。<br>確率が一点集中（ある \(p_i=1\)）なら \(H=0\)（完全に予測可能）です。</p>
+
+    <div class="widget">
+      <p class="widget-title">エントロピーの体感 ── 確率分布を変えると？</p>
+      <div class="wrow">
+        <label for="ent-n">選択肢の数</label>
+        <input type="range" id="ent-n" min="2" max="64" value="4" step="1">
+        <span class="wval" id="ent-n-read"></span>
+      </div>
+      <div class="wrow">
+        <label for="ent-peak">一点への集中(イカサマ)度</label>
+        <input type="range" id="ent-peak" min="0" max="100" value="0" step="1">
+        <span class="wval" id="ent-peak-read"></span>
+      </div>
+      <div id="ent-bars" style="display:flex;align-items:flex-end;gap:4px;height:120px;margin:.6rem 0"></div>
+      <div class="wrow"><span class="wval" id="ent-out" style="min-width:100%"></span></div>
+      <p class="widget-note">集中度0＝均等分布（エントロピー最大＝log₂ n ビット）、集中度100＝一点集中（エントロピー0）。「散らばり＝高エントロピー、集中＝低エントロピー」を目で確かめてください。<br>HE の核心は、これを<strong>音程解釈の確率分布</strong>に適用することです。</p>
+    </div>
+
+    <h2 id="sec-renyi">準備 ── Rényi エントロピー（一般化）</h2>
+
+      <p>たとえばハッカーがどのぐらいの確率でパスワードを当てられるかという喩えをします。<br>パスワードの安全性を考えるとき、「平均して何回目で破られるか」はあまり意味がありません。<br>なぜならハッカーはバカではないので、「名前＋誕生日」みたいな「一番確率が高いお決まりのパターン」から順番に試してくるからです。このように確率分布に偏りがある（高確率の選択肢が存在する）と知っているとき、ハッカーの攻撃力は跳ね上がります。</p>
+      
+    <p> Shannon エントロピーにはこうした「小癪なマネ」をする確率を想定した一般化があります。<br>Alfréd Rényi（1961）の <strong>Rényi エントロピー</strong>は、パラメータ \(\alpha \ge 0\)（\(\alpha \ne 1\)）を持ち、</p>
+
+    <p>$$ H_\alpha = \frac{1}{1-\alpha} \log \sum_i p_i^{\,\alpha} $$</p>
+
+    <p>と定義されます。この \(\alpha\) は<strong>「大きい確率をどれだけ重く見るか」のつまみ</strong>です。<br>\(\alpha \to 1\) の極限で Shannon エントロピーに一致し、\(\alpha\) を大きくすると<strong>最も確率の高い解釈</strong>が支配的になります。<br>\(\alpha \to \infty\) で \(H_\infty = -\log \max_i p_i\)、min-entropy になります。<br>逆に \(\alpha \to 0\) では<strong>選択肢の個数</strong>だけが効きます。（Hartley エントロピー）</p>
+
+    <p>HE の文脈で有用な Rényi エントロピーは、しばしば<br> \(\alpha=2\)　<strong>　とする collision entropy</strong>、　\(H_2 = -\log \sum_i p_i^2\)<br>です。計算しやすく、かつ「最有力候補への嵌まり具合」を強調するため、協和の極小がくっきり出るからです。<br>下の HE ウィジェットでも \(\alpha\) を動かして、Shannon（\(\alpha\!=\!1\)）と Rényi（\(\alpha\!=\!2\)）の曲線の違いを見られます。<strong>どちらを使っても純正比が谷になる位置は変わらず、変わるのは谷の深さの強調度</strong>です。</p>
+
+    <h2 id="sec-hemodel">HE モデルの組み立て</h2>
+
+    <p>二つの音の音程（セント値 \(x\)）が与えられたとき、HE を計算する手順は3段です。</p>
+
+    <p><strong>第1段：候補となる整数比を並べる。</strong>脳が特定の音程を聴いたとき、「当てはめようとする」純正な周波数比の一覧を用意します。標準は <strong>Farey 数列（分母・分子が一定の複雑さ以下の既約分数すべて）</strong>です。あるいは Tenney height に上限を設けた比の集合です。単純な比（3/2, 4/3, 5/4…）は疎らに、複雑な比は密に分布します。</p>
+
+    <p><strong>第2段：各候補に「確率」を割り当てる。</strong>聴いた音程 \(x\) の周りに<strong>ガウス分布</strong>（釣鐘曲線）を置きます。というのも知覚には必ず幅（不確かさ \(s\)、およそ 1% ≈ 17¢とする）があるからです。各候補の周波数比が受け取る確率は、その比が「担当する区間」（隣接比との <strong>mediant</strong>＝中間比で区切られる領域）に掛かるガウス曲線の<strong>面積</strong>。単純な比は広い区間を担当するので、多くの確率を集めます。全候補の確率を合計が1になるよう正規化します。</p>
+
+      <p><strong>第3段：その確率分布のエントロピーを計算する。</strong>第1段の準備どおり、</p><p style=text-align:center>\( H = -\sum p_i \log p_i　\)（または collision \(H_2 \) ）</p><p>3/2 の真上では確率がほぼ 3/2 の一点に集中 → 低エントロピー。<br>純正比から離れた場所では複数候補に分散 → 高エントロピー。</p>
+
+    <p>この \(x\) を 0〜1200¢ で動かして \(H(x)\) を描いたのが <strong>HE 曲線</strong>です。下のウィジェットでは実際に近似計算を用いて HE を示しました。
+
+    <div class="widget">
+      <p class="widget-title">Harmonic Entropy 曲線（近似計算・クリックで試聴）</p>
+      <div class="wrow">
+        <label>エントロピー</label>
+        <span class="pillgroup" id="he-kind">
+          <button data-k="shannon" class="on">Shannon（α=1）</button>
+          <button data-k="renyi">Rényi（α=2）</button>
+        </span>
+        <label style="margin-left:1rem"><input type="checkbox" id="he-mark12" checked> 12edo グリッド</label>
+        <label><input type="checkbox" id="he-mark31"> 31edo グリッド</label>
+      </div>
+      <div id="he-plot"></div>
+      <div class="wrow"><span class="wval" id="he-info" style="min-width:100%">曲線をクリックすると、その音程を試聴し、近い純正比を表示します。</span></div>
+      <p class="widget-note">谷（極小）＝協和 ＝ 単純な純正比の位置。<br>3/2（702¢）が最も深く、4/3・5/4・6/5・5/3・7/4 と続きます。<br>12edo のグリッドを重ねると、長3度（400¢）が 5/4 の谷（386¢）からやや外れ、5度（700¢）が 3/2 の谷にほぼ乗ることが見えます。<br>31edo の目盛に切り替えると、多くのグリッドが谷の近くに落ちる。「音階の平均 HE」の伏線です。</p>
+    </div>
+      <p>さらに詳細に計算結果を得るには <a href="https://www.mikebattagliamusic.com/HE-JS/HE.html">Mike Battaglia 氏の計算ウェブアプリ</a>が利用できます。</p>
+    <details class="precise" open>
+      <summary>精密レイヤー ── モデルの位置づけと限界</summary>
+      <div class="precise-body">
+        <p>HE は Paul Erlich が2000年前後に定式化したモデルで、C. van Eck の先行案と Ernst Terhardt の<strong>仮想ピッチ</strong>論（Ⅵ-5）を情報理論で洗練したものです。<br>測っているのは不協和の〝<strong>成分</strong>〟（音程を単一の倍音列（missing fundamental）に嵌める難しさ）であって、不協和のすべてではありません。とりわけ<strong>臨界帯域の粗さ</strong>（Plomp–Levelt、Ⅰ-4・Ⅵ-3）は別成分で、HE には入っていません。両者は補完的で、実際の協和感はおおむね「HE（比としての明晰さ）＋粗さ（うなり）＋文脈」の合成と考えられます。</p>
+        <p>HE の重要な功績は、<strong>和音の不協和が構成音程の不協和の和では説明できない</strong>ことを定量的に示した点です。<br>有名な例：4:5:6:7 とその転回 1/(4:5:6:7)＝ 1/7 : 1/6 : 1/5 : 1/4 は<strong>構成音程の集合が完全に同一</strong>なのに、前者（otonal）は協和、後者（utonal）は不協和と聴かれます。ペアワイズのモデル（粗さの合計など）では両者を区別できませんが、和音全体を単一倍音列に嵌める難しさ ＝ HE の三和音版（Voronoi 領域を使う）ははっきり区別します。これは「協和は倍音列への嵌まりやすさ」という立場（Ⅵ-6）の強力な傍証です。</p>
+        <p>技術的な注記。曲線の細部（極大・極小の正確な位置）は基底集合の取り方（Farey 次数、分子/分母のどちらに上限を置くか、Tenney / Weil のどちらで重みづけるか）と幅 \(s\) に依存します。本ウィジェットは Tenney 重み・Farey 基底・\(s\!=\!17\)¢ の近似実装で、教育目的には十分ですが、研究用の値とは細部が異なりえます。Erlich 自身が「local max/min は N の 1 変化で入れ替わりうる」と注意しており、<strong>谷の位置（＝純正比）は頑健だが、谷の深さの細部は不変ではない</strong>と理解するのが正確です。</p>
+      </div>
+    </details>
+
+    <div class="keybox">
+      <span class="kb-label">この節の要点</span>
+      <strong>エントロピー</strong>＝確率分布の「予測のつかなさ」（散らばり大→高、一点集中→0）。<br><strong>Rényi エントロピー</strong>は α で「最有力候補の強調度」を変える一般化（α→1 で Shannon、α=2 は計算容易）。<br><strong>HE</strong>＝音程を整数比に当てはめる際の<strong>解釈の曖昧さ</strong>：<br>候補比（Farey）→ガウスと mediant で確率化→エントロピー。純正比＝谷（協和）。<br>粗さとは別成分で、和音の otonal/utonal 非対称を説明できる。
+    </div>
+
+    <nav class="pager" id="pager"></nav>
+  </main>
+</div>
+
+<script src="assets/data/toc.js"></script>
+<script src="assets/data/glossary.js"></script>
+<script src="assets/data/he-data.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/audio.js"></script>
+<script src="assets/figures.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+<script>
+(function () {
+  "use strict";
+  const C4 = 261.6255653;
+
+  /* --- エントロピー体感ウィジェット --- */
+  const nS = document.getElementById("ent-n");
+  const pS = document.getElementById("ent-peak");
+  const bars = document.getElementById("ent-bars");
+  const out = document.getElementById("ent-out");
+  function entUpd() {
+    const n = +nS.value, peak = +pS.value / 100;
+    document.getElementById("ent-n-read").textContent = n + " 択";
+    document.getElementById("ent-peak-read").textContent = (peak * 100).toFixed(0) + "%";
+    // 分布：一様 (1/n) から一点集中へ補間
+    const base = 1 / n;
+    const probs = [];
+    for (let i = 0; i < n; i++) probs.push(i === 0 ? base + peak * (1 - base) : base * (1 - peak));
+    let H = 0;
+    probs.forEach(p => { if (p > 1e-12) H -= p * Math.log2(p); });
+    bars.innerHTML = probs.map(p =>
+      "<div style='flex:1;background:#3b4a9c;border-radius:3px 3px 0 0;height:" +
+      (p * 100).toFixed(1) + "%'></div>").join("");
+    out.innerHTML = "エントロピー <strong>H = " + H.toFixed(3) + " ビット</strong>（最大 " +
+      Math.log2(n).toFixed(3) + " ビットで表せる）";
+  }
+  nS.addEventListener("input", entUpd); pS.addEventListener("input", entUpd); entUpd();
+
+  /* --- HE 曲線ウィジェット --- */
+  const HE = window.HE_DATA.he;
+  let kind = "shannon";
+  const plot = document.getElementById("he-plot");
+
+  function draw() {
+    const ys = HE[kind];
+    const maxY = Math.max(...ys) * 1.05;
+    plot.innerHTML = "";
+    const p = Fig.plot(plot, { w: 680, h: 300, x: [0, 1200], y: [0, maxY], pad: { l: 44, r: 12, t: 12, b: 40 } });
+    // 12edo / 31edo 目盛
+    if (document.getElementById("he-mark12").checked)
+      for (let k = 1; k < 12; k++) p.vline(k * 100, { stroke: "#c9973a", "stroke-dasharray": "3 3", "stroke-width": 1 });
+    if (document.getElementById("he-mark31").checked)
+      for (let k = 1; k < 31; k++) p.vline(k * 1200 / 31, { stroke: "#8aa0c8", "stroke-dasharray": "2 3", "stroke-width": 0.8 });
+    // 曲線
+    const pts = HE.cents.map((c, i) => [c, ys[i]]);
+    p.polyline(pts, { stroke: "#3b4a9c", "stroke-width": 2, fill: "none" });
+    p.axisX([0, 200, 400, 600, 800, 1000, 1200], v => v, "音程（¢）");
+    p.axisY([0, +(maxY / 2).toFixed(1), +maxY.toFixed(1)], v => v, kind === "shannon" ? "H（bits）" : "H₂");
+    // クリック（p.X の逆写像を数値的に構成）
+    const vb = p.svg.viewBox.baseVal.width;
+    const x0px = p.X(0), x1px = p.X(1200);
+    p.svg.style.cursor = "crosshair";
+    p.svg.addEventListener("click", ev => {
+      const rect = p.svg.getBoundingClientRect();
+      const px = (ev.clientX - rect.left) / rect.width * vb;
+      const c = (px - x0px) / (x1px - x0px) * 1200;
+      if (c < 0 || c > 1200) return;
+      XenAudio.playFreqs([C4, XenAudio.freqFromCents(C4, c)], { dur: 1.6 });
+      // 近い純正比
+      const cand = [[1,1,0],[16,15,111.7],[9,8,203.9],[7,6,266.9],[6,5,315.6],[5,4,386.3],[9,7,435.1],[4,3,498],[7,5,582.5],[10,7,617.5],[3,2,702],[8,5,813.7],[5,3,884.4],[7,4,968.8],[9,5,1017.6],[11,6,1049.4],[15,8,1088.3],[2,1,1200]];
+      let best = cand[0], bd = 1e9;
+      cand.forEach(r => { const d = Math.abs(r[2] - c); if (d < bd) { bd = d; best = r; } });
+      document.getElementById("he-info").innerHTML =
+        c.toFixed(1) + "¢ を試聴。最寄りの単純比：<strong>" + best[0] + "/" + best[1] +
+        "</strong>（" + best[2] + "¢、差 " + (c - best[2]).toFixed(1) + "¢）";
+    });
+  }
+  document.querySelectorAll("#he-kind button").forEach(b =>
+    b.addEventListener("click", () => {
+      document.querySelectorAll("#he-kind button").forEach(x => x.classList.remove("on"));
+      b.classList.add("on"); kind = b.getAttribute("data-k"); draw();
+    }));
+  document.getElementById("he-mark12").addEventListener("change", draw);
+  document.getElementById("he-mark31").addEventListener("change", draw);
+  draw();
+})();
+</script>
+</body>
+</html>

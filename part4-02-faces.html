@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ⅳ-2 31の多面性 — 微分音のグリモワール</title>
+<link rel="icon" href="./assets/data/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+</head>
+<body>
+<header class="topbar">
+  <button id="nav-toggle" aria-label="目次を開く"><span></span><span></span><span></span></button>
+  <a class="site-name" href="index.html">微分音のグリモワール</a>
+  <span class="topbar-section">第Ⅳ部 31平均律</span>
+</header>
+
+<div class="layout">
+  <aside id="sidebar" aria-label="目次"></aside>
+  <div id="sidebar-overlay"></div>
+
+  <main class="content">
+    <p class="eyebrow">第Ⅳ部 31平均律　─　2</p>
+    <h1>31の多面性 ── ひとつの環、いくつもの顔</h1>
+
+    <div class="intuition">
+      <span class="layer-tag">直感レイヤー</span>
+      <p>Ⅲ-3 で立てた旗、〝<strong>EDO は音律たちの交差点</strong>〟という内容を、31edo で本格的に開帳します。31音の環は、ミーントーンの完成形として知られていますが、それは顔のひとつにすぎません。generator の選び方を変えるだけで、同じ31音が<strong>まったく別の文法の音楽システム</strong>として立ち上がります。純正3度を積み上げる世界、8/7 で歩く世界、116¢ の魔法の歩幅（secor）の世界、中立3度の世界……。以下の6つの顔は、どれも「31edo の中に完全に実装されて」います。楽器を持ち替えずに音律を持ち替えられる。このことは 31edo の実用上の最大の贅沢です。</p>
+    </div>
+
+    <h2 id="sec-faces">さまざまな顔</h2>
+
+    <div class="widget">
+      <p class="widget-title">顔の切替 ── generator が変われば文法が変わる</p>
+      <div class="wrow">
+        <label for="fc-sel">顔</label>
+        <select id="fc-sel">
+          <option value="meantone" selected>ミーントーン（5度 18歩）</option>
+          <option value="wurschmidt">würschmidt（長3度 10歩）</option>
+          <option value="slendric">slendric（〜8/7 6歩）</option>
+          <option value="mothroid">slentonic（〜8/7 11歩）</option>
+          <option value="miracle">miracle（～16/15 3歩）</option>
+          <option value="orwell">orwell（〜7/6 7歩）</option>
+          <option value="mohajira">mohajira（中立3度 9歩）</option>
+          <option value="oneiro">oneirotonic MOS（12歩）</option>
+        </select>
+      </div>
+      <div class="table-scroll"><table><tbody id="fc-table"></tbody></table></div>
+      <div class="wrow">
+        <button class="btn" id="fc-gen">generator を聴く</button>
+        <button class="btn" id="fc-scale">代表 MOS 音階を聴く</button>
+        <button class="btn secondary" id="fc-short">和音の例を聴く</button>
+      </div>
+      <p class="widget-note">和音の例では、その顔が売りにする純正音程への到達路。<br>同じ31音の環の上で、<strong>歩幅（generator）を変えるだけで別の音階系・別の和声観が立ち上がる</strong>のを確かめてください。各顔の音律としての一般論（31以外の調律を含む）は<span class="xref" data-file="part5-03-families.html">第Ⅴ部3</span>で。</p>
+    </div>
+
+    <h2 id="sec-detail">それぞれの顔の売り</h2>
+
+    <p><strong>ミーントーン</strong>は31の「表の顔」。全音階・半音階という西洋音楽の全遺産がそのまま動き、しかも 5-limit を超えて <strong>septimal meantone</strong>（126/125・225/224 も消える）として動くため、従来の語法の内部に第7倍音が編み込まれます（増6度＝7/4。Ⅳ-6の主題）。</p>
+
+    <p><strong>würschmidt</strong> は純正3度（10歩・+0.8¢）を積む顔。3度8つで「5度＋2オクターブ」に届く。完全5度中心の音楽観を3度中心へ反転させた世界で、MOS も 3度系特有の細かい系列（4, 7, 10, 13, …）を生やします。</p>
+
+    <p><strong>slendric</strong>および<strong>slentonic</strong>は 8/7（6歩・232.3¢）で歩く顔です。<strong>8/7 を3つ積むと5度</strong>（1029/1024 の消去）という驚くほど単純な骨格をもち、5音 MOS はガムランのスレンドロを思わせる均等感を帯びます。素数5を経由しない 2.3.7 のサブグループによる音楽です。</p>
+
+    <p><strong>miracle</strong> は3歩（116.1¢）の generator は、George Secor が1974年に発見した <strong>secor</strong>と呼ばれる大きな半音程度の積み上げで組まれる顔。6歩で完全5度、オクターブ -2歩で 7/4。3歩で中立3度（11/9）という11-limit までの音程を少ステップ数で網羅する「効率の奇跡」で、21音 MOS <strong>blackjack</strong>は微分音界の名所です。ただし本来の最適調律は 72edo 寄りで、31での実装はやや粗い近似であり「31で試せる」ことと「31が最適」は別、という好例でもあります。</p>
+
+    <p><strong>orwell</strong> は 7/6 気味の 271.0¢（7歩）で歩く顔。この名は George Orwell の文学作品『1984年』にかけた洒落で、 generator が〝 84edo 〟の 〝19 歩〟に当たることから。9音 MOS が代表的な遊び場で、5度を経由しない独特の暗い透明感があります。</p>
+
+    <p><strong>mohajira</strong> は中立3度（9歩・348.4¢）の顔。<strong>中立3度2つ＝5度</strong>（243/242、rastma の消去）を骨格に、7音 MOS（3L4s）はマカーム・ラーストを思わせる旋法世界を開きます。アラブ音楽の語彙との接点であり、Ⅳ-6 のブルーノート表現の母体でもあります。</p>
+      
+    <p><strong>oneirotonic</strong> は種族名ではなく MOS 音階の名前ですが、1029/1024 の消去があるとこの音階も取れることがあります。増3度（12歩・464.5¢）から得られる興味深い MOS 音階としての顔です。</p>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── 「同居」の代数的な意味</summary>
+      <div class="precise-body">
+        <p>これらの顔が31に同居するのは偶然ではありません。rank-2 音律が31edo に実装できる条件は、<strong>31 の patent val がその音律の kernel をすべて消す</strong>ことであり、すなわち val \( \left\langle 31 \; 49 \; 72 \; 87 \; 107 \; 115 \right] \) が、その音律を指名する2つの val の張る平面上にあることです（Ⅲ-3）。ミーントーン＝12 &amp; 19、würschmidt＝31 &amp; 34、slendric＝31 &amp; 36 などいずれの平面も点31を通ります。逆に、31を通る平面（＝31が消すコンマの組）を数え上げれば、31の顔の総目録が得られます。上の6つはその中で badness が良い（Ⅲ-5）代表選手です。</p>
+        <p>調律精度の注意をひとつ。同居するどの顔も、31edo という<strong>単一の調律</strong>を共有します。これは各音律の POTE 最適解と一致するとは限りません。ミーントーンには 696.77 はほぼ最適（POTE 696.24）ですが、miracle の secor の最適は 116.7¢ 付近で、31の 116.13 はやや窮屈です。<strong>「どの顔で聴くか」によって、同じ31が最適に近くも遠くもなる</strong>ため、アトラス（第Ⅴ部）でこの距離感を体系化します。</p>
+      </div>
+    </details>
+
+    <div class="keybox">
+      <span class="kb-label">この節の要点</span>
+      31edo は<strong>多数の rank-2 音律の同時実装</strong>。<br>ミーントーン（18歩）・würschmidt（10歩）・slendric（6歩）・miracle（3歩）・orwell（7歩）・mohajira（9歩）など。<br>generator の選択＝文法の選択であり、楽器を替えずに音律を替えられる。<br>ただし31という単一調律が各顔の最適解に近いかどうかは顔ごとに異なる。
+    </div>
+
+    <nav class="pager" id="pager"></nav>
+  </main>
+</div>
+
+<script src="assets/data/toc.js"></script>
+<script src="assets/data/glossary.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/audio.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+<script>
+(function () {
+  "use strict";
+  const C4 = 261.6255653;
+  const STEP = 1200 / 31;
+  const f = s => XenAudio.freqFromCents(C4, s * STEP);
+
+  const FACES = {
+    meantone: {
+      gen: 18, genName: "完全5度（696.8¢）",
+      commas: "81/80、126/125、225/224",
+      mos: "5, 7, 12, 19",
+      modename: "イオニアン （LLsLLLs）",
+      short: "長3度＝完全5度4つ（−2 oct）／ 7/4＝増6度＝5度10個（−5 oct）",
+      scale: [0, 5, 10, 13, 18, 23, 28, 31],
+      scaleName: "全音階（5L2s）",
+      chord: [0, 10, 18, 28], chordName: "メジャーセブンス"
+    },
+    wurschmidt: {
+      gen: 10, genName: "長3度（387.1¢）",
+      commas: "393216/390625（Würschmidt コンマ）",
+      mos: "4, 7, 10, 13, 16, 19, 22, 25, 28",
+      modename: "Yesod （LssLsssLss）",
+      short: "完全5度＝長3度8つ（−2 oct）",
+      scale: [0, 8, 9, 10, 18, 19, 20, 21, 29, 30, 31],
+      scaleName: "würschmidt[11]（3L4s、L:s＝9歩:1歩の極端な形）",
+      chord: [0, 10, 18, 21], chordName: "3度の塔（5/4×3）"
+    },
+    slendric: {
+      gen: 6, genName: "〜8/7（232.3¢）",
+      commas: "1029/1024（gamelisma）",
+      mos: "5, 6, 11, 16, 21, 26, 30",
+      modename: "Oplen （LLLLsL）",
+      short: "5度＝8/7 三つ",
+      scale: [0, 6, 12, 18, 24, 25, 31],
+      scaleName: "mothra[6]（スレンドロ的な準均等6音）",
+      chord: [0, 6, 12, 18], chordName: "8/7 の塔（＝5度で閉じる）"
+    },
+    mothroid: {
+      gen: 6, genName: "〜8/7（232.3¢）",
+      commas: "1029/1024（gamelisma）",
+      mos: "5, 6, 11, 16, 21, 26, 30",
+      modename: "Shiva （LssLsLsLsLs）",
+      short: "5度＝8/7 三つ",
+      scale: [0, 5, 6, 7, 12, 13, 18, 19, 24, 25, 30, 31],
+      scaleName: "mothra[11]（11音）",
+      chord: [0, 18, 25, 43], chordName: "8/7 の塔（＝5度で閉じる）"
+    },
+    miracle: {
+      gen: 3, genName: "全音階的半音（116.1¢）",
+      commas: "225/224、1029/1024",
+      mos: "10, 11, 21（blackjack）",
+      modename: "？ （未命名）（sssssssssL）",
+      short: "5度＝全音階的半音 6つ／ 7/4＝オクターブ − secor 2つ",
+      scale: [0, 3, 6, 9, 12, 15, 18, 21, 24, 27, 31],
+      scaleName: "miracle[10]（decimal）",
+      chord: [0, 10, 18, 25], chordName: "4:5:6:7（secor 語法：5/4＝oct−7g、3/2＝6g、7/4＝oct−2g）"
+    },
+    orwell: {
+      gen: 7, genName: "〜7/6（271.0¢）",
+      commas: "225/224、1728/1715",
+      mos: "4, 5, 9, 13, 22",
+      modename: "Roi（LsLsLsLss）",
+      short: "7/6 ＝ generator そのもの／ 5度＝ generator 7つ − oct",
+      scale: [0, 4, 7, 11, 14, 18, 21, 25, 28, 31],
+      scaleName: "orwell[9]",
+      chord: [0, 7, 18, 25], chordName: "6:7:9 ＋ 7/4"
+    },
+    mohajira: {
+      gen: 9, genName: "中立3度（348.4¢）",
+      commas: "243/242（rastma）",
+      mos: "4, 7, 10, 17, 24",
+      modename: "Cilician / Kleeth （LssLsLs）",
+      short: "5度＝中立3度2つ",
+      scale: [0, 5, 9, 13, 18, 22, 27, 31],
+      scaleName: "mohajira[7]（3L4s・ラースト風）",
+      chord: [0, 9, 18, 27], chordName: "ニュートラルセブンス"
+    },
+    oneiro: {
+      gen: 12, genName: "増3度（464.5¢）",
+      commas: "1029/1024（gamelisma）",
+      mos: "5, 8, 13, 18",
+      modename: "Dylathian （LLsLLsLs）",
+      short: "Slendric の2倍",
+      scale: [0, 5, 10, 12, 17, 22, 24, 29, 31],
+      scaleName: "Dylathian",
+      chord: [0, 10, 36, 43], chordName: "？"
+    }
+  };
+
+  const sel = document.getElementById("fc-sel");
+  const tb = document.getElementById("fc-table");
+
+  function render() {
+    const F = FACES[sel.value];
+    tb.innerHTML = [
+      ["generator", F.gen + "歩 ＝ " + F.genName],
+      ["消える主なコンマ", F.commas],
+      ["31内の主な MOS", F.mos],
+      ["和声の近道", F.short],
+      ["代表 MOS", F.scaleName],
+      ["代表旋法名", F.modename]
+    ].map(r => "<tr><th>" + r[0] + "</th><td>" + r[1] + "</td></tr>").join("");
+  }
+  sel.addEventListener("change", render);
+  render();
+
+  document.getElementById("fc-gen").addEventListener("click", () => {
+    const F = FACES[sel.value];
+    XenAudio.playFreqs([f(0), f(F.gen)], { dur: 1.8 });
+  });
+  document.getElementById("fc-scale").addEventListener("click", () => {
+    const F = FACES[sel.value];
+    XenAudio.playSeq(F.scale.map(f), { dur: 0.36, gap: 0.06 });
+  });
+  document.getElementById("fc-short").addEventListener("click", () => {
+    const F = FACES[sel.value];
+    XenAudio.playFreqs(F.chord.map(f), { dur: 2.6 });
+  });
+})();
+</script>
+</body>
+</html>

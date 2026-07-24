@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ⅵ-4 Delta-Rational コードの概説 — 微分音のグリモワール</title>
+<link rel="icon" href="./assets/data/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+</head>
+<body>
+<header class="topbar">
+  <button id="nav-toggle" aria-label="目次を開く"><span></span><span></span><span></span></button>
+  <a class="site-name" href="index.html">微分音のグリモワール</a>
+  <span class="topbar-section">第Ⅵ部 響きの科学</span>
+</header>
+
+<div class="layout">
+  <aside id="sidebar" aria-label="目次"></aside>
+  <div id="sidebar-overlay"></div>
+
+  <main class="content">
+    <p class="eyebrow">第Ⅵ部 響きの科学　─　4</p>
+    <h1>Delta-Rational コードの概説</h1>
+
+    <div class="intuition">
+      <span class="layer-tag">直感レイヤー</span>
+        <p>ここまでは音程の<strong>比</strong>（周波数の割り算）で協和を測ってきました。<br>ところが2022年、匿名の理論家・著者によって投稿されたXenharmonic Wikiの解説ページに、周波数比そのものは純正（整数比）でなくても、「隣り合う周波数の差（階差）」が単純な整数比であれば、和音はある種の安定性と協和感を持つと主張されました。二音 \(f_1, f_2\) をかなり強く鳴らすと、耳の非線形性から<strong>差音</strong> \(f_2 - f_1\) が生じます（Ⅵ-5 で詳述）。<br><strong>Delta-Rational（差有理）</strong>の考え方は、和音の構成音の<strong>差</strong>が互いに単純な整数比をなすように音を選ぶと、生じる差音たちが1つの倍音列に揃って和音が安定する、というものです。比ベースの純正律とは別の座標から協和にアプローチする、比較的新しい視点です。<br>もちろん、これには粗さの増大や脳の仮想ピッチの判断システムとのバッティングから、<strong>批判も多く残る</strong>ものです。</p>
+    </div>
+
+    <h2 id="sec-idea">差を揃える</h2>
+
+    <p>通常の純正律は<strong>周波数の比</strong>を整数にします（3/2 なら \(f_2/f_1 = 3/2\)）。<br>Delta-Rational コードは<strong>周波数の差</strong>に注目します。たとえば三音 \(f_1 \lt f_2 \lt f_3\) について、差 \((f_2-f_1) : (f_3-f_2)\) が単純な整数比になるように取る。差音は差の周波数で鳴るので、差が単純比をなせば<strong>差音どうしも協和</strong>し、さらに元の音と差音が共通の倍音列に整列しやすくなります。比を揃える純正律と、差を揃える Delta-Rational コードは、一般には<strong>異なる音</strong>を選びます。両者が一致するのは倍音列そのもの（隣接倍音の差が基音に等しい）のような特別な場合です。</p>
+
+    <p>この視点が実務で効くのは、<strong>密集した高音の和音</strong>や<strong>持続音のパッド</strong>など、差音が知覚的に前に出る状況とも考えられ、Delta-Rational に整えた和音は、比としては複雑でも「下から支える低い唸り」が濁らず、独特のまとまりを持つと考えられます。近年の微分音コミュニティ（とくに電子音楽・ドローン系）で議論が活発な、発展途上のトピックです。</p>
+
+    <div class="widget">
+      <p class="widget-title">差を聴く ── 比有理・差有理・その両立と、あえて非整数比の差有理</p>
+      <div class="wrow">
+        <button class="btn" id="dr-just">比有理：純正長三和音 4:5:6</button>
+        <button class="btn" id="dr-delta">等差三和音（9:11:13＝差が等しい）</button>
+      </div>
+      <div class="wrow">
+        <button class="btn secondary" id="dr-nonint">非整数比だが差有理な三和音（413, 562, 711 Hz）</button>
+      </div>
+      <div class="wrow"><span class="wval" id="dr-note" style="min-width:100%"></span></div>
+      <p class="widget-note">「等差三和音」は隣接音の周波数差を等しく取った和音。これは倍音列の断片 9:11:13 そのもので、差音が基音として全体を支えるとされます。<br>3番目の <strong>413・562・711 Hz</strong> は、比としては<strong>単純整数比ではない</strong>和音ですが、隣接差はどちらも 149 Hz で<strong>差有理（差の比 1:1）</strong><br>比有理の座標では「濁った」和音のはずが、差音 149 Hz が共通の支えとなり独特のまとまりを持つと言われます。比有理と差有理が別の音を選ぶ実例です。</p>
+    </div>
+      
+    <h2 id="sec-phi">黄金比 ── 差音の自己相似と、そこから生まれる MOS</h2>
+
+    <p>差の座標で協和を考えると、有理比とは別の場所に、もうひとつの「安定」が現れます。<strong>黄金比 \(\varphi = \tfrac{1+\sqrt5}{2} = 1.6180339887\ldots\)</strong> です。ただしここは<strong>踏み外しやすい要所</strong>で、音楽における φ には<strong>まったく別の二つの用法</strong>があります。まずそこを峻別します。</p>
+
+    <div class="table-scroll">
+    <table>
+      <thead><tr><th></th><th>定義</th><th>値</th><th>効く場所</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>acoustic phi</strong><br>（音響的 φ）</td>
+          <td>φ を<strong>周波数比</strong>として使う（\(f : \varphi f\)）</td>
+          <td class="num">833.090¢<br>（中立6度あたり）</td>
+          <td><strong>結合音の自己相似</strong>・Bohlen の833セント音階<br>——<strong>Delta-Rational と直結するのはこちら</strong></td>
+        </tr>
+        <tr>
+          <td><strong>logarithmic phi</strong><br>（対数的 φ）</td>
+          <td>φ を<strong>ピッチ（セント）の比</strong>として使う。オクターブを黄金分割</td>
+          <td class="num">741.641¢ ／ 458.359¢<br>（和が 1200）</td>
+          <td>黄金 generator・Fibonacci の MOS</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>片方は<strong>周波数</strong>の世界、もう片方は<strong>ピッチ（対数）</strong>の世界の住人です。混ぜると議論が崩壊します。<br>そして本章 Delta-Rational が扱う「差」の話に直結するのは、差音は周波数の引き算ですから、<strong>acoustic phi の側</strong>です。そちらから始めます。</p>
+
+    <h3 id="sec-acoustic-phi">acoustic phi ── 差が自分に還る、もうひとつの閉包</h3>
+
+    <p>φ を定めるのは \(\varphi^2 = \varphi + 1\)、書き直せば</p>
+
+    <p>$$ \varphi^{2} - \varphi = 1 $$</p>
+
+    <p>——<strong>自分の2乗から自分を引くと、ちょうど単位 1 が残る</strong>。これは単なる定義式ではなく、<strong>差についての閉包条件</strong>です。等比列 \(\ldots, \varphi^{-1}, 1, \varphi, \varphi^{2}, \ldots\) に「隣どうしの差を取るとまた自分の項に戻る」（\(\varphi^{n} - \varphi^{n-1} = \varphi^{n-2}\)）を要求すると、両辺を \(\varphi^{n-2}\) で割って \(x^{2} - x = 1\)。<br>この性質を持つ正の数は φ <strong>ただひとつ</strong>です。</p>
+
+    <p>差音は周波数の引き算ですから、この代数がそのまま結合音の構造になります。二音 \(f\) と \(\varphi f\) なら：</p>
+
+    <p>$$ \text{QDT} = \varphi f - f = f(\varphi - 1) = \frac{f}{\varphi}, \qquad \text{CDT} = 2f - \varphi f = f(2-\varphi) = \frac{f}{\varphi^{2}} $$</p>
+
+    <p>差音がまた φ 系列の音になります（440 Hz と 711.935 Hz なら QDT ＝ 271.935 Hz ＝ 440/φ、CDT ＝ 168.065 Hz ＝ 440/φ²）。ただし二音だけを見ていると、この鎖は下へ下へ伸びるばかりに見えます。ところが <strong>\(\varphi^{2}\) を足して三和音にすると、閉包の姿がはっきりします</strong>。</p>
+
+    <div class="table-scroll">
+    <table>
+      <thead><tr><th>ペア</th><th class="num">差</th><th>正体</th><th class="num">440 Hz 基準</th></tr></thead>
+      <tbody>
+        <tr><td>\(\varphi - 1\)</td><td class="num">0.618034</td><td>\(\varphi^{-1}\)（系列を下へ延ばす新しい音）</td><td class="num">271.935 Hz</td></tr>
+        <tr><td>\(\varphi^{2} - \varphi\)</td><td class="num"><strong>1.000000</strong></td><td><strong>根音そのもの</strong></td><td class="num"><strong>440.000 Hz</strong></td></tr>
+        <tr><td>\(\varphi^{2} - 1\)</td><td class="num"><strong>1.618034</strong></td><td><strong>中音 \(\varphi\) そのもの</strong></td><td class="num"><strong>711.935 Hz</strong></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>三つの差のうち<strong>二つが、和音の構成音そのもの</strong>です。<br>とりわけ \(\varphi^{2} - \varphi = 1\) は<strong>上二音の差音が根音にぴたりと重なります</strong>。倍音列で隣接倍音の差が基音に一致するのと、形はまったく同じです。しかも差の集合 \(\{\varphi^{-1}, 1, \varphi\}\) は、和音 \(\{1, \varphi, \varphi^{2}\}\) を \(1/\varphi\) 倍した<strong>相似形</strong>であり、和音とその差が、同じ形で入れ子になっている。Bohlen の833セント音階は、この入れ子の上に音を置いた音階です。</p>
+
+    <p>だから acoustic phi は「差が決して整数にならない音程」ではありません。むしろ逆で、<strong>差 \(\varphi^{2}-\varphi\) はきっかり 1、単位そのもの</strong>。無理数でありながら、差の世界では単位を循環的に生み直しています。</p>
+
+    <p>ここで注意が要ります。φ にはもうひとつ、<strong>まったく別の軸の顔</strong>があります。いま見たのは<strong>差の軸</strong>の話でした。では<strong>比の軸</strong>ではどうか？<br>連分数展開が \([1;1,1,1,\ldots]\) と<strong>すべて 1</strong>。<br>つまりこれは<strong>有理数で最も近似しにくい数</strong>（Hurwitz の定理）であることを意味します。収束分数は Fibonacci 比 3/2, 5/3, 8/5, 13/8, 21/13, … と続き、833.090¢ へじりじり寄っていく。つまり acoustic phi は<strong>どんな単純な純正音程からも最も遠い</strong>音程です。<br>差の軸では単位を生み直すのに、比の軸ではどこにも嵌まらないという居心地の悪さがあります。この二つは独立の性質で、φ はたまたま両方を兼ねています。</p>
+
+    <p>ここまで来ると、DR と φ の関係を正しく置き直せます。</p>
+
+    <div class="keybox" style="border-left-color:#c9973a">
+      <span class="kb-label" style="color:#8a6116">差の座標にある、二種類の閉包</span>
+      <strong>Delta-Rational</strong>：差が<strong>有理</strong>に揃う → 差の集合が<strong>ひとつの基音の整数倍</strong>に収まる。<strong>算術的な閉包</strong>。結合音は単一の基音へ収束してロックする。<br>
+      <strong>acoustic phi</strong>：差が<strong>\(1/\varphi\) 倍の相似形</strong>になる → 差の集合が<strong>同じ等比列に戻り</strong>、\(\varphi^{2}-\varphi=1\) ゆえ<strong>根音まで再生成される</strong>。<strong>幾何的な閉包</strong>が連鎖していて、尺度を変えても同じ形。<br>
+      どちらも「差を取ると自分の系列に帰ってくる」閉包で、<strong>対極ではなく、閉じ方の型が違う</strong>。分かれ目は<strong>共通の基音を持つか否か</strong>で、算術的閉包は基音を1つ持ち、幾何的閉包は基音を持たないまま自己相似を保ちます。
+    </div>
+
+    <p>HE（<span class="xref" data-file="part6-01-he.html">Ⅵ-1</span>）の座標でも、比の軸の性質に裏が取れます。<br>本書の HE データでは、両隣の純正比が谷（8/5＝813.7¢ で 2.30、5/3＝884.4¢ で 1.86）なのに対し、<strong>acoustic phi＝833.1¢ は 2.40 と高エントロピー域</strong>に座ります。理論的には、連分数の末尾がすべて 1 になる数（<strong>noble number</strong>）が HE の極大を与えるとされます（極大の正確な位置は HE のパラメータに依存します）。Erv Wilson はこの性質を <em>"the worstest of the worst — and yet somehow with divinity imbued"</em>（最悪の中の最悪、しかしなぜか神性を帯びた）と評し、<strong>merciful intonation</strong> という語を残しました。<br>純正律が谷を目指すのに対し、<strong>φ は峰に居座ることを選ぶ</strong>、この曖昧さを欠陥ではなく素材として使う美学です。</p>
+
+    <p>そして、差の軸では閉じて根音を生み直し、比の軸ではどんな単純比にも嵌まらないという、<strong>二つの軸の同居</strong>こそ φ が <strong>metastable（メタ安定）</strong> と呼ばれることの中身です。<strong>自分自身に閉じているから崩れない</strong>ということです。</p>
+
+    <h3 id="sec-ap-mos">acoustic phi から生まれる MOS と 13edo</h3>
+
+    <p>この 833.090¢ を <strong>generator</strong> に取ってオクターブ内に積むと、どんな音階ができるかを見てみましょう。<br>MOS（<span class="xref" data-file="part3-04-mos.html">Ⅲ-4</span>）を数えると、ステップが2種類に収まるのは次のサイズです：</p>
+
+    <div class="table-scroll">
+    <table>
+      <thead><tr><th>音数 N</th><th>MOS</th><th>ステップ（¢）</th><th>L/s</th><th>パターン</th></tr></thead>
+      <tbody>
+        <tr><td class="num">2</td><td>1L1s</td><td class="num">833.09 / 366.91</td><td class="num">2.271</td><td>Ls</td></tr>
+        <tr><td class="num">3</td><td>1L2s</td><td class="num">466.18 / 366.91</td><td class="num">1.271</td><td>Lss</td></tr>
+        <tr><td class="num">4</td><td>3L1s</td><td class="num">366.91 / 99.27</td><td class="num">3.696</td><td>sLLL</td></tr>
+        <tr><td class="num">7</td><td>3L4s</td><td class="num">267.64 / 99.27</td><td class="num">2.696</td><td>ssLsLsL</td></tr>
+        <tr><td class="num">10</td><td>3L7s</td><td class="num">168.37 / 99.27</td><td class="num">1.696</td><td>sssLssLssL</td></tr>
+        <tr><td class="num">13</td><td>—</td><td class="num">99.27 / 69.10</td><td class="num">1.437</td><td>（13音）</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>MOS のサイズは <strong>2, 3, 4, 7, 10, 13</strong></p>
+
+    <p>そして<strong>この列の落としどころが 13</strong>となります。連分数の収束分数を並べると：</p>
+
+    <div class="table-scroll">
+    <table>
+      <thead><tr><th>収束分数</th><th class="num">2\3</th><th class="num">7\10</th><th class="num">9\13</th><th class="num">25\36</th><th class="num">84\121</th></tr></thead>
+      <tbody>
+        <tr><th>セント</th><td class="num">800.000</td><td class="num">840.000</td><td class="num">830.769</td><td class="num">833.333</td><td class="num">833.058</td></tr>
+        <tr><th>誤差</th><td class="num">−33.09</td><td class="num">+6.91</td><td class="num"><strong>−2.32</strong></td><td class="num">+0.24</td><td class="num">−0.03</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p><strong>9\13 ＝ 830.769¢ は acoustic phi の収束分数</strong>（誤差 −2.32¢ ）で、実用に耐える最小の EDO 実装です。</p>
+
+    <div class="table-scroll">
+    <table>
+      <thead><tr><th>MOS</th><th>L（歩）</th><th>s（歩）</th><th>歩数列</th><th>検算</th></tr></thead>
+      <tbody>
+        <tr><td>4音 3L1s</td><td class="num">4</td><td class="num">1</td><td class="num">0, 1, 5, 9</td><td class="num">3·4 + 1·1 = 13</td></tr>
+        <tr><td>7音 3L4s</td><td class="num">3</td><td class="num">1</td><td class="num">0, 1, 2, 5, 6, 9, 10</td><td class="num">3·3 + 4·1 = 13</td></tr>
+        <tr><td>10音 3L7s</td><td class="num">2</td><td class="num">1</td><td class="num">0, 1, 2, 3, 5, 6, 7, 9, 10, 11</td><td class="num">3·2 + 7·1 = 13</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>7音の <strong>3L4s</strong> は MOS family tree（<span class="xref" data-file="appendix-c-tables.html">付録C</span>）でいう <strong>mosh</strong>。<br>黄金比を generator に取ると、全音階（5L2s）とはまったく別の系譜の7音音階に着地することになるます。</p>
+
+    <details class="precise">
+      <summary style="color:#8a6116">余談 ── logarithmic phi</summary>
+      <div class="precise-body">
+        <p>差の話からは逸れますが、混同を避けるためにもう一方の φ も見ておきます。オクターブ（1200¢）を φ で割ると：</p>
+
+        <p>$$ \frac{1200}{\varphi} = 741.641\,\text{¢}, \qquad 1200 - 741.641 = 458.359\,\text{¢}, \qquad \frac{741.641}{458.359} = \varphi $$</p>
+
+        <p>大きい方をまた φ で割ると 458.359 ＋ 283.281 です。<strong>余りが前段の小さい方に一致し、比はまた φ</strong>。<br>この「最大ステップを φ で割り続ける」操作がそのまま MOS の階段になります。generator \(g = 741.641\)¢ で MOS を数えると、成立するのは <strong>2, 3, 5, 8, 13, 21, 34…</strong><br>——<strong>Fibonacci 数のときだけ</strong>（4・6・7・9・10・12音はステップ3種で非MOS）。理由は \(g/1200 = 1/\varphi\) の連分数が \([0;1,1,1,1,\ldots]\) で、収束分数の分母がまさに Fibonacci 数列、しかも部分商が全て 1 なので中間近似が存在しないこと。さらに <strong>L/s はどの段でも厳密に φ</strong> となります。これは<span class="xref" data-file="part5-05-small-edos.html">Ⅴ-5</span> の「硬さ」の連続体における唯一の不動点で、「Golden  MOS」の名はここから来ます。</p>
+
+        <p>そしてもちろん通過点の <strong>13edo はこちらの φ もそこそこ担えます</strong>。13 は Fibonacci 数（\(13 = F_7\)）なので、generator <strong>8\13 ＝ 738.462¢</strong>（誤差 −3.18¢）が logarithmic phi の近似になり、しかも黄金 MOS の<strong>ステップ幅まで Fibonacci 数</strong>になります。</p>
+
+        <div class="table-scroll">
+        <table>
+          <thead><tr><th>MOS（generator 8\13）</th><th>L（歩）</th><th>s（歩）</th><th>検算</th></tr></thead>
+          <tbody>
+            <tr><td>3音 2L1s</td><td class="num">5</td><td class="num">3</td><td class="num">2·5 + 1·3 = 13</td></tr>
+            <tr><td>5音 3L2s</td><td class="num">3</td><td class="num">2</td><td class="num">3·3 + 2·2 = 13</td></tr>
+            <tr><td>8音 5L3s</td><td class="num">2</td><td class="num">1</td><td class="num">5·2 + 3·1 = 13</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>大ステップの個数・小ステップの個数・大ステップの幅・小ステップの幅、<strong>四つとも Fibonacci 数</strong>で、積和が必ず 13。Fibonacci 恒等式 \(F_m F_n + F_{m-1}F_{n-1} = F_{m+n-1}\) の音楽的な顕現です（\(13 = F_7\)）。<br><strong>13edo という器が、二つの φ を同時に抱えていることになります。</strong>9\13 が acoustic phi、8\13 が logarithmic phi。ただし logarithmic phi はピッチ（対数）側の話で、差音の構造とは接続しませんし、本章の主題からは外れるため、ここまでとします。</p>
+      </div>
+    </details>
+
+    <div class="widget">
+      <p class="widget-title">黄金比を聴く ── acoustic phi の結合音と、13edo の MOS</p>
+      <div class="wrow">
+        <label>acoustic phi（周波数比 φ:1 ＝ 833.090¢）── 差が自分に還る</label>
+      </div>
+      <div class="wrow">
+        <button class="btn" id="phi-ac">φ 二音のみ（440・711.9 Hz）</button>
+        <button class="btn" id="phi-ac-ct">＋ 結合音を合成（QDT・CDT）</button>
+        <button class="btn" id="phi-ac-tri">三和音 1:φ:φ²（差音が根音に重なる）</button>
+        <button class="btn secondary" id="phi-ac-13">13edo 版（9\13 ＝ 830.769¢）</button>
+      </div>
+      <div class="wrow">
+        <label>acoustic phi を generator にした MOS（13edo・9\13）</label>
+      </div>
+      <div class="wrow">
+        <button class="btn" id="phi-mos4">4音 3L1s</button>
+        <button class="btn" id="phi-mos7">7音 3L4s（mosh）</button>
+        <button class="btn" id="phi-mos10">10音 3L7s</button>
+      </div>
+      <div class="wrow"><span class="wval" id="phi-note" style="min-width:100%"></span></div>
+      <p class="widget-note">基準は C4＝261.6255653 Hz。「結合音を合成」は QDT（f₂−f₁）と CDT（2f₁−f₂）を明示的に足したもので、<strong>どちらも φ 系列の音（440/φ・440/φ²）に落ちます</strong>。「三和音」では \(\varphi^{2}-\varphi=1\) が効き、<strong>上二音の差音がちょうど根音 440 Hz に重なります</strong>。13edo 版（9\13、誤差 −2.32¢）では \(r^{2}-r = 0.99516\) と厳密な 1 からわずかに外れ、再生成される根音は <strong>8.40¢ 低い 437.87 Hz</strong>——毎秒約 2.1 回のうなりとして、自己相似が「ほぼ」保たれる度合いが聴き取れます。</p>
+    </div>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── 31edo と φ、そして二つの美学</summary>
+      <div class="precise-body">
+        <p>31edo は φ を<strong>得意としません</strong>。acoustic phi 833.090¢ は 22\31 ＝ 851.613¢（誤差 +18.52¢）、実用とは言いがたい。</p>
+        <p>しかしこれは<strong>設計思想の違い</strong>です。31edo は「有理比の格子にいかに嵌まるか」を極めた律射の交差点であり（第Ⅳ・Ⅴ部）、φ は「有理比からいかに遠ざかるか」を狙う数です。両者はそもそも<strong>目指す方向が正反対</strong>で、同じ物差しで優劣を測れはしません。acoustic phi を鳴らしたいなら 13edo（9\13）や、より精密には 36edo・121edo を選ぶ。31edo に φ を求めるのは難しい。</p>
+        <p><strong>協和を「差」の座標から眺めると、閉じ方に二つの型がある</strong>。ひとつは差を有理に揃え、結合音を<strong>ひとつの基音へ収束</strong>させる算術的な閉じ方。もうひとつは差を \(1/\varphi\) 倍の相似形にして、<strong>共通の基音を持たないまま系列そのものに還る</strong>幾何性（acoustic phi・Bohlen 833・merciful intonation）。<strong>31edo は前者の王であり、φ は後者の王</strong>です。自分がどちらの目的で扱っているのかを意識しておくと、設計の指針が定まります。</p>
+      </div>
+    </details>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── 位置づけと批判</summary>
+      <div class="precise-body">
+        <p>Delta-Rational は、協和の<strong>差音説</strong>（Tartini・Hindemith の系譜。Ⅵ-5・6）を和音設計原理に発展させたものと理解できます。比有理（純正律・HE）が「共通の倍音列に嵌まるか（上向きの整列）」を見るのに対し、差有理は「共通の差音／基音に集まるか（下向きの整列）」を見ます。特に 両者は協和の別々の側面で、優劣ではなく<strong>補完</strong>です。理論的な厳密化（どの差の集合を許すか、重みづけをどうするか）は HE ほど成熟しておらず、差音「 \( f_2 - f_1 \)」のQDT側はそもそも聞こえにくいとされている（Ⅵ-5で詳述）などの批判も多く残るため、本項第Ⅳ部4では概説に留めます。</p>
+        <p>定量的な検証は今後の課題です。</p>
+      </div>
+    </details>
+
+    <div class="keybox">
+      <span class="kb-label">この節の要点</span>
+      <strong>Delta-Rational</strong>とは周波数の<strong>差</strong>を単純比に揃える和音設計。差音が協和し共通の基音に整列する下向きの整列。比有理（純正律・HE、上向きの整列）とは補完関係の発展途上のトピック。
+      <strong>黄金比</strong>は差の座標のもうひとつの閉じ方。<br>DR と直結するのは <strong>acoustic phi</strong>（周波数比 φ:1 ＝ 833.090¢）で、鍵は <strong>φ²−φ=1</strong>で、等比列が<strong>差について自分に戻る</strong>唯一の数であることを意味し、三和音 1:φ:φ² では<strong>上二音の差音が根音に、外側の差音が中音に重なる</strong>。<br>DR が共通の基音へ収束なのに対し、φ は基音を持たないまま自己相似。<br>加えて<strong>比の軸</strong>では連分数が全て1で<strong>有理数から最も遠い</strong>。<br>generator に取ると MOS は <strong>2,3,4,7,10,13</strong> 音、実装は <strong>13edo の 9\13 ＝ 830.769¢</strong>。<br>
+    </div>
+
+    <nav class="pager" id="pager"></nav>
+  </main>
+</div>
+
+
+<script src="assets/data/toc.js"></script>
+<script src="assets/data/glossary.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/audio.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+<script>
+(function () {
+  "use strict";
+  const C4 = 261.6255653;
+  const base = 130.8;   // C3 付近で差音が聞こえやすく
+  document.getElementById("dr-just").addEventListener("click", () => {
+    XenAudio.playFreqs([base * 4, base * 5, base * 6], { dur: 3.0 });
+    document.getElementById("dr-note").textContent = "比有理 4:5:6（差は 1×・2× base で、これも整数比。上下両方で整列）";
+  });
+  document.getElementById("dr-delta").addEventListener("click", () => {
+    XenAudio.playFreqs([base * 9/2 , base * 11/2 , base * 13/2], { dur: 3.0 });
+    document.getElementById("dr-note").textContent = "等差 3:4:5（差はどちらも base＝共通の差音。倍音列の断片）";
+  });
+  document.getElementById("dr-nonint").addEventListener("click", () => {
+    XenAudio.playFreqs([413, 562, 711], { dur: 3.0 });
+    document.getElementById("dr-note").textContent = "413, 562, 711 Hz ＝ 比 413:562:711（非整数的）差はどちらも 149 Hz＝差有理。";
+  });
+    
+  /* ===== 黄金比デモ（すべて 13edo）===== */
+  const PHI = (1 + Math.sqrt(5)) / 2;
+  const STEP13 = 1200 / 13;
+  const phiNote = document.getElementById("phi-note");
+
+  // 13edo で generator g 歩を N 音積んだ MOS の歩数列
+  function mos13(g, N) {
+    const pcs = [];
+    for (let i = 0; i < N; i++) pcs.push(((i * g) % 13 + 13) % 13);
+    pcs.sort((a, b) => a - b);
+    return pcs;
+  }
+  function playMos13(g, N, label) {
+    const pcs = mos13(g, N);
+    const seq = pcs.concat([13]).map(k => XenAudio.freqFromCents(C4, k * STEP13));
+    XenAudio.playSeq(seq, { dur: 0.45, gap: 0.03 });
+    const st = [];
+    for (let i = 0; i < N; i++) st.push((i === N - 1 ? 13 + pcs[0] : pcs[i + 1]) - pcs[i]);
+    const u = [...new Set(st)].sort((a, b) => b - a);
+    const x = st.filter(v => v === u[0]).length, y = st.length - x;
+    phiNote.innerHTML = "<strong>" + label + "</strong>：歩数列 [" + pcs.join(", ") +
+      "]　L=" + u[0] + "歩 / s=" + u[1] + "歩";
+  }
+  // acoustic phi 側（generator 9\13）
+  document.getElementById("phi-mos4").addEventListener("click", () => playMos13(9, 4, "4音 3L1s（9\\13）"));
+  document.getElementById("phi-mos7").addEventListener("click", () => playMos13(9, 7, "7音 3L4s ＝ mosh（9\\13）"));
+  document.getElementById("phi-mos10").addEventListener("click", () => playMos13(9, 10, "10音 3L7s（9\\13）"));
+
+  // acoustic phi（周波数比 φ:1）と、その結合音
+  const AF = 440;
+
+  document.getElementById("phi-ac").addEventListener("click", () => {
+    XenAudio.playFreqs([AF, AF * PHI], { dur: 3.0 });
+    phiNote.innerHTML = "<strong>acoustic phi</strong>：440 Hz と " + (AF * PHI).toFixed(1) +
+      " Hz（比 φ:1 ＝ 833.090¢）。純正比のどこにも嵌まらない「宙吊り」の響き。";
+  });
+  document.getElementById("phi-ac-ct").addEventListener("click", () => {
+    const f2 = AF * PHI;
+    const qdt = f2 - AF;         // = 440/φ
+    const cdt = 2 * AF - f2;     // = 440/φ²
+    XenAudio.playFreqs([AF, f2, qdt, cdt], { dur: 3.0 });
+    phiNote.innerHTML = "<strong>φ 二音＋結合音</strong>：QDT ＝ " + qdt.toFixed(1) + " Hz（＝440/φ ＝ " +
+      (AF / PHI).toFixed(1) + "）、CDT ＝ " + cdt.toFixed(1) + " Hz（＝440/φ² ＝ " +
+      (AF / (PHI * PHI)).toFixed(1) + "）——<strong>差音がまた φ 系列に戻る</strong>（自己相似）。";
+  });
+  document.getElementById("phi-ac-tri").addEventListener("click", () => {
+    const f2 = AF * PHI, f3 = AF * PHI * PHI;
+    XenAudio.playFreqs([AF, f2, f3], { dur: 3.0 });
+    phiNote.innerHTML = "<strong>三和音 1:φ:φ²</strong>：" + AF + " / " + f2.toFixed(1) + " / " + f3.toFixed(1) +
+      " Hz。差は " + (f2 - AF).toFixed(1) + "（＝440/φ・新しい音）、<strong>" + (f3 - f2).toFixed(1) +
+      "（＝根音そのもの）</strong>、<strong>" + (f3 - AF).toFixed(1) + "（＝中音そのもの）</strong>——" +
+      "<strong>φ²−φ=1</strong> により<strong>差音が和音の構成音を生み直す</strong>。";
+  });
+  document.getElementById("phi-ac-13").addEventListener("click", () => {
+    const c = 9 * STEP13;
+    const f2 = XenAudio.freqFromCents(AF, c);
+    XenAudio.playFreqs([AF, f2, f2 - AF, 2 * AF - f2], { dur: 3.0 });
+    phiNote.innerHTML = "<strong>13edo の acoustic phi</strong>：9\\13 ＝ " + c.toFixed(3) +
+      "¢（誤差 " + (c - 1200 * Math.log2(PHI)).toFixed(3) +
+      "¢、収束分数）。QDT ＝ " + (f2 - AF).toFixed(1) + " Hz、CDT ＝ " + (2 * AF - f2).toFixed(1) +
+      " Hz——厳密な φ（271.9 / 168.1 Hz）の近くに落ち、自己相似の感触は保たれる。";
+  });
+})();
+</script>
+</body>
+</html>

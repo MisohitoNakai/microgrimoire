@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ⅰ-3 倍音列 ── 協和と音色の源 — 微分音のグリモワール</title>
+<link rel="icon" href="./assets/data/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+</head>
+<body>
+<header class="topbar">
+  <button id="nav-toggle" aria-label="目次を開く"><span></span><span></span><span></span></button>
+  <a class="site-name" href="index.html">微分音のグリモワール</a>
+  <span class="topbar-section">第Ⅰ部 土台</span>
+</header>
+
+<div class="layout">
+  <aside id="sidebar" aria-label="目次"></aside>
+  <div id="sidebar-overlay"></div>
+
+  <main class="content">
+    <p class="eyebrow">第Ⅰ部 土台：音・周波数・知覚　─　3</p>
+    <h1>倍音列 ── 協和と音色の源</h1>
+
+    <div class="intuition">
+      <span class="layer-tag">直感レイヤー</span>
+      <p>一本の弦、一本の管は、実は同時にたくさんの高さで鳴っています。基音の 2 倍、3 倍、4 倍……と整数倍の高さの成分「<strong>倍音</strong>」がいっせいに響き、その配合が音色を決めています。<br>つまりあなたが「ひとつの音」を聴くたび、耳はすでに整数比の和音を聴いているのです。純正な音程が心地よいのも、微分音がそこに新しい響きを見つけるのも、源泉はすべてこの倍音列にあります。本書で最も重要な一枚の設計図です。</p>
+    </div>
+
+    <h2 id="sec-what">整数倍の梯子</h2>
+
+    <p>周期的な振動（両端を固定された弦、片端の開いた管の気柱、人の声など）は、基本周波数 \(f_0\) と、その整数倍 \(2f_0, 3f_0, 4f_0, \dots\) の成分を同時に含みます。この整数倍の列を<strong>倍音列</strong>と呼びます。隣り合う倍音の周波数比は \( \frac{2}{1}, \frac{3}{2}, \frac{4}{3}, \frac{5}{4}, \frac{6}{5}, \frac{7}{6}, \dots \) と、上に行くほど狭くなっていきます。オクターブ、完全5度、完全4度、長3度……<strong>前節までに登場した純正音程は、すべて倍音列の中の隣接関係・遠隔関係として現れる</strong>のです。</p>
+
+    <p>下の梯子で、第1〜16倍音を一段ずつ聴いてみましょう。基音は A2（110 Hz）です。</p>
+
+    <div class="widget">
+      <p class="widget-title">倍音の梯子（基音 110 Hz・正弦波）</p>
+      <div class="wrow">
+        <button class="btn" id="hs-sweep">1→16 を順に聴く</button>
+        <button class="btn secondary" id="hs-chord4567">4:5:6:7 を和音で聴く</button>
+        <label style="margin-left:auto"><input type="checkbox" id="hs-withf0" checked> 基音と一緒に鳴らす</label>
+      </div>
+      <div class="table-scroll">
+      <table id="hs-table">
+        <thead><tr><th class="num">n</th><th class="num">周波数</th><th class="num">基音からのセント</th><th>オクターブ内</th><th>最寄りの 12edo</th><th>試聴</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      </div>
+      <p class="widget-note">「最寄りの 12edo」列の符号つきの数字が、その倍音が 12 平均律からどれだけ外れているかです。第 5 倍音で −14¢、第 7 倍音で −31¢、第 11 倍音では半音のほぼ中間——<strong>ここが微分音の生まれる場所</strong>です。</p>
+    </div>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── 用語の整理：部分音・倍音・上音</summary>
+      <div class="precise-body" id="sec-terms">
+        <p>用語を厳密に切り分けておきます。<br><strong>部分音（partial）</strong>は複合音を構成する個々の正弦波成分の総称で、整数倍かどうかを問いません。<br><strong>倍音（harmonic）</strong>は部分音のうち基本周波数のちょうど整数倍のもので、第 n 倍音＝\(n f_0\)（第 1 倍音は基音自身）。<br><strong>上音（overtone）</strong>は基音より上の部分音を指す古い言い方で、第 1 上音＝第 2 倍音と番号が 1 つずれるため混乱のもとになりやすく、本書では原則使いません。<br>鐘・棒・膜など多くの打楽器の部分音は整数倍からずれた<strong>非調和部分音（inharmonic partials）</strong>であり、「倍音列」はあくまで理想化された周期振動のモデルです。この理想からのずれが現実にどれほど重要かは、本節の末尾と<span class="xref" data-file="part6-03-timbre.html">第Ⅵ部3（音色↔音律）</span>で扱います。</p>
+      </div>
+    </details>
+
+    <h2 id="sec-timbre">倍音の配合が音色を決める</h2>
+
+    <p>同じ高さの音でも、楽器によって聞こえが違うのは、倍音の振幅配合（<strong>スペクトル</strong>）が違うからです。逆に言えば、正弦波を整数倍の周波数で複数重ねれば、音色を自分の手で合成できます（<strong>加算合成</strong>）。試してみましょう。スライダーは第 1〜12 倍音の振幅です。</p>
+
+    <div class="widget">
+      <p class="widget-title">加算合成 ── 音色を組み立てる（基音 110 Hz）</p>
+      <div class="wrow">
+        <label>プリセット</label>
+        <button class="btn small secondary" data-preset="parabolic">放物線波 1/n²</button>
+        <button class="btn small secondary" data-preset="saw">のこぎり波 1/n</button>
+        <button class="btn small secondary" data-preset="odd">奇数倍音のみ</button>
+        <button class="btn small secondary" data-preset="pure">純音</button>
+        <button class="btn small secondary" data-preset="bell">先細り（フルート風）</button>
+      </div>
+      <div id="as-sliders"></div>
+      <div class="wrow">
+        <button class="btn" id="as-play">この音色で鳴らす</button>
+      </div>
+      <p class="widget-note">どの配合でも<strong>ピッチは 110 Hz のまま</strong>で、変わるのは音色だけであることを確かめてください。本書の基準音色「放物線波」は 1/n² の配合、のこぎり波は 1/n の配合です（試聴音量はエンジン側でおおむね揃えています）。</p>
+    </div>
+
+    <h2 id="sec-microtones">微分音が生まれる場所 ── 第7・11・13倍音</h2>
+
+    <p>梯子の表をもう一度見てみましょう。第 1〜6 倍音（および第 8・9・10・12・15・16）は、12edo の音名で「だいたい」歌えます。しかし第 <strong>7</strong> 倍音（968.83¢）は最寄りの短7度から 31¢ も低く、第 <strong>11</strong> 倍音（551.32¢）は完全4度と増4度のほぼ中間、第 <strong>13</strong> 倍音（840.53¢）も半音の隙間に落ちます。自然の設計図には最初から、12 平均律の鍵盤の「隙間の音」が書き込まれているのです。</p>
+
+    <p>この 3 つの倍音を含む響き（たとえば 4:5:6:7 のコード）は、12edo では近似が粗く、うなりの多い響きに翻訳されてしまいます。<br>31edo が微分音の入口として強力なのは、まさに<strong>第 7 倍音を −1.08¢ という精度で捉える</strong>からです（<span class="xref" data-file="part4-01-why31.html">第Ⅳ部1</span>）。聴き比べてみましょう。</p>
+
+    <div class="widget">
+      <p class="widget-title">4:5:6:7 ── 三つの音律で</p>
+      <div class="wrow">
+        <button class="btn" id="h7-just">純正 4:5:6:7</button>
+        <button class="btn secondary" id="h7-12">12edo 近似</button>
+        <button class="btn secondary" id="h7-31">31edo 近似</button>
+      </div>
+      <p class="widget-note">基音 C3 相当（130.81 Hz）。12edo 版（0-400-700-1000¢）は第 7 倍音の位置が 31¢ 高く、特有のうなりが出ます。31edo 版（0-387.1-696.8-967.7¢）は純正版とほとんど区別がつかないはずです。</p>
+    </div>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── 実在の弦はわずかに嘘をつく：非調和性</summary>
+      <div class="precise-body">
+        <p>理想弦の部分音は厳密な整数倍ですが、実在の弦には曲げ剛性があり、部分音は \( f_n = n f_0 \sqrt{1 + B n^2} \)（\(B\) は非調和性係数）のように整数倍からわずかに<strong>上へ</strong>ずれます。ピアノの中低音でこの効果は無視できず、オクターブ調律の伸長（stretch）の一因になります。本書の理論編では当面、部分音＝厳密な倍音列という理想化で進めますが、次の 2 点は先に記しておきます。<br>（1）合成音源を使う限り、理想倍音列は完全に実現できる<br>─── 微分音の実践にとって電子音源が有利な理由のひとつです。<br>（2）スペクトルが理想からずれるなら、協和の条件もずれる<br>─── 「音色に合わせて音律を選ぶ／音律に合わせて音色を設計する」という Sethares の視点（<span class="xref" data-file="part6-03-timbre.html">第Ⅵ部3</span>）へ直結します。</p>
+      </div>
+    </details>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── 倍音列は「和音の推薦状」であって「音階」ではない</summary>
+      <div class="precise-body">
+        <p>倍音列をそのまま音階として使う試み（第 8〜16 倍音を並べる等）は歴史上たびたび現れますが、倍音列の本領はむしろ<strong>同時に鳴る音の整合性の設計図</strong>である点にあります。2 つの複合音の基本周波数が小さな整数比にあるとき、両者の倍音は多くの周波数で一致し、一致しない倍音どうしの衝突（うなり・粗さ）が減ります。これが次節で扱う感覚的協和の音響的な骨格です。ただし「協和＝倍音の一致」だけでは説明しきれない現象（存在しない基音が聞こえるミッシングファンダメンタル、比の解釈の曖昧さとしての不協和（Harmonic Entropy）などがあり、それらは<span class="xref" data-file="part6-05-virtual-pitch.html">第Ⅵ部5</span>・<span class="xref" data-file="part6-01-he.html">第Ⅵ部1</span>の主題です。</p>
+      </div>
+    </details>
+
+    <div class="keybox">
+      <span class="kb-label">この節の要点</span>
+      楽音は倍音（整数倍の部分音）の重ね合わせで、配合が音色を決める。純正音程は倍音列の内部関係として自然に現れる。第 7・11・13 倍音は 12edo の鍵盤の隙間に落ち、<strong>ここから微分音が始まる</strong>。実在の弦の非調和性は「音色と音律の共進化」という後半の主題への伏線。
+    </div>
+
+    <p>倍音どうしの「衝突」が協和・不協和をどう形づくるのかについて、次節で耳の内部の解像度（臨界帯域）と粗さの科学に踏み込みます。</p>
+
+    <nav class="pager" id="pager"></nav>
+  </main>
+</div>
+
+<script src="assets/data/toc.js"></script>
+<script src="assets/data/glossary.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/audio.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+<script>
+(function () {
+  "use strict";
+  const F0 = 110;
+  const INAMES = ["ユニゾン","短2度","長2度","短3度","長3度","完全4度","三全音","完全5度","短6度","長6度","短7度","長7度"];
+
+  /* --- 倍音の梯子 --- */
+  const tbody = document.querySelector("#hs-table tbody");
+  const withF0 = document.getElementById("hs-withf0");
+  for (let n = 1; n <= 16; n++) {
+    const f = F0 * n;
+    const cAbs = 1200 * Math.log2(n);
+    const cOct = ((cAbs % 1200) + 1200) % 1200;
+    const near = Math.round(cOct / 100) % 12;
+    const dev = cOct - Math.round(cOct / 100) * 100;
+    const devStr = (dev >= 0 ? "+" : "") + dev.toFixed(1) + "¢";
+    const tr = document.createElement("tr");
+    tr.innerHTML =
+      "<td class='num'>" + n + "</td>" +
+      "<td class='num'>" + f.toFixed(1) + " Hz</td>" +
+      "<td class='num'>" + cAbs.toFixed(1) + "</td>" +
+      "<td class='num'>" + cOct.toFixed(1) + "¢</td>" +
+      "<td>" + INAMES[near] + "　<code>" + devStr + "</code></td><td></td>";
+    const btn = document.createElement("button");
+    btn.className = "btn small secondary";
+    btn.textContent = "♪";
+    btn.setAttribute("aria-label", "第" + n + "倍音を試聴");
+    btn.addEventListener("click", () => {
+      if (withF0.checked && n > 1) {
+        XenAudio.playFreq(F0, { dur: 1.6, wave: "sine", gain: 0.18 });
+        XenAudio.playFreq(f,  { dur: 1.6, wave: "sine", gain: 0.18 });
+      } else {
+        XenAudio.playFreq(f, { dur: 1.2, wave: "sine", gain: 0.25 });
+      }
+    });
+    tr.lastElementChild.appendChild(btn);
+    tbody.appendChild(tr);
+  }
+  document.getElementById("hs-sweep").addEventListener("click", () => {
+    const freqs = [];
+    for (let n = 1; n <= 16; n++) freqs.push(F0 * n);
+    freqs.forEach((f, i) =>
+      XenAudio.playFreq(f, { dur: 0.4, when: i * 0.32, wave: "sine", gain: 0.22 }));
+  });
+  document.getElementById("hs-chord4567").addEventListener("click", () =>
+    XenAudio.playFreqs([4, 5, 6, 7].map(n => F0 * n), { dur: 2.6, wave: "sine" }));
+
+  /* --- 加算合成 --- */
+  const NP = 12;
+  const sliders = [];
+  const holder = document.getElementById("as-sliders");
+  for (let i = 1; i <= NP; i++) {
+    const row = document.createElement("div");
+    row.className = "wrow";
+    const lab = document.createElement("label");
+    lab.textContent = "倍音 " + i;
+    lab.style.minWidth = "4.5em";
+    const s = document.createElement("input");
+    s.type = "range"; s.min = 0; s.max = 100;
+    s.value = Math.round(100 / (i * i));
+    s.setAttribute("aria-label", "第" + i + "倍音の振幅");
+    const v = document.createElement("span");
+    v.className = "wval"; v.style.minWidth = "3.5em";
+    const upd = () => { v.textContent = s.value + "%"; };
+    s.addEventListener("input", upd); upd();
+    row.appendChild(lab); row.appendChild(s); row.appendChild(v);
+    holder.appendChild(row);
+    sliders.push(s);
+  }
+  const PRESETS = {
+    parabolic: i => 100 / (i * i),
+    saw:       i => 100 / i,
+    odd:       i => (i % 2 === 1 ? 100 / i : 0),
+    pure:      i => (i === 1 ? 100 : 0),
+    bell:      i => 100 * Math.exp(-(i - 1) * 0.9)
+  };
+  document.querySelectorAll("[data-preset]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const fn = PRESETS[btn.getAttribute("data-preset")];
+      sliders.forEach((s, idx) => {
+        s.value = Math.round(fn(idx + 1));
+        s.dispatchEvent(new Event("input"));
+      });
+    });
+  });
+  document.getElementById("as-play").addEventListener("click", () => {
+    const amps = sliders.map(s => s.value / 100);
+    XenAudio.playPartials(F0, amps, { dur: 2.4 });
+  });
+
+  /* --- 4:5:6:7 三律比較 --- */
+  const C3 = 130.8128;
+  const STEP31 = 1200 / 31;
+  function chordFromCents(cs) {
+    return cs.map(c => XenAudio.freqFromCents(C3, c));
+  }
+  document.getElementById("h7-just").addEventListener("click", () =>
+    XenAudio.playFreqs([4, 5, 6, 7].map(n => C3 * n / 4), { dur: 3.0 }));
+  document.getElementById("h7-12").addEventListener("click", () =>
+    XenAudio.playFreqs(chordFromCents([0, 400, 700, 1000]), { dur: 3.0 }));
+  document.getElementById("h7-31").addEventListener("click", () =>
+    XenAudio.playFreqs(chordFromCents([0, 10 * STEP31, 18 * STEP31, 25 * STEP31]), { dur: 3.0 }));
+})();
+</script>
+</body>
+</html>

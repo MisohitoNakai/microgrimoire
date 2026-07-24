@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ⅵ-2 音階の平均 HE と31の極小性 — 微分音のグリモワール</title>
+<link rel="icon" href="./assets/data/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+</head>
+<body>
+<header class="topbar">
+  <button id="nav-toggle" aria-label="目次を開く"><span></span><span></span><span></span></button>
+  <a class="site-name" href="index.html">微分音のグリモワール</a>
+  <span class="topbar-section">第Ⅵ部 響きの科学</span>
+</header>
+
+<div class="layout">
+  <aside id="sidebar" aria-label="目次"></aside>
+  <div id="sidebar-overlay"></div>
+
+  <main class="content">
+    <p class="eyebrow">第Ⅵ部 響きの科学　─　2</p>
+    <h1>音階の平均 HE と、31の極小性</h1>
+
+    <div class="intuition">
+      <span class="layer-tag">直感レイヤー</span>
+      <p>前節の HE は<strong>2音（dyad）</strong>の協和度でした。<br>ここではそれを<strong>音階全体</strong>に持ち上げます。ある音階の「全音程の平均 HE」を測れば、その音階が<strong>どれだけ純正比に富んでいるか</strong>を1つの数値で表せます。<br>そして generator を連続的に掃引しながらこの平均 HE を描くと…特定の generator で<strong>くっきりと谷</strong>が現れます。<br>その谷こそ、第Ⅴ部のアトラスで名前を持っていた音律たち（ミーントーン、mohajira……）です。<strong>「良い音律」は HE の風景の谷底にいる</strong>はずで、理論（RTT）と知覚（HE）が、独立の出発点から同じ場所を指す。この一致が、31edo を含む名たる音律たちの<strong>知覚的な根拠</strong>を与えます。</p>
+    </div>
+
+    <h2 id="sec-scalehe">音階の平均 HE</h2>
+
+    <p>定義は素直です。音階 \(S\)（オクターブ内の音の集合）に対し、すべての音のペアの音程 dyad を取り、それぞれの HE を平均します：</p>
+
+    <p>$$ \overline{HE}(S) = \frac{1}{\binom{|S|}{2}} \sum_{i \lt j} HE(s_j - s_i) $$</p>
+
+    <p>この値が低いほど、音階内の音程が単純な純正比に集中している＝<strong>和声的に豊か</strong>ということです。<br>rank-2 音律の MOS 音階（Ⅲ-4）は generator ひとつで決まるので、<strong>generator を横軸に、平均 HE を縦軸に</strong>取れば、音律たちの「和声的richさの地形図」が描けます。これは Xenharmonic Wiki の <a href="https://en.xen.wiki/w/Low_harmonic_entropy_linear_temperaments">Low harmonic entropy linear temperaments</a> が示す図と同じ発想で、下に近似版を一部掲載します。</p>
+
+    <div class="widget">
+      <p class="widget-title">generator 掃引による平均 HE の地形（谷＝低 HE ＝名律）</p>
+      <div class="wrow">
+        <label>MOS の音数</label>
+        <span class="pillgroup" id="sh-n">
+          <button data-n="5">5音</button>
+          <button data-n="7" class="on">7音</button>
+          <button data-n="9">9音</button>
+          <button data-n="10">10音</button>
+          <button data-n="12">12音</button>
+        </span>
+      </div>
+      <div id="sh-plot"></div>
+      <div class="wrow"><span class="wval" id="sh-info" style="min-width:100%">曲線をクリックすると、その generator の MOS 音階を試聴します。</span></div>
+      <p class="widget-note"><strong>横軸は 0〜600¢（1¢刻み）。</strong>generator \(g\) と補音程 \(1200-g\) は<strong>同じ音階</strong>を生む（片方を積むことは、もう片方を逆向きに積むこと）ため、地形は <strong>600¢ を軸に折り返します</strong>。半分だけ描けば全体を尽くせるので、meantone は5度 696.24¢ ではなく<strong>4度側 503.76¢</strong>に現れます。縦の琥珀線は主要音律の POTE generator（meantone 503.8¢・mohajira 350.5¢・porcupine 164.0¢・orwell 271.5¢）。<br><strong>藍色＝ well-formed な MOS、薄紫＝非MOS（3種）</strong>。曲線が途切れる箇所は、その generator では N 音音階が<strong>均等化（collapse）</strong>する点です。たとえば 7音で \(g=200¢\) は実質6音の6edo、\(g=199¢\) は 6¢ の近接ユニゾンを含む）。<br>平均は全ペアの dyad を<strong>音程類</strong>として（\(d\) と \(1200-d\) の平均として）取ります。<br>7音曲線の<strong>全体最小は 504¢＝ミーントーンの4度</strong>（POTE 503.76¢ とほぼ一致）で、そのほか 350¢ 付近に mohajira、164¢ 付近に porcupine の谷が立ちます。<br><strong>31edo の4度 503.23¢（＝5度 696.77¢ の逆）と中立3度 348.4¢ は、いずれもこれらの谷のほぼ底</strong>です。次の図でこれを拡大します。</p>
+    </div>
+
+    <h2 id="sec-31min">31 はなぜ谷の底なのか</h2>
+
+    <p>31edo の特別さを、この地形図の言葉で言い直せます。31edo は多くの名種族を同時に支持する交差点でした（Ⅳ-2・Ⅴ）。地形図で言えば、<strong>31 は複数の谷の底に同時に足を置いています。</strong>たとえばミーントーンの谷の底（18\31＝696.77¢ は POTE 696.24¢ の 0.5¢ 隣です。上図は 600¢ で折り返してあるので、4度側 13\31＝503.23¢ として読みます）、mohajira の谷の底（348.4¢ は POTE 350.5¢ の 2¢ 隣）、そして 7-limit を含めれば slendric・miracle の谷にも近い。ひとつの EDO が<strong>複数の HE 極小に同時に嵌まる</strong>という事実こそ、31 が「弾いていて気持ち良いとされる音がやたらと多い」体感の正体です。</p>
+
+    <div class="widget">
+      <p class="widget-title">31edo の格子は、HE の谷にどれだけ乗るか</p>
+      <div class="wrow">
+        <button class="btn" id="lat-31" >31edo の目盛を HE 曲線に重ねる</button>
+        <button class="btn secondary" id="lat-12">12edo の目盛を HE 曲線に重ねる</button>
+        <span class="wval" id="lat-score"></span>
+      </div>
+      <div id="lat-plot"></div>
+      <p class="widget-note">各格子点（縦線）が、dyad HE 曲線（Ⅵ-1）のどこに落ちるかを可視化し、格子点上の HE の合計（低いほど「純正比に乗っている」）をスコア表示します。31 は12より多くの点が谷に入り、とりわけ 7/4・7/5・7/6 の谷（12 では大きく外す）を捉えます。</p>
+    </div>
+
+    <h2 id="sec-zeta">拡張 ── zeta-HE と、無限のすべての倍音</h2>
+
+    <p>ここまでの HE には、隠れた打ち切りがありました。候補比を Farey や Tenney height の<strong>上限 \(N\)</strong> で切っていたので、「脳が認識する比の複雑さには限度がある」という近似です。では、<strong>この上限を無限大に飛ばし、すべての倍音・すべての素数を平等に考慮したら</strong>どうなるか。驚くべきことに、その極限は数論の中心的対象「<strong>Riemann ゼータ関数</strong>」と直結します。これが <strong>zeta 音律理論</strong>（Gene Ward Smith）です。この節は数学的な補遺ですが、音楽と素数の深いつながりを覗く価値があります。</p>
+
+    <h3 id="sec-primes">素数の分布 ── なぜ素数か</h3>
+
+    <p>まず復習です。あらゆる音程は素数の積で書けました（monzo、Ⅲ-2）。<br>つまり素数は音程の<strong>「元素」</strong>です。ある EDO がどれだけ純正律に近いかは、結局<strong>各素数 2, 3, 5, 7, 11, … をどれだけ良く近似するか</strong>で決まります。ここで素数の<strong>分布</strong>が効いてきます。<br>素数は 2, 3, 5, 7, 11, 13, … と不規則に並びますが、その密度は素数定理により \(x\) 以下におよそ \(x/\ln x\) 個であり、大きな素数ほど疎らになります。倍音列では、高次の倍音ほど間隔が詰まり、かつ音楽的な重要度は下がる。そこで<strong>「すべての素数を、重要度に応じた重みで、同時に評価する」</strong>装置が必要になります。それがゼータ関数です。</p>
+    <p>まず復習です。あらゆる音程は素数の積で書けました（monzo、Ⅲ-2）。<br>つまり素数は音程の<strong>「元素」</strong>です。ある EDO がどれだけ純正律に近いかは、結局<strong>各素数 2, 3, 5, 7, 11, … をどれだけ良く近似するか</strong>で決まります。ここで素数の<strong>分布</strong>が効いてきます。<br>素数は 2, 3, 5, 7, 11, 13, … と不規則に並びますが、その密度は素数定理により \(x\) 以下におよそ \(x/\ln x\) 個であり、大きな素数ほど疎らになります。倍音列も同じで、高次の倍音ほど間隔が詰まり、かつ音楽的な重要度は下がる。<strong>「すべての素数を、重要度に応じた重みで、同時に評価する」</strong>装置が必要になります。それがゼータ関数です。</p>
+
+    <h3 id="sec-zeta-fn">Riemann ゼータ関数 ── 素数と調和級数の結び目</h3>
+
+    <p>Riemann ゼータ関数は、複素数 \(s\) に対し</p>
+
+    <p>$$ \zeta(s) = \sum_{n=1}^{\infty} \frac{1}{n^s} = \frac{1}{1^s} + \frac{1}{2^s} + \frac{1}{3^s} + \cdots $$</p>
+
+    <p>と定義されます（\(\mathrm{Re}(s) \gt 1\) で収束、他へは解析接続）。この「すべての自然数にわたる和」が素数と結びつくのは、Euler が発見した<strong>Euler 積</strong>のためです：</p>
+
+    <p>$$ \zeta(s) = \prod_{p:\text{素数}} \frac{1}{1 - p^{-s}} $$</p>
+
+    <p>——<strong>すべての自然数の和 ＝ すべての素数にわたる積</strong>。<br>これは「自然数は素数の積で一意に書ける」（素因数分解の一意性）の解析版で、\(\zeta\) が<strong>素数の情報をすべて内包する</strong>ことを意味します。しかも定義の \(\sum 1/n^s\) は<strong>倍音列そのもの</strong>（第 \(n\) 倍音の寄与を \(n^{-s}\) で重みづけたもの）のため、ゼータ関数は、その本質からして<strong>「無限のすべての倍音を重みづけて足し合わせたもの」</strong>なのです。音律論がこれに出会うのは、必然だったとも言えます。</p>
+
+    <h3 id="sec-zeta-tuning">zeta 音律 ── 臨界線上の ζ が EDO の良さを測る</h3>
+
+    <p>Gene Ward Smith の洞察は、<strong>EDO の等分数 \(x\) を実変数とみなし、ゼータ関数を臨界線 \(\mathrm{Re}(s)=1/2\) 上で評価する</strong>：</p>
+
+    <p>$$ Z(x) = \left| \zeta\!\left( \tfrac{1}{2} + \frac{2\pi i}{\ln 2}\, x\, i \right) \right| \quad(\text{概念式}) $$</p>
+
+    <p>正確には \(\zeta(1/2 + i t)\) を \(t = \frac{2\pi}{\ln 2} x\) と対応させた \(|\zeta|\)（あるいは実数値の \(Z\) 関数）。<br>この関数を \(x\) について描くと、<strong>ピークが整数 \(x\) の近く、つまりまさしく良い EDO の位置に立ちます</strong>。12, 19, 22, 31, 41, 46, 53, 72… といった「純正律に近めの EDO」が、ゼータのピークとして<strong>自動的に浮かび上がる</strong>のです。臨界線上の \(1/2\) という指数は、すべての素数・倍音を「発散も収束もしない絶妙な重み」で足し合わせる点であり、これが「無限のすべての倍音を平等に考慮した HE」＝ <strong>zeta-HE</strong> の極限に対応します。有限 \(N\) の HE は、この無限和の打ち切り近似だったわけです。</p>
+
+    <div class="widget">
+      <p class="widget-title">zeta による EDO の良さ ── |ζ| のピークが良い EDO</p>
+      <div id="zeta-plot"></div>
+      <p class="widget-note">臨界線上の \(|\zeta|\) を等分数 \(x\)（5〜60）で描いた近似曲線。琥珀の点は 12・19・22・31・41・53。<strong>31 を含む名 EDO がピーク（極大）に立つ</strong>のが見えます。この曲線は「対象を特定の素数リミットに限定せず、すべての素数を臨界線上の重みで同時評価した EDO 良さ関数」で、有限 limit の誤差評価（Ⅲ-3・Ⅴ）を \(N\to\infty\) へ一般化したものです。ゼータの零点（谷の底）は逆に「純正律を最も表現しない」等分数に対応します。</p>
+    </div>
+
+    <p>数論との接続はさらに深く、ゼータの<strong>非自明零点</strong>の分布（Riemann 予想が語る対象）は素数の分布の「揺らぎ」を支配し、それが zeta-HE のピーク構造の細部に反映されます。「良い音律はどこにあるか」という問いが、「素数はどう分布するか」という数論最大の未解決問題と地続きであり、31edo を含む名音律たちは、この深い数学的風景のなかの、たまたま私たちの音楽に都合のよい尾根に立っていると言えます。</p>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── オクターブ伸縮と zeta ピーク</summary>
+      <div class="precise-body">
+        <p>技術的な注記。<br>（1）zeta のピークは一般に<strong>整数の等分数ちょうどには来ません。</strong>わずかにずれた実数（例：31 に対し 30.97 付近）に立ちます。この小数部は、純正律への最良近似がオクターブをわずかに<strong>伸縮</strong>させたほうが良いことを意味し、「zeta-stretched EDO」（オクターブを1200¢からわずかにずらした最適 equal tuning）を与えます。TE/TOP（Ⅲ-5）がオクターブを純正に固定しないのと同じ現象が、ここでも現れます。<br>（2）本ウィジェットの \(|\zeta|\) は Euler–Maclaurin 近似または有限項の直接和による<strong>近似計算</strong>で、ピーク位置の定性的な把握には十分ですが、厳密な zeta-record edo の判定には Riemann–Siegel 公式による高精度計算が要ります。</p>
+      </div>
+    </details>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── 平均 HE の使い方と注意</summary>
+      <div class="precise-body">
+        <p>三点補足。<br>（1）<strong>音数の効果</strong>：平均 HE は音数が増えると一般に上がります（複雑な音程が増えるため）。音律間の比較は同じ音数の MOS どうしで行うのが公平で、上のウィジェットが音数を選ばせるのはそのためです。<br>（2）<strong>単純平均か重み付きか</strong>：全ペアを等重みで平均する素朴版のほか、和音として同時に鳴る頻度で重みづける版、min（最悪ペア）を見る版などがあります。目的（旋律的か和声的か）で選び分けます。<br>（3）<strong>31edo の極小性は目的関数依存</strong>：ここで 31edo が谷底に来るのは「5・7-limit の dyad HE を平均する」という目的関数のもとでの話です。5-limit だけなら 53 が、11-limit を重視すれば 41・72 が相対的に有利になり、第Ⅴ部4で相対化したとおりです。HE 地形図の価値は「31edo が一位」を主張することではなく、<strong>RTT が代数的に選んだ名音律と、知覚モデルが選ぶ低 HE 点が一致する</strong>という、独立な二つの理論の合流を可視化することにあります。</p>
+        <p>この合流には理由があります。RTT の badness（Ⅲ-5）は「単純な純正比を少ない複雑さで良く近似する」ことを、HE は「音程が単純な純正比によく嵌まる」ことを測ります。どちらも根は同じ、<strong>単純整数比への近さ</strong>です。Tenney height（Ⅲ-5）が両者の共通言語で、実際、HE のガウス基底を Tenney 重みで作ると、低 HE 点と低 badness 音律の対応がよりくっきりします。理論と知覚が同じ Tenney 幾何の上に立っている、というのが最も深い言い方です。</p>
+      </div>
+    </details>
+
+    <div class="keybox">
+      <span class="kb-label">この節の要点</span>
+      <strong>音階の平均 HE</strong>＝全 dyad の HE の平均。generator 掃引で描くと名音律が<strong>谷</strong>として現れ、RTT が代数で選んだ音律と一致する。<br><strong>31 は複数の谷（meantone・mohajira・slendric…）の底に同時に足を置くが、</strong>これが「気持ちよい音が多い」体感の数理的正体。ただし極小性は目的関数（対象 limit・重み）に依存する。<br>理論（badness）と知覚（HE）は Tenney 幾何という共通の根を持つ。
+    </div>
+
+    <nav class="pager" id="pager"></nav>
+  </main>
+</div>
+
+<script src="assets/data/toc.js"></script>
+<script src="assets/data/glossary.js"></script>
+<script src="assets/data/he-data.js"></script>
+<script src="assets/data/scale-he-data.js"></script>
+<script src="assets/data/zeta-data.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/audio.js"></script>
+<script src="assets/figures.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+<script>
+(function () {
+  "use strict";
+  const C4 = 261.6255653;
+  const SH = window.SCALE_HE;
+  const HE = window.HE_DATA.he;
+
+  /* --- 地形図 --- */
+  let curN = 7;
+  const shPlot = document.getElementById("sh-plot");
+  /* generator g と 1200−g は同じ音階を生む（互いの補音程）ので、地形は 600¢ を軸に厳密に折り返す。
+     0〜600¢ の半分だけ描けば全体を尽くせる。meantone の POTE 696.24¢ は 4度側 503.76¢ に折り返す。 */
+  const MARK = [[503.76, "meantone（4度側）"], [350.53, "mohajira"], [163.95, "porcupine"], [271.51, "orwell"]];
+
+  function drawScape() {
+    const c = SH.curves[curN];
+    const def = c.h.filter(v => v !== null);
+    const minY = Math.min(...def) * 0.98, maxY = Math.max(...def) * 1.02;
+    shPlot.innerHTML = "";
+    const p = Fig.plot(shPlot, { w: 680, h: 300, x: [0, 600], y: [minY, maxY], pad: { l: 46, r: 12, t: 12, b: 40 } });
+    MARK.forEach(([g, nm]) => p.vline(g, { stroke: "#c9973a", "stroke-dasharray": "3 3", "stroke-width": 1 }));
+    /* 色分け：データに格納した well-formed（MOS）判定をそのまま使う。
+       MOS ＝ N音がすべて相異なり、かつステップがちょうど2種。
+       h が null の点（重複ピッチや 30¢ 未満のステップを持つ退化音階）では曲線を切る。 */
+    const drawSeg = (pts, isMOS) => {
+      if (pts.length < 2) return;
+      p.polyline(pts, { stroke: isMOS ? "#3b4a9c" : "#c9b8d8", "stroke-width": isMOS ? 2 : 2.4, fill: "none" });
+    };
+    let seg = [], segMOS = null;
+    for (let i = 0; i < c.g.length; i++) {
+      if (c.h[i] === null) { drawSeg(seg, segMOS); seg = []; segMOS = null; continue; }
+      const m = c.m[i] === 1;
+      if (segMOS === null) { segMOS = m; seg = [[c.g[i], c.h[i]]]; continue; }
+      if (m !== segMOS) { seg.push([c.g[i], c.h[i]]); drawSeg(seg, segMOS); seg = [[c.g[i], c.h[i]]]; segMOS = m; continue; }
+      seg.push([c.g[i], c.h[i]]);
+    }
+    drawSeg(seg, segMOS);
+    p.axisX([0, 100, 200, 300, 400, 500, 600], v => v, "generator（¢）");
+    p.axisY([+minY.toFixed(2), +((minY + maxY) / 2).toFixed(2), +maxY.toFixed(2)], v => v, "平均 HE");
+    const vb = p.svg.viewBox.baseVal.width, x0 = p.X(0), x1 = p.X(600);
+    p.svg.style.cursor = "crosshair";
+    p.svg.addEventListener("click", ev => {
+      const rect = p.svg.getBoundingClientRect();
+      const px = (ev.clientX - rect.left) / rect.width * vb;
+      const g = (px - x0) / (x1 - x0) * 600;
+      if (g < 0 || g > 600) return;
+      const pcs = [];
+      for (let i = 0; i < curN; i++) pcs.push(((i * g) % 1200 + 1200) % 1200);
+      pcs.sort((a, b) => a - b); pcs.push(1200);
+      XenAudio.playSeq(pcs.map(x => XenAudio.freqFromCents(C4, x)), { dur: 0.32, gap: 0.05 });
+      let near = MARK[0]; let bd = 1e9;
+      MARK.forEach(m => { const d = Math.abs(m[0] - g); if (d < bd) { bd = d; near = m; } });
+      const idx = Math.round(g);
+      const isM = c.m[idx] === 1 && c.h[idx] !== null;
+      document.getElementById("sh-info").innerHTML =
+        "generator " + g.toFixed(1) + "¢（＝補音程 " + (1200 - g).toFixed(1) + "¢）の " + curN + "音音階を試聴：" +
+        (c.h[idx] === null ? "<strong>退化</strong>（重複ピッチまたは30¢未満のステップ）" :
+          (isM ? "<strong>MOS</strong>（ステップ2種）" : "非MOS（ステップ3種）")) +
+        "　最寄りの名律：" + near[1] + " " + near[0].toFixed(2) + "¢";
+    });
+  }
+  document.querySelectorAll("#sh-n button").forEach(b =>
+    b.addEventListener("click", () => {
+      document.querySelectorAll("#sh-n button").forEach(x => x.classList.remove("on"));
+      b.classList.add("on"); curN = +b.getAttribute("data-n"); drawScape();
+    }));
+  drawScape();
+
+  /* --- 格子オーバーレイ --- */
+  const latPlot = document.getElementById("lat-plot");
+  function heAt(c) { const x = ((c % 1200) + 1200) % 1200, i = Math.floor(x), f = x - i; return HE.shannon[i] + (HE.shannon[(i + 1) % 1201] - HE.shannon[i]) * f; }
+  function drawLat(n) {
+    const maxY = Math.max(...HE.shannon) * 1.05;
+    latPlot.innerHTML = "";
+    const p = Fig.plot(latPlot, { w: 680, h: 280, x: [0, 1200], y: [0, maxY], pad: { l: 44, r: 12, t: 12, b: 40 } });
+    let score = 0;
+    for (let k = 1; k < n; k++) {
+      const c = k * 1200 / n;
+      p.vline(c, { stroke: n === 31 ? "#8a6116" : "#c9973a", "stroke-width": 1 });
+      p.dot(c, heAt(c), { r: 3, fill: n === 31 ? "#8a6116" : "#c9973a" });
+      score += heAt(c);
+    }
+    p.polyline(HE.cents.map((c, i) => [c, HE.shannon[i]]), { stroke: "#3b4a9c", "stroke-width": 1.6, fill: "none" });
+    p.axisX([0, 300, 600, 900, 1200], v => v, "音程（¢）");
+    p.axisY([0, +(maxY / 2).toFixed(1), +maxY.toFixed(1)], v => v, "dyad HE");
+    document.getElementById("lat-score").innerHTML = n + "edo：格子点 HE 合計 <strong>" + score.toFixed(2) + "</strong>（低いほど純正に富む・音数で正規化: " + (score / (n - 1)).toFixed(3) + "/点）";
+  }
+  document.getElementById("lat-31").addEventListener("click", () => drawLat(31));
+  document.getElementById("lat-12").addEventListener("click", () => drawLat(12));
+  drawLat(31);
+
+  /* --- zeta 曲線 --- */
+  const Z = window.ZETA_DATA;
+  const zPlot = document.getElementById("zeta-plot");
+  if (zPlot && Z) {
+    const maxY = Math.max(...Z.y) * 1.05;
+    const p = Fig.plot(zPlot, { w: 680, h: 280, x: [5, 60], y: [0, maxY], pad: { l: 44, r: 12, t: 12, b: 40 } });
+    const MARKE = [12, 19, 22, 31, 41, 46, 53];
+    MARKE.forEach(n => p.vline(n, { stroke: "#8a6116", "stroke-dasharray": "3 3", "stroke-width": 1 }));
+    p.polyline(Z.x.map((x, i) => [x, Z.y[i]]), { stroke: "#3b4a9c", "stroke-width": 1.8, fill: "none" });
+    MARKE.forEach(n => {
+      const i = Z.x.indexOf(n);
+      if (i >= 0) { p.dot(n, Z.y[i], { r: 4, fill: "#8a6116" }); p.label(n, Math.min(Z.y[i] + maxY * 0.06, maxY * 0.96), String(n), { fill: "#8a6116", "font-size": 10 }); }
+    });
+    p.axisX([10, 20, 30, 40, 50, 60], v => v, "等分数 x（EDO）");
+    p.axisY([0, +(maxY / 2).toFixed(1), +maxY.toFixed(1)], v => v, "|ζ(½+it)|");
+  }
+})();
+</script>
+</body>
+</html>

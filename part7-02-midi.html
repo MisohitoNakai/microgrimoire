@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ⅶ-2 MIDI・MPE・MTS-ESP・MIDI 2.0 — 微分音のグリモワール</title>
+<link rel="icon" href="./assets/data/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <button id="nav-toggle" aria-label="目次を開く"><span></span><span></span><span></span></button>
+  <a class="site-name" href="index.html">微分音のグリモワール</a>
+  <span class="topbar-section">第Ⅶ部 実践</span>
+</header>
+
+<div class="layout">
+  <aside id="sidebar" aria-label="目次"></aside>
+  <div id="sidebar-overlay"></div>
+
+  <main class="content">
+    <p class="eyebrow">第Ⅶ部 実践　─　2</p>
+    <h1>MIDI・MPE・MTS-ESP・MIDI 2.0 ── 音高を届ける層</h1>
+
+    <div class="intuition">
+      <span class="layer-tag">直感レイヤー</span>
+      <p>音源ひとつを微分音で<strong>鳴らす</strong>だけなら、前節（<span class="xref" data-file="part7-01-scala.html">Ⅶ-1</span>）の <code>.tun</code> や <code>.scl/.kbm</code> をロードすれば済みます。本当の課題はその先、<strong>複数の音源・DAW・ハードへ、微分音を「通信し、共有する」</strong>ことです。<br>旧来の MIDI は「1オクターブ12音」を前提に設計されているため、演奏情報そのものにピッチ情報を載せる標準的な手段がありません。この壁を越えるために積み重ねられてきた後発の仕組みが<strong>ピッチベンドの多チャンネル運用（MPE）</strong>、<strong>プラグインを一斉にリチューンする MTS-ESP とハブ型ツール</strong>、そして<strong>プロトコルそのものを刷新する MIDI 2.0</strong>を、静的な「ロード」と動的な「通信」という軸で整理します。</p>
+    </div>
+
+    <h2 id="sec-problem">静的ロードと動的通信 ── 二つの層</h2>
+
+    <p>微分音を音源に届ける方法は、大きく二層に分かれます。</p>
+
+    <div class="table-scroll">
+    <table>
+      <thead><tr><th>層</th><th>やること</th><th>手段</th><th>向き / 限界</th></tr></thead>
+      <tbody>
+        <tr><td><strong>静的</strong></td><td>演奏の前に、音源へ音律を<br>丸ごと読み込ませておく</td><td><code>.tun</code><br><code>.scl</code>+<code>.kbm</code>（<span class="xref" data-file="part7-01-scala.html">Ⅶ-1</span>）</td><td>音源が対応形式を読めれば一発<br>曲の途中で音律を動かすのには不向き</td></tr>
+        <tr><td><strong>動的</strong></td><td>演奏しながら、各音の正確な<br>音高を信号として送る</td><td>ピッチベンド<br>MPE<br>MTS-ESP<br>MIDI 2.0</td><td>音律を動かせる<br>方式ごとに別のボトルネックがある</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>ファイルを読める音源に固定音律で鳴らすだけなら、静的ロードで十分です。この節が扱うのは<strong>動的通信</strong>、ファイルを読めない音源を鳴らしたい、和音の各音を個別に寄せたい、演奏中に音律を動かしたい、あるいは制作環境の外へ音律ごと持ち出し演奏したい、というさまざまな場面のための後発的な仕組みです。歴史的には次の系統に整理できます。</p>
+
+    <div class="table-scroll">
+    <table>
+      <thead><tr><th>方式</th><th>仕組み</th><th>長所 / 短所</th></tr></thead>
+      <tbody>
+        <tr><td><strong>ピッチベンド</strong><br>（単ch）</td><td>各ノートを最寄り12音<br>＋ベンドで微調整</td><td>どこでも動くが、<br>和音内で音ごとに別ベンドできない<br>入力が面倒</td></tr>
+        <tr><td><strong>MPE</strong><br>(MIDI Polyphonic Expression)</td><td>1音を1chに割り当て、<br>ch ごとに独立ベンド</td><td>和音の各音を個別に微分音化できるが、<br>15音までの同時発音制限、対応音源が要る</td></tr>
+        <tr><td><strong>MTS-ESP</strong><br>(MIDI Tuning Standard - ESP)</td><td>ホストが全対応プラグインを<br>一括リチューン</td><td>ベンドを使わず全音源を同時に微分音化<br>専用プラグイン（Master/Client）が要る</td></tr>
+        <tr><td><strong>MIDI 2.0</strong></td><td>ノートに高分解能の音高を<br>1音ずつ付与<br>（Pitch 7.9 / Per-Note）</td><td>プロトコルとして根本的<br>音律固定曲には過剰<br>普及と規格が未成熟</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 id="sec-mpe">MPE ── 和音で別のベンドを与える定番</h2>
+
+    <p><strong>MPE</strong> は、和音の各音を別々の MIDI チャンネルに配り、チャンネルごとに独立したピッチベンドをかける仕組みです。これにより「和音の中で音ごとに違う微調整」〝31edo などの各音を正確な位置へ寄せること〟が可能になります。<br>ROLI Seaboard や LinnStrument などの表現力の高いコントローラの規格として広まり、多くのシンセ（Serum 2、Vital、Pigments、u-he 系など）が対応します。31edo の演奏ではプラグイン／DAWで各音を最寄り12音＋ベンドに分解し、MPE 対応音源がそれを正しい音高で発音します。<br><strong>制限は同時発音数</strong>：MPE は1音1chなので、15ch 運用なら和音は最大15音。31edo の分厚いクラスタには足りることが多いものの、上限がある点は意識します。</p>
+
+    <p>本書後半で扱う「白鍵3段・黒鍵2段のチャンネル鍵盤」<span class="xref" data-file="part7-05-workflow.html">Ⅶ-5</span>）は、MPE とは別の発想で、<strong>ピッチクラスを固定的に3チャンネルへ振り分ける</strong>方式です。MPE が「音の発音ごとに動的に ch を割る」のに対し、こちらは「どの音名はどの ch」と静的に決める。Reaper のようにチャンネル別に色分け表示できる環境では、この静的割り当てが譜面の可読性を生みます。</p>
+
+    <h2 id="sec-mts">MTS-ESP とハブ型ツール ── リチューンを一括配信する</h2>
+
+    <p><strong>MTS-ESP</strong>（ODDSound 社）は、近年の微分音制作を大きく変えた仕組みです。DAW に <strong>MTS-ESP Master</strong> を挿し、そこに <code>.scl</code> や音律を読み込むと、<strong>MTS-ESP 対応の全プラグイン（Client）が自動的にその音律にリチューン</strong>されます。ピッチベンドを一切使わないため、MPE の同時発音制限も、ベンドレンジの管理も要りません。普通の12鍵 MIDI をそのまま弾いても、音源側が31edo で鳴る。対応音源は増え続けており、無料のものでは <strong>Surge XT</strong> や <strong>Dexed</strong>、有料では <strong>Pigments</strong>・<strong>FabFilter Twin 3</strong>・<strong>u-he</strong> 各種・<strong>TAL</strong> 各種・<strong>Serum 2</strong> などが Client 対応です（対応状況は <a href="https://en.xen.wiki/w/List_of_microtonal_software_plugins" target="_blank" rel="noopener">Xenharmonic wiki の対応プラグイン一覧</a>が随時更新しています）。<strong>「まず MTS-ESP、足りなければ MPE」</strong>が現在の実務的な優先順位になりつつあります。</p>
+
+    <p>注意したいのは、<strong>チューニングファイルを読めることと、MTS-ESP に対応していることは別</strong>だという点です。たとえば <strong>Vital</strong> は <code>.scl/.kbm/.tun</code> のインポートに対応する一方、MTS-ESP Client では<strong>ありません</strong>。前者は静的ロード（曲の前に固定音律を読ませる）、後者は動的通信（Master から一括で、演奏中でも配信する）で、層が違います。音源を選ぶときは「どちらの方法で微分音化できるのか」を確認するのが確実です。</p>
+
+    <p>同じ「リチューンを一括管理する司令塔」として、<strong>Entonal Studio</strong>（Node Audio）も有力です。これは <strong>任意の AU/VST2/VST3 音源をホストして微分音化するプラグインホスト</strong>で、内部の音源を <strong>MTS-ESP かMPE、ピッチベンド</strong>のいずれかでリチューンします。radial graph（放射状グラフ）で音律を直感的に編集でき、スケールは Scala 形式で入出力可能です。MTS-ESP が「対応音源だけを裏で一括調律する規格」であるのに対し、Entonal Studio は「<strong>非対応音源も抱え込んで微分音化する容れ物</strong>」であり、MTS-ESP に対応していない好みのシンセを微分音で鳴らしたいときのより現実的な受け皿になります。</p>
+
+    <h2 id="sec-midi2">MIDI 2.0 ── 期待と、肩透かし</h2>
+
+    <p><strong>MIDI 2.0</strong>（2020年正式化）は、ノートに<strong>高分解能の音高を1音ずつ載せられる</strong>ようにしました。中核は二つです。<br>ひとつは <strong>Pitch 7.9</strong>——<br>Note On/Off に付ける属性で、上位7ビットが従来のノート番号、下位9ビットが半音の512分割（<strong>約 0.195¢ 刻み</strong>）を表します。<br>もうひとつは <strong>Per-Note Pitch Bend</strong>——<br>従来チャンネル全体にかかっていたベンドを、32ビット分解能で<strong>特定のノートだけ</strong>に適用できます。MPE のようにチャンネルを使い切る必要も、15音の制限もありません。原理的には、ベンドやチャンネル分割という「回避策」そのものが要らなくなります。</p>
+
+    <p>ところが、2026年現在も微分音コミュニティの受け止めは<strong>手放しの歓迎ではありません</strong>。理由は、この仕組みが音高を<strong>1音ずつ逐一送る</strong>設計だからです。演奏中に音律そのものが動く音楽にはこれは強力です。<br>しかし実際に作られる微分音曲の<strong>大半は音律が固定</strong>で、その用途には「毎ノートに音高を明示し続ける」のは冗長すぎます。欲しいのは各音への逐一指定ではなく、<strong>「この曲は 31edo」などと一度宣言して音律を共有する仕組み</strong>なのです。<br>ところが 2.0 の華々しい部分（Pitch 7.9 と Per-Note Pitch Bend）は、まさにそこを<strong>直接には埋めません</strong>でした。<br>また、微分音の楽曲を制作するにあたり、音域はそのまま12音よりも多くの音を扱えるようになればよかったものの、MIDI の鍵盤の情報（Note No.）は従来通り、一つのチャンネルにつき0から127までしかなく、そもそも<strong>音の多い音律を配置すると音域が狭くなってしまう</strong>問題は解消されておらず、残念ながら実際に微分音コミュニティ内では「肩透かしを食らった」という空気が流れているのも現状です。</p>
+
+    <p>そこで切実に待たれているのが、MIDI 2.0 のもう一本の柱 <strong>MIDI-CI</strong>（MIDI Capability Inquiry）側の整備です。<br>MIDI-CI は接続した機器どうしが「何ができるか」を交渉して設定を自動化する枠組みで、なかでも <a href="https://midi.org/profiles/" target="_blank" rel="noopener">Profile Configuration</a> が鍵を握ります。プロファイルとは「この楽器（チャンネル）はこう振る舞う」という共通の型のことで、もし<strong>微分音プロファイル</strong>（たとえば "Microtonal Tuning Profile" のようなもの）が規格として定義されれば、コントローラが要求するだけで音源側がチャンネル配分やチューニングを受け取る準備を整えられます。加えて <a href="https://midi.org/midi-2-0-property-exchange/" target="_blank" rel="noopener">Property Exchange</a>（JSON でデバイス情報をやり取りする仕組み）を使えば、音律を人間にも読める形式で一括送受信・確認できる。従来 MTS の SysEx のように音源依存だったものが、オフィシャルでエラーに強い形に置き換わります。コミュニティが「Profile Configuration を整備してほしい」と求めているのは、この<strong>音律共有の標準化</strong>です。</p>
+
+    <p>現状はまだ発展途上です。仕様上の柱は揃いつつあるものの、微分音プロファイルというものはまだ策定されておらず、実装側にも不具合報告があります。たとえば Pitch 7.9 の解釈が送受信側でずれ、出音が一瞬 12edo で鳴ってから正しい微分音ピッチへ「ヒョイッ」と動く現象や、メッセージ量が膨らむ複雑な曲でのタイミングのずれなども報告されています。「将来の本命」であること自体は変わりませんが、<strong>現場の主力は当面 MTS-ESP と MPE</strong>、というのが正直な現在地です。</p>
+    <p>MIDI 2.0 仕様の一次情報は <a href="https://midi.org/midi-2-0" target="_blank" rel="noopener">MIDI Association の MIDI 2.0 ページ</a>にまとまっています。日本語サイトでは AMEI が同じ仕様書群を配布していますが、内容は英語です。</p>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── 分解能の対比と、チャンネル運用</summary>
+      <div class="precise-body">
+        <p>各方式の音高分解能を並べます。MIDI 1.0 ピッチベンドは14ビット（0〜16383、中央8192）で、既定のベンドレンジ±2半音なら約 <strong>0.024¢</strong>ほどであり、31edo の 38.7¢ を送るには十分です。実務では当然ピッチベンドは専らピッチベンドのために用いるため、そもそも使いません。もし使ったとしてもベンドレンジを Master と一致させていないと、全体が音痴になります。MTS-ESP がベンドを使わないのは、この「レンジ整合の事故」を根絶するためでもあります。MIDI 2.0 の <strong>Pitch 7.9</strong> はさらに粗く、7ビットで半音単位でMIDI上にある128から最寄りのピッチを選び、残りの9bitで半音の512分割＝<strong>約 0.195¢/step</strong>をしていするものであり、先ほどのベンド値より精度は粗くなります。</p>
+        <p><strong>0.195¢ は「もうひと声」かもしれません</strong>。<code>.scl</code> はセント値を小数で好きな桁数だけ書けるため、実質的な分解能はテキストの精度そのものであり、〝C4＝261.6255653 Hz〟のような値も、<code>.scl</code>や<code>.tun</code>v2 なら丸めずに書けます。Pitch 7.9 は量子化された固定格子なので、純正比を厳密に積み上げたいときや、微小なコンマの差を正確に扱いたいときには、静的ロード（<code>.tun</code>／<code>.scl</code>）のほうがなお有利な場面が残ります。「演奏中に動かせる分解能」と「固定だが任意精度」は、まだ完全には両立していません。</p>
+        <p>チャンネル運用の上限も明示します。MIDI 1.0 は16ch。MPE は1chをグローバル制御に使うため実質15ch＝15音同時。本書のチャンネル鍵盤方式（<span class="xref" data-file="part7-05-workflow.html">Ⅶ-5</span>）は31音を<strong>ピッチクラスで3ch</strong>に畳むため、和音の同時発音は ch あたりの制限を受けず、かつ Ch.4 を制御に残せます。静的割り当てゆえの効率です。方式ごとに「何がボトルネックか」（同時発音数か、レンジ整合か、規格の成熟度か、分解能か）が違う点を理解して選ぶのが要点です。</p>
+      </div>
+    </details>
+
+    <div class="keybox">
+      <span class="kb-label">この節の要点</span>
+      動的通信は<strong>MPE</strong>（1音1ch＋独立ベンド、〜15音）、<strong>MTS-ESP</strong>（対応 Client を一括リチューン）、<strong>MIDI 2.0</strong>（Pitch 7.9で1音ずつ高分解能指定）。<br><strong>チューニングファイル対応と MTS-ESP 対応は別物</strong>で、Vital は前者のみでMTS-ESP 非対応。<br><strong>Entonal Studio</strong> は任意音源をホストして MTS-ESP／ベンドで微分音化するハブ。<br>MIDI 2.0 は1音ずつ送る設計ゆえ音律固定曲には過剰で、コミュニティは<strong>Profile Configuration による音律共有の標準化</strong>を待望している。<br>Pitch 7.9 約0.195¢/step で精密さに欠け、<strong>任意精度で書ける <code>.scl</code> がなお有利な場面も残る</strong>。
+    </div>
+
+    <nav class="pager" id="pager"></nav>
+  </main>
+</div>
+
+<script src="assets/data/toc.js"></script>
+<script src="assets/data/glossary.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/audio.js"></script>
+</body>
+</html>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ⅳ-5 記譜・音名・鍵盤・指板 — 微分音のグリモワール</title>
+<link rel="icon" href="./assets/data/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<style>
+@font-face {
+  font-family: "BravuraText";
+  src: url("https://cdn.jsdelivr.net/gh/steinbergmedia/bravura@master/redist/woff/BravuraText.woff2") format("woff2"),
+       url("https://cdn.jsdelivr.net/gh/steinbergmedia/bravura@master/redist/woff/BravuraText.woff") format("woff");
+  font-display: swap;
+}
+.smufl { font-family: "BravuraText", serif; font-size: 1.5em; line-height: 1; vertical-align: -0.12em; }
+.notetile {
+  display: inline-flex; flex-direction: column; align-items: center;
+  min-width: 3.2rem; padding: .45rem .3rem .4rem; margin: .14rem;
+  border: 1px solid #d7d9e6; border-radius: .5rem;
+  background: #fff; cursor: pointer; user-select: none;
+}
+.notetile:hover { border-color: #3b4a9c; }
+.notetile .nm { font-weight: 700; font-size: .98rem; }
+.notetile .alt { font-size: .76rem; color: #565863; min-height: 1.25em; }
+.notetile .ct { font-size: .66rem; color: #9a9caa; font-family: var(--font-mono, monospace); }
+.notetile.nat { background: #f3f4fa; }
+.hexkey { cursor: pointer; }
+.hexkey:hover polygon { stroke-width: 2.4; }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <button id="nav-toggle" aria-label="目次を開く"><span></span><span></span><span></span></button>
+  <a class="site-name" href="index.html">微分音のグリモワール</a>
+  <span class="topbar-section">第Ⅳ部 31平均律</span>
+</header>
+
+<div class="layout">
+  <aside id="sidebar" aria-label="目次"></aside>
+  <div id="sidebar-overlay"></div>
+
+  <main class="content">
+    <p class="eyebrow">第Ⅳ部 31平均律　─　5</p>
+    <h1>記譜・音名・鍵盤・指板</h1>
+
+    <div class="intuition">
+      <span class="layer-tag">直感レイヤー</span>
+      <p>この節は31edo「身体側」です。<br>名前をどう呼び、紙にどう書き、指をどこに置くかを一括で考えます。<br>本書第Ⅳ部の標準としてここでは<strong>音名は Stein–Zimmermann 記号を主体</strong>とし（±1歩＝ハーフシャープ <span class="smufl">&#xE282;</span>／ハーフフラット <span class="smufl">&#xE280;</span>、±2歩＝通常の♯♭）、拡張ミーントーン的な綴り（D𝄫 等）も理論的な由来が特別ある場合の記法になっていきます。</p>
+    </div>
+
+    <h2 id="sec-names">31音の名前 ── Stein–Zimmermann 主体の体系</h2>
+
+    <p>規則は2つだけです。<br><strong>（1）幹音から±2歩以内はその幹音の変化音として書く</strong>：+1＝ハーフシャープ <span class="smufl">&#xE282;</span>、+2＝♯、−1＝ハーフフラット <span class="smufl">&#xE280;</span>、−2＝♭。<br><strong>（2）全音間隙（5歩）は上下から2歩ずつで埋まり、全音階的半音間隙（3歩：E–F、B–C）は上下から1歩ずつで埋まる</strong>。<br>これで31音すべてに過不足なく名前が付きます。セスキシャープ <span class="smufl">&#xE283;</span>・セスキフラット <span class="smufl">&#xE281;</span>＝±3歩）も規格にはありますが、本書の説明では特段の理由が無い限り主に使いません。D♭ と書けるものを理由なくC<span class="smufl">&#xE283;</span> とは書かない、という方針です。</p>
+
+    <div class="widget">
+      <p class="widget-title">31音 音名パネル（上段＝本書標準、下段＝ミーントーン綴り。クリックで試聴・C4＝261.6255653 Hz）</p>
+      <div id="nm-panel"></div>
+      <p class="widget-note">E<span class="smufl">&#xE282;</span>＝F♭、F<span class="smufl">&#xE280;</span>＝E♯ など、半音間隙においては S–Z 名とミーントーン綴りが互いの領分に食い込みます。<strong>どちらの名前も同じ1点を指す</strong>ため、綴りの選択は「どの調的文脈から来たか」の表明となります。</p>
+    </div>
+
+    <h2 id="sec-keyboard">鍵盤 ── isomorphic 配列</h2>
+
+    <p>31音を従来型の鍵盤に足すと黒鍵が4本も林立して大変です。フォッカーがオルガンに採用したのは <strong>Bosanquet 型の isomorphic 鍵盤</strong>で、鍵を格子状に並べ、<strong>音程を格子ベクトルに対応させる</strong> rank-2 的な設計でした。現代の Lumatone も同じ思想の六角格子です。<br>要点は<strong>等音程性（isomorphism）</strong>です。鍵盤の重複を許して配置すれば、同じ音程は盤面上で常に同じ形になるため、和音もフレーズも<strong>移調しても指の形が変わりません</strong>。調ごとに運指を覚え直す苦労が原理的には消えます。</p>
+
+    <div class="center-box">
+      <img src="./assets/data/lumatone.png"/ style="width: 100%;">
+      <p>筆者撮影 </p>
+    </div>      
+
+    <div class="widget">
+      <p class="widget-title">六角配列キーボード── Lumatone 風配置</p>
+      <div id="hex-board"></div>
+      <p class="widget-note">右方向＝+5歩（全音）、右下方向＝+3歩（全音階的半音）。<br>右と右下からは自動的に右上＝+2歩（半音階的半音）が導かれます。<br>実機の Lumatone と同様、<strong>オクターブがちょうど真右に並ぶよう盤面を16.1° ほど傾けて</strong>あります。<br>クリックして試してみましょう。</p>
+    </div>
+
+    <h2 id="sec-fretboard">指板 ── フレット楽器の現実</h2>
+
+    <p>フレット位置は弦長 \(L\) に対し　\(d_k = L\,(1 - 2^{\frac{-k}{31}})\)　です。<br>スケール（ナットからブリッジまでの長さ） 647.7 mm のエレキギターなら第1フレットまで 14.32 mm、1オクターブ（第31フレット）で 323.85 mm。<br>12edo の22フレット相当であれば、31edo では57本のフレットが打たれる計算になり、第56～57フレット間は 4.094 mm までに迫ります。<br>12edo の1フレットの間に 31edo では約2.6本のフレットが立つ計算で、ハイポジションでは指の太さが実際の制約になります（が練習次第で弾けます）。</p>
+      
+    <div class="center-box">
+      <img src="./assets/data/31EDO_guitar2.png"/ style="width: 100%;">
+      <p>筆者所有・撮影</p>
+    </div>
+
+<h2 id="sec-channel">31音を「白鍵3段・黒鍵2段」で理解する</h2>
+
+    <div class="center-box">
+      <img src="./assets/data/keyboard_map.png"/ style="width: 100%;">
+      <p>図は筆者が作成</p>
+    </div>
+
+    <p>ここまでは六角格子という<strong>旧来の</strong>アプローチの話でした。でも、鍵盤に見慣れた我々はどうやって31音を単純に認識したらよいか、また、これらのハードがどのように31音を扱っているか、専用機がなくても MIDI 環境で 31edo を簡単に扱うにはどうするか。<br>これは本来<strong>制作の実務</strong>の話題ですので、第Ⅶ部（<span class="xref" data-file="part7-05-workflow.html">Ⅶ-5</span>）でじっくり扱います。ここではその<strong>軽い予習</strong>として、31音を平面に並べる代表的な一案だけを図で眺めておきます。<strong>白鍵を3段・黒鍵を2段に積み、5段で31音を並べる</strong>配置です。<br>下図は、中段白鍵の起点を 31edo の「ド」（MIDI No.60, Ch.1＝0番目）とし、そこから上下・左右に31音を並べたものです。（数字は各音の歩数、色は MIDI チャンネル）。</p>
+
+    <div class="widget">
+      <p class="widget-title">白鍵3段・黒鍵2段の31音配置（クリックで試聴・C4＝261.6255653 Hz）</p>
+      <div id="ck-board"></div>
+      <p class="widget-note">色分け（Ch.1 赤・Ch.2 黄・Ch.3 緑）の意味は第Ⅶ部で。</p>
+    </div>
+
+    <p>白鍵3段・黒鍵2段という配置をまず考えます。この配置の狙いは、幹音（C･D･E･F･G･A･B）を中段白鍵としてそのまま残し、♯と♭の上下段黒鍵のエンハーモニックを分け、各幹音の周囲にハーフシャープ・ハーフフラットを上下の段へ振り分けることで、12edo の鍵盤感覚を土台にしたまま、31edo へ理解が届きます。そして実務では、この31鍵を<strong>MIDI の3チャンネルに振り分けて</strong>MIDI ノート12個ぶんへ畳み込むという手筋が要になります。その仕組みと、DAW 上（Reaper v5 のピアノロール配色・Ch.1＝赤・Ch.2＝黄・Ch.3＝緑）による運用は、また<span class="xref" data-file="part7-05-workflow.html">Ⅶ-5</span> で詳説します。</p>
+      
+    <div class="center-box">
+      <img src="./assets/data/keyboardmodel.png"/ style="width: 100%;">
+      <p>モデルは筆者が作成</p>
+    </div>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── 記譜の実務メモ</summary>
+      <div class="precise-body">
+        <p>五線譜上の運用規則を確認します。<br>（1）Stein–Zimmermann （S-Z）記号は通常の変化記号と同じく<strong>小節内有効</strong>で、同音の再変化は明示します。<br>（2）調号はそのまま使えます。また、S-Z 記号を調号に取ることもできます。31がミーントーンである（♯♭が2歩として整合する）ことの恩恵で、<strong>調性音楽の記譜慣習が無傷で生き残ります</strong>。<br>（3）Sagittal との対応（Ⅲ-6）は、S–Z のハーフシャープ＝Sagittal の <span class="smufl">&#xE30A;</span>（11M ディエシス）＝ups and downs の ^となります。移行はこの対応表で機械的に行えます。<br>（4）歌手や管弦楽者向けには「31edo では♯と♭の区別が明確になり、♯と♭の半分がある」という説明が最速で通じます。ハーフシャープは「♯に半分行く」。31の1歩＝38.7¢ は訓練された奏者の制御範囲内であり、実際、弦楽アンサンブルのミーントーンでの演奏は古楽などで歴史的奏法として確立しています。</p>
+        <div class="center-box">
+      <img src="./assets/data/Score.png"/ style="width: 50%;">
+      <p>画像は Dorico 5 の調性編集機能。</p>
+    </div>
+      </div>
+    </details>
+
+    <div class="keybox">
+      <span class="kb-label">この節の要点</span>
+      <strong>幹音±2歩以内で命名が可能。</strong>（+1＝<span class="smufl">&#xE282;</span>、+2＝♯、−1＝<span class="smufl">&#xE280;</span>、−2＝♭）。<br>拡張ミーントーン由来のさらなる異名同音が存在。鍵盤は<strong>isomorphic 配列</strong>で「同じ音程＝同じ形」の実機が存在する。ギターはオクターブに31フレット打てばよい。<br>実質的には白鍵が3段、黒鍵が2段。
+    </div>
+
+    <nav class="pager" id="pager"></nav>
+  </main>
+</div>
+
+<script src="assets/data/toc.js"></script>
+<script src="assets/data/glossary.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/audio.js"></script>
+<script src="assets/channel-keyboard.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+<script>
+(function () {
+  "use strict";
+  const NS = "http://www.w3.org/2000/svg";
+  const C4 = 261.6255653;
+  const STEP = 1200 / 31;
+  const fq = s => XenAudio.freqFromCents(C4, s * STEP);
+  const HS = "\uE282", HF = "\uE280";
+
+  const NAT = { C: 0, D: 5, E: 10, F: 13, G: 18, A: 23, B: 28 };
+  const natSet = new Set(Object.values(NAT));
+
+  /* 本書標準（S–Z 主体）の名前
+     半音変化（±1歩＝半♯・半♭）を先に確定させ、そのあと残りに ♯・♭（±2歩）を割り当てる。
+     こうすると E♯ ではなく F半♭（12歩）、C♭ ではなく B半♯（29歩）が選ばれ、
+     ナチュラル7・半♯7・半♭7・♯5・♭5 ＝ 31音 という直感的な配分になる。 */
+  const szName = new Array(31).fill(null);
+  Object.entries(NAT).forEach(([L, s]) => { szName[s] = [L, ""]; });
+  [[1, HS], [-1, HF]].forEach(([d, sym]) => {          // ±1歩：半シャープ・半フラット（各7音）
+    Object.entries(NAT).forEach(([L, s]) => {
+      const t = ((s + d) % 31 + 31) % 31;
+      if (!szName[t]) szName[t] = [L, sym];
+    });
+  });
+  [[2, "♯"], [-2, "♭"]].forEach(([d, sym]) => {        // ±2歩：♯・♭（各5音。E♯・B♯・F♭・C♭ は生じない）
+    Object.entries(NAT).forEach(([L, s]) => {
+      const t = ((s + d) % 31 + 31) % 31;
+      if (!szName[t]) szName[t] = [L, sym];
+    });
+  });
+
+  /* ミーントーン綴り（正準・五度圏 G𝄫〜A𝄪） */
+  const LETTERS = ["C", "G", "D", "A", "E", "B", "F"];
+  const ACC = a => a === 0 ? "" : a === 1 ? "♯" : a === 2 ? "𝄪" : a === -1 ? "♭" : "𝄫";
+  const mtName = new Array(31).fill(null);
+  for (let c = -13; c <= 17; c++) {
+    const letter = LETTERS[((c % 7) + 7) % 7];
+    mtName[((c * 18) % 31 + 31) % 31] = letter + ACC(Math.floor((c + 1) / 7));
+  }
+
+  const html = ([L, sym]) =>
+    L + (sym === HS || sym === HF ? '<span class="smufl">' + sym + "</span>" : sym);
+
+  /* 音名パネル */
+  const panel = document.getElementById("nm-panel");
+  for (let i = 0; i < 31; i++) {
+    const tile = document.createElement("button");
+    tile.type = "button";
+    tile.className = "notetile" + (natSet.has(i) ? " nat" : "");
+    tile.innerHTML =
+      '<span class="nm">' + html(szName[i]) + "</span>" +
+      '<span class="alt">' + mtName[i] + "</span>" +
+      '<span class="ct">' + i + "・" + (i * STEP).toFixed(1) + "¢</span>";
+    tile.addEventListener("click", () => XenAudio.playFreqs([fq(i)], { dur: 1.0 }));
+    panel.appendChild(tile);
+  }
+
+  /* 六角配列キーボード：Lumatone 標準配置 */
+  const board = document.getElementById("hex-board");
+  const R = 21;
+  const DX = R * Math.sqrt(3);                  // 右隣キーまでの中心間距離
+  const ROWH = R * 1.5;                         // 1段下がるときの垂直距離
+  const TILT = -Math.atan(Math.sqrt(3) / 6);    // ≒ −16.102°（SVG は y 下向き＝負が反時計回り）
+  const COS = Math.cos(TILT), SIN = Math.sin(TILT);
+  const pos = (q, r) => {
+    const x = q * DX + r * DX / 2, y = r * ROWH;
+    return [x * COS - y * SIN, x * SIN + y * COS];
+  };
+
+  // 傾けた後の高さ：y(q,r) = A·q + B·r、q = (p−3r)/5 を代入して y = sP·p + sR·r
+  const Aq = DX * SIN;
+  const Br = (DX / 2) * SIN + ROWH * COS;
+  const sP = Aq / 5, sR = Br - 3 * Aq / 5;
+
+  // 幹音帯の中心（1オクターブぶんの幹音の高さの中点）
+  const NATPATH = [[0, 0], [1, 0], [2, 0], [2, 1], [3, 1], [4, 1], [5, 1]]; // C D E / F G A B
+  const natY = NATPATH.map(([q, r]) => pos(q, r)[1]);
+  const YC = (Math.min(...natY) + Math.max(...natY)) / 2;
+
+  // 歩数 p の代表 (q, r)：r ≡ 2p (mod 5) のうち幹音帯の中心に最も近いもの
+  const repOf = p => {
+    const rIdeal = (YC - sP * p) / sR;
+    let best = null;
+    for (let d = -3; d <= 3; d++) {
+      const r = Math.round(rIdeal) + d;
+      if ((((p - 3 * r) % 5) + 5) % 5 !== 0) continue;   // 5q = p − 3r が整数になる段だけ
+      const cost = Math.abs(sP * p + sR * r - YC);
+      if (!best || cost < best.cost) best = { r, cost };
+    }
+    return [(p - 3 * best.r) / 5, best.r];
+  };
+
+  const PMAX = 62;                              // 歩数 0〜62（C から2オクターブ上の C まで）
+  const cells = [];
+  for (let p = 0; p <= PMAX; p++) {
+    const [q, r] = repOf(p);
+    const [X, Y] = pos(q, r);
+    cells.push({ steps: p, X, Y });
+  }
+
+  const PAD = 12;
+  const minX = Math.min(...cells.map(c => c.X)) - R - PAD;
+  const maxX = Math.max(...cells.map(c => c.X)) + R + PAD;
+  const minY = Math.min(...cells.map(c => c.Y)) - R - PAD;
+  const maxY = Math.max(...cells.map(c => c.Y)) + R + PAD;
+  const svg = document.createElementNS(NS, "svg");
+  svg.setAttribute("viewBox", minX.toFixed(1) + " " + minY.toFixed(1) + " " +
+    (maxX - minX).toFixed(1) + " " + (maxY - minY).toFixed(1));
+  svg.setAttribute("width", "100%");
+  board.appendChild(svg);
+
+  // 六角形も盤面と一緒に傾く（実機同様、キー自体が傾く）
+  const hexPts = (cx, cy) => {
+    const p = [];
+    for (let k = 0; k < 6; k++) {
+      const a = Math.PI / 180 * (60 * k + 30) + TILT;
+      p.push((cx + R * Math.cos(a)).toFixed(1) + "," + (cy + R * Math.sin(a)).toFixed(1));
+    }
+    return p.join(" ");
+  };
+
+  cells.forEach(({ steps, X, Y }) => {
+    const s31 = ((steps % 31) + 31) % 31;
+    const g = document.createElementNS(NS, "g");
+    g.setAttribute("class", "hexkey");
+    const poly = document.createElementNS(NS, "polygon");
+    poly.setAttribute("points", hexPts(X, Y));
+    const isNat = natSet.has(s31);
+    const isHalf = szName[s31][1] === HS || szName[s31][1] === HF;
+    poly.setAttribute("fill", isNat ? "#e7eaf7" : "#ffffff");
+    poly.setAttribute("stroke", isHalf ? "#c9973a" : "#3b4a9c");
+    poly.setAttribute("stroke-width", isNat ? "2.2" : "1.5");
+    g.appendChild(poly);
+    // 文字は水平のまま（可読性のためキーの傾きには追随させない）
+    const t = document.createElementNS(NS, "text");
+    t.setAttribute("y", Y + 4);
+    t.setAttribute("text-anchor", "middle");
+    t.setAttribute("font-size", "12");
+    t.setAttribute("fill", "#1e1f24");
+    const [L, sym] = szName[s31];
+    if (sym === HS || sym === HF) {
+      t.setAttribute("x", X - 5);
+      t.textContent = L;
+      const t2 = document.createElementNS(NS, "text");
+      t2.setAttribute("x", X + 8); t2.setAttribute("y", Y + 6);
+      t2.setAttribute("font-size", "15");
+      t2.setAttribute("font-family", "BravuraText, serif");
+      t2.setAttribute("fill", "#1e1f24");
+      t2.textContent = sym;
+      g.appendChild(t2);
+    } else {
+      t.setAttribute("x", X);
+      t.textContent = L + sym;
+    }
+    g.appendChild(t);
+    g.addEventListener("click", () =>
+      XenAudio.playFreqs([XenAudio.freqFromCents(C4, steps * STEP)], { dur: 1.0 }));
+    svg.appendChild(g);
+  });
+
+
+
+  /* チャンネル鍵盤図 */
+  const STEP31 = 1200 / 31;
+  ChannelKeyboard.render(document.getElementById("ck-board"), {
+    onPlay: s => XenAudio.playFreqs([XenAudio.freqFromCents(C4, s * STEP31)], { dur: 1.0 })
+  });
+})();
+</script>
+</body>
+</html>

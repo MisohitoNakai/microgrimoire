@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ⅴ-5 小 EDO と MOS の両端 — 微分音のグリモワール</title>
+<link rel="icon" href="./assets/data/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <button id="nav-toggle" aria-label="目次を開く"><span></span><span></span><span></span></button>
+  <a class="site-name" href="index.html">微分音のグリモワール</a>
+  <span class="topbar-section">第Ⅴ部 音律アトラス</span>
+</header>
+
+<div class="layout">
+  <aside id="sidebar" aria-label="目次"></aside>
+  <div id="sidebar-overlay"></div>
+
+  <main class="content">
+    <p class="eyebrow">第Ⅴ部 色々な音律 ── 音律アトラス　─　5</p>
+    <h1>小 EDO と MOS の両端</h1>
+
+    <div class="intuition">
+      <span class="layer-tag">直感レイヤー</span>
+      <p>アトラスの端、音数の少ない世界には、大 EDO とは別種の面白さがあります。<br>鍵は<strong>MOS の「硬さ」（hardness＝L/s 比）</strong>という一本の軸です。<br>どの aL bs 型 MOS も、L/s を動かすと二つの終端の間を滑ります。<strong>L/s→1 で L と s の区別が崩壊 (a+b)edo に、s→0 で小ステップが消えて a-edo（period がオクターブの場合）に均等化</strong>。<br>全音階（5L2s）なら 7edo と 5edo がその両端です。つまり <strong>5edo と 7edo は「音階」というより「末端」</strong>です。こうした小 EDO の多くは、なにかの MOS の極限か簡素な形として理解するのがいちばん正確です。</p>
+    </div>
+
+    <h2 id="sec-hardness">硬さの連続体 ── 全音階を溶かす</h2>
+
+    <p>5度 generator を 4\7（685.7¢）から 3\5（720¢）まで動かすと、全音階 5L2s は「等間隔の7音」から「等間隔の5音」まで連続変形します。途中に 12edo（L/s＝2）、19edo（3/2）、31edo（5/3）、ピタゴラス（約2.26）、17edo（3）、22edo（4）……と、見知った律たちが<strong>硬さの目盛り</strong>として並びます。</p>
+
+    <div class="widget">
+      <p class="widget-title">全音階モーフィング（硬さスライダー）</p>
+      <div class="wrow">
+        <label for="hd-gen">完全5度</label>
+        <input type="range" id="hd-gen" min="685.7" max="720" value="696.77" step="0.05">
+      </div>
+      <div class="wrow">
+              <span class="wval" id="hd-read"></span>
+      </div>
+      <div class="wrow">
+        <button class="btn small secondary" data-v="685.71">7edo（L=s）</button>
+        <button class="btn small secondary" data-v="692.31">26edo</button>
+        <button class="btn small secondary" data-v="694.74">19edo</button>
+        <button class="btn small secondary" data-v="696">50edo</button>
+        <button class="btn small secondary" data-v="696.77">31edo</button>
+        <button class="btn small secondary" data-v="697.67">43edo</button>
+        <button class="btn small secondary" data-v="698.18">55edo</button>
+        <button class="btn small secondary" data-v="700">12edo</button>
+        <button class="btn small secondary" data-v="701.88">53edo</button>
+        <button class="btn small secondary" data-v="701.96">ピタゴラス</button>
+        <button class="btn small secondary" data-v="702.44">41edo</button>
+        <button class="btn small secondary" data-v="703.45">29edo</button>
+        <button class="btn small secondary" data-v="704.35">46edo</button>
+        <button class="btn small secondary" data-v="705.88">17edo</button>
+        <button class="btn small secondary" data-v="709.09">22edo</button>
+        <button class="btn small secondary" data-v="720">5edo（s=0）</button>
+      </div>
+      <div class="wrow">
+        <button class="btn" id="hd-play">この硬さの全音階を聴く</button>
+        <button class="btn secondary" id="hd-triad">長三和音を聴く</button>
+        <button class="btn secondary" id="hd-triad-minor">短三和音を聴く</button>
+      </div>
+      <p class="widget-note">L/s と3度の性格が連動して滑るのを聴いてみましょう。<br>柔らかい側（7edo 寄り）では3度が中立化し長短の区別が消えます。<br>硬い側（5edo 寄り）ではミとﾌｧが近づき、supermajor 化します。<br><strong>「音階の表情」と「音律の選択」が同じ一本の軸の上にある</strong>第Ⅲ部4と第Ⅴ部全体を貫く景色です。propriety の境界（L＝2s、12edo）を跨ぐ瞬間にも注目。</p>
+    </div>
+
+    <h2 id="sec-smalledos">小 EDO の人物誌</h2>
+
+    <p><strong>5edo</strong>──<br>全音階の〝硬い〟限界線（s＝0）であり、slendric の△実装。<br>インドネシアのバリ州でおなじみのスレンドロ音階が「およそ5等分」に近い配置を取ることはガムラン研究の古典的観察で知られていて、240¢ 刻みは 8/7（231¢）由来の旋法と自然に響き合う。</p>
+
+    <p><strong>6edo</strong>──<br>全音音階（ホールトーンスケール）そのもの。12 の部分集合で、独立の音律というより「対称和音・音階の見本」。</p>
+
+    <p><strong>7edo</strong>──<br>全音階の〝柔らかい〟限界線（L＝s）。タイ古典音楽の7音がしばしば「およそ7等分」と記述される（実測は揺れます）ことで知られ、中立化した3度は mohajira の△実装でもあります。すべての「調」が同じ音階になる世界。</p>
+
+    <p><strong>8edo</strong>──<br>150¢ ステップ。減七的対称（300¢×4）を持ち、調性の重力から遠い小 EDO のひとつ。</p>
+
+    <p><strong>9edo</strong>──<br>mavila の△実装（anti-diatonic 2L5s の入口）と、augmented 的な 133¢ 世界の二面。小 EDO の中では旋法の個性が強い音律です。</p>
+
+    <p><strong>10edo</strong>──<br>blackwood△・miracle○・srutal△が同居する意外な交差点。mosh 3L4s の入口であり、5edo の倍として「slendro に半音を足した」ようにも、独立の旋法としても使えます。</p>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── 「民族音楽＝小 EDO」という等式への注意</summary>
+      <div class="precise-body">
+        <p>slendro≈5edo、タイ音楽≈7edo という記述は<strong>近似</strong>にすぎません。実測研究は、ガムランごと・村ごと・楽器ごとに配置が大きく揺れるなど、意図的な「うなり」（ombak）のためのペア調律があること、7等分から系統的に逸れるタイの実例などを繰り返し報告しています。正確な言い方は「これらの伝統は<strong>西洋の5度圏とは別の均等性の理想</strong>を持ち、その理想の粗い写像が 5edo・7edo に落ちる」です。小 EDO は民族音楽の説明ではなく、<strong>MOS の極限という理論的座標</strong>として使うのが本書の立場です。</p>
+      </div>
+    </details>
+
+    <div class="keybox">
+      <span class="kb-label">この節の要点</span>
+      MOS は硬さ L/s の軸上を滑り、<strong>L/s＝1 と s＝0 の両端が小 EDO</strong>（全音階なら 7edo と 5edo）。<br>硬さの中間に 26・31・12・17・22 などのEDOが目盛りとして並び、3度の性格が連動する。<br>小 EDO は民族音楽を近似し、 MOS の極限座標としての性格もある。
+    </div>
+
+    <nav class="pager" id="pager"></nav>
+  </main>
+</div>
+
+<script src="assets/data/toc.js"></script>
+<script src="assets/data/glossary.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/audio.js"></script>
+<script>
+(function () {
+  "use strict";
+  const C4 = 261.6255653;
+  const genS = document.getElementById("hd-gen");
+  const read = document.getElementById("hd-read");
+
+    
+    
+  function dia(g) {
+    const pcs = [];
+    for (let i = -1; i < 6; i++) {
+    let va = ((i * g) % 1200 + 1200) % 1200;
+    
+    // 計算結果が0、かつ、すでに配列に0があるなら1200に変換
+    if (va === 0 && pcs.includes(0)) {
+        va = 1200;
+    }
+    
+    pcs.push(va);
+}
+    //for (let i = -1; i < 6; i++) pcs.push(((i * g) % 1200 + 1200) % 1200);//
+    pcs.sort((a, b) => a - b);
+    return pcs;
+  }
+  function upd() {
+    const g = parseFloat(genS.value);
+    const tone = 2 * g - 1200;          // 全音 L ＝ 2·P5 − oct（g=700 → 200 ✓）
+    const dsemi = 3600 - 5 * g;         // 全音階的半音 s ＝ 3·oct − 5·P5（g=700 → 100 ✓）
+    read.textContent = g.toFixed(2) + "¢　L=" + tone.toFixed(1) + "¢, s=" + dsemi.toFixed(1) +
+      "¢　L/s=" + (dsemi > 0.01 ? (tone / dsemi).toFixed(2) : "∞");
+  }
+  genS.addEventListener("input", upd); upd();
+  document.querySelectorAll("[data-v]").forEach(b =>
+    b.addEventListener("click", () => { genS.value = b.getAttribute("data-v"); upd(); }));
+
+  document.getElementById("hd-play").addEventListener("click", () => {
+    const g = parseFloat(genS.value);
+    const pcs = dia(g); pcs.push(1200);
+    XenAudio.playSeq(pcs.map(c => XenAudio.freqFromCents(C4, c)), { dur: 0.34, gap: 0.06 });
+  });
+  document.getElementById("hd-triad").addEventListener("click", () => {
+    const g = parseFloat(genS.value);
+    XenAudio.playFreqs([0, 4 * g - 2400, g].map(c => XenAudio.freqFromCents(C4, c)), { dur: 2.4 });
+  });
+  document.getElementById("hd-triad-minor").addEventListener("click", () => {
+    const g = parseFloat(genS.value);
+    XenAudio.playFreqs([0, -3 * g + 2400, g].map(c => XenAudio.freqFromCents(C4, c)), { dur: 2.4 });
+  });
+})();
+</script>
+</body>
+</html>

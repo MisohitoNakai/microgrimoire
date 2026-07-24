@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ⅲ-4 MOS 音階 — 微分音のグリモワール</title>
+<link rel="icon" href="./assets/data/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+</head>
+<body>
+<header class="topbar">
+  <button id="nav-toggle" aria-label="目次を開く"><span></span><span></span><span></span></button>
+  <a class="site-name" href="index.html">微分音のグリモワール</a>
+  <span class="topbar-section">第Ⅲ部 音律を組み立てる</span>
+</header>
+
+<div class="layout">
+  <aside id="sidebar" aria-label="目次"></aside>
+  <div id="sidebar-overlay"></div>
+
+  <main class="content">
+    <p class="eyebrow">第Ⅲ部 音律を組み立てる　─　4</p>
+    <h1>MOS 音階 ── 生成音程から音階が生える</h1>
+
+    <div class="intuition">
+      <span class="layer-tag">直感レイヤー</span>
+      <p>rank 2 の律射は通常はオクターブなどの「period」とひとつの「generator」の2本で張られています。では generator を1回、2回、3回……と積んでオクターブの環に畳んでいくと、何が起こるでしょう？<br>完全5度（約700¢）で試すと、5音でペンタトニック、7音で全音階…<strong>おなじみの音階たちが、順番に生えてきます</strong>。しかもこれらは、音階で隣り合う音程の種類は大小2つだけ。この「2種類だけ」の状態を <strong>MOS</strong>（moment of symmetry）と呼びます。<br>メキシコ出身の Wilson さんは思いました。全音階やペンタトニックが持つ〝歌いやすさ、調の移りやすさ、位置の分かりやすさ〟の多くは MOS の一般的な性質でなのではないか？<strong>generator を完全5度以外にも変えてみると、全音階の親戚にあたる未知の音階族が無限に手に入る</strong>のです。</p>
+    </div>
+
+    <h2 id="sec-def">定義と、最初の驚き</h2>
+
+    <p>generator \(g\)（セント値）を 0 から積み、各音をオクターブ（一般には period）に畳んで環に並べます。音数 \(N\) のとき、隣接する音程の種類を数えると…？</p>
+
+    <p><strong>驚きその1</strong>：どんな \(g\)、どんな \(N\) でも、音程の種類は<strong>高々3種類</strong>。これは音楽と無関係に成り立つ数論の定理（Three-Gap 定理／Steinhaus の予想、1950年代に証明）です。</p>
+
+    <p><strong>驚きその2</strong>：\(N\) をうまく選ぶと、種類がちょうど<strong>2つ</strong>に減る瞬間が訪れます。この \(N\) での音階が <strong>MOS 音階</strong>（Erv Wilson, 1975）。大きい音程を L、小さい音程を s と書き、たとえば全音階（リディアンスケール）は <strong>5L2s</strong>（LLLsLLs）という並びです。<br>しかも L と s の並びは最大限に均等（maximally even な分配）になります。</p>
+
+    <p>下の実験室で generator を動かし、MOS が生える瞬間を観察してみましょう。</p>
+
+    <div class="widget">
+      <p class="widget-title">MOS の実験</p>
+      <div class="wrow">
+        <label for="mos-gen">generator</label>
+        <input type="range" id="mos-gen" min="20" max="1199.9" value="503" step="0.1">
+        <span class="wval" id="mos-gen-read"></span>
+      </div>
+      <div class="wrow">
+        <button class="btn small secondary" data-g="696.77">31edo 5度 696.8</button>
+        <button class="btn small secondary" data-g="701.96">純正 3/2</button>
+        <button class="btn small secondary" data-g="387.10">31edo 長3度 387.1</button>
+        <button class="btn small secondary" data-g="348.39">31edo 中立3度 348.4</button>
+        <button class="btn small secondary" data-g="232.26">31edo 8/7 近似 232.3</button>
+        <button class="btn small secondary" data-g="271.0">kleismic 271.0</button>
+      </div>
+      <div class="wrow">
+        <label for="mos-n">音数 N</label>
+        <input type="range" id="mos-n" min="2" max="31" value="7" step="1">
+        <span class="wval" id="mos-n-read"></span>
+      </div>
+      <div class="wrow"><span class="wval" id="mos-verdict" style="min-width:60%"></span></div>
+      <div id="mos-ring"></div>
+      <div class="wrow">
+        <button class="btn" id="mos-play">この音階を聴く</button>
+        <span class="wval" id="mos-pattern" style="min-width:55%"></span>
+      </div>
+      <div class="wrow"><span class="wval" id="mos-series" style="min-width:100%"></span></div>
+      <p class="widget-note">環の弧の色：大きい音程 L＝藍、小さい音程 s＝琥珀、3種類目（MOS でないとき）＝灰。下段には、その generator で 31 音までに現れる <strong>MOS の音数の系列</strong>を自動計算して表示します。5度系（696.8¢）なら 2, 3, 5, 7, 12, 19, 31——ペンタトニック・全音階・半音階、そして 31 がひとつの系譜に並ぶのが見えます。generator を中立3度に変えると 4, 7, 10, 17, 24, 31——まったく別の家系（<span class="xref" data-file="part5-03-families.html">第Ⅴ部3</span> の Rastmic／Mohajira 系）が生えます。</p>
+    </div>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── 連分数と MOS 系列</summary>
+      <div class="precise-body">
+        <p>MOS が生える音数はどう決まるのか。答えは <strong>generator とオクターブの比 \(x = g/1200\) の有理近似</strong>にあります。Stern–Brocot 木（連分数の convergents と semiconvergents）で \(x\) へ降りていく経路上の分数の<strong>分母</strong>が、そのまま MOS の音数の系列になります。<br>例：31edo の5度では \(x = 18/31\) で、経路は</p>
+        <p>$$ \frac{1}{2},\ \frac{2}{3},\ \frac{3}{5},\ \frac{4}{7},\ \frac{7}{12},\ \frac{11}{19},\ \frac{18}{31} $$</p>
+        <p>見事に分母 <strong>2, 3, 5, 7, 12, 19, 31</strong> が MOS の音数で、実験室の出力と正確に一致します。<br>直感的には、 generator を積む操作は円周上の回転であり、回転数の有理近似が良い瞬間＝点の配置が均等に近い瞬間＝ステップが2種類に整理される瞬間、という対応です。<br>Three-Gap 定理はこの回転の一般論、MOS は最も対称的となる「2ギャップ」の特別な瞬間です。なお \(x\) が有理数（EDO 内の generator）の場合、系列は分母＝EDO の音数で打ち止めになり、最後は EDO 全体（音程が1種類）に到達します。<br>ただし要注意な点として、有理な generator では、経路上にない音数でも<strong>偶然ステップが2種類になる</strong>ことがあります。（例：31edo の5度で N=20〜30）。しかしそれらは「generator が常に同じ度数を張る」という <strong>well-formed 性</strong>（Carey–Clampitt）を満たさず、真の MOS ではありません。（実験ウィジェットの判定はこの検査まで行っています。）</p>
+        <p>用語の整理：L と s の個数で <strong>aL bs</strong> と書く記法が標準です（5L2s＝全音階型、2L3s＝ペンタ型、3L4s＝中立3度系の7音階など）。period が 600¢ や 400¢ といったようにオクターブの 1/k になる音律（例：srutal・diminished 系）では MOS の定義も period 基準に一般化されます。また、二つの音程の大きさの比率である L/s 比（hardness）が音階の性格を大きく左右します。同じ 5L2s でも、L/s＝2（12edo）と L/s＝5/3（31edo の全音階：L=5歩, s=3歩）では旋律の表情が違います。この係数の美学は第Ⅳ部6・第Ⅴ部で再訪します。</p>
+      </div>
+    </details>
+
+    <h2 id="sec-propriety">音階の「聴き取りやすさ」── Rothenberg の propriety</h2>
+
+    <p>MOS は音階の<strong>作り方</strong>の理論ですが、できた音階が<strong>聴いて把握しやすいか</strong>は別の問いです。Rothenberg（1978）の <strong>propriety</strong>は、その古典的な基準で、音階のすべての「k個の音階上のステップぶんの音程」を並べたとき、<strong>k が大きいほど音程も大きい（順序が崩れない）</strong>なら proper、厳密な不等号で成り立つなら strictly proper、逆転があれば improper。逆転があると、聴き手は「いま何度の跳躍を聴いたのか」を文脈なしに判定できなくなります。<br>全音階で具体例を示すと、増4度（ﾌｧ～シ）よりも減5度（シ～ﾌｧ）のほうが大きくあってほしいということです。</p>
+
+    <p>全音階で見ていくと、結果は調律に依存します。<strong>ピタゴラス音律の全音階は improper</strong>（増4度 611.7¢ ＞ 減5度 588.3¢：3音階ステップの音程が4音階ステップの音程を追い越す）、<strong>12edo は proper</strong>（両者 600¢ で同点）、そして <strong>31edo（ミーントーン）の全音階は strictly proper</strong>（増4度 580.6¢ ＜ 減5度 619.4¢）。<br>5L2s ではこの判定は「<strong>L と 2s の大小</strong>」に帰着します。 L＞2s なら improper（ピタゴラス：203.9＞180.4）、L＝2s なら proper（12edo：200＝200）、L＜2s なら strictly proper（31edo：193.5＜232.3）。「ミーントーンの全音階は 12edo のそれより<strong>聴覚的な整合性が高い</strong>」31edo の音楽的な擁護論のひとつが、ここから出てきます。</p>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── propriety の限界と、その先</summary>
+      <div class="precise-body">
+        <p>propriety は有用ですが万能ではありません。improper な音階にも音楽的に豊かなものは多く（ピタゴラス全音階は約千年使われてきましたし）、また propriety は音階の<strong>旋律的な把握</strong>の基準であって、和声的な資源の豊かさは測っていません。MOS・propriety・和声資源（そのgeneratorで純正音程がいくつ何歩で手に入るか）の三点セットで音階を評価する、というのが本書の以後の実務的な流儀です。和声資源の勘定は mapping（前節）そのものであり、最適化の言葉に載せるのが次節です。</p>
+      </div>
+    </details>
+
+    <div class="keybox">
+      <span class="kb-label">この節の要点</span>
+      generator を環に積むとステップは高々3種（Three-Gap）、ちょうど2種になる音数が <strong>MOS</strong>（aL bsで表す）。<br>MOS の音数系列は g/1200 の連分数近似の分母。全音階＝5度 generator の 5L2s は氷山の一角で、<strong>generator ごとに音階の家系が生える</strong>。<br>Rothenberg propriety は聴取的整合性の基準となり、31edo の全音階は strictly proper。
+    </div>
+    <nav class="pager" id="pager"></nav>
+  </main>
+</div>
+
+<script src="assets/data/toc.js"></script>
+<script src="assets/data/glossary.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/audio.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+<script>
+(function () {
+  "use strict";
+  const NS = "http://www.w3.org/2000/svg";
+  const C4 = 261.6256;
+  const EPS = 0.5;   // ステップ同一視の許容差（¢）
+
+  const genS = document.getElementById("mos-gen");
+  const nS = document.getElementById("mos-n");
+  const genR = document.getElementById("mos-gen-read");
+  const nR = document.getElementById("mos-n-read");
+  const verdict = document.getElementById("mos-verdict");
+  const patEl = document.getElementById("mos-pattern");
+  const serEl = document.getElementById("mos-series");
+  const ring = document.getElementById("mos-ring");
+
+  function scaleOf(g, N) {
+    const pcs = [];
+    for (let i = 0; i < N; i++) pcs.push(((i * g) % 1200 + 1200) % 1200);
+    pcs.sort((a, b) => a - b);
+    return pcs;
+  }
+  function stepsOf(pcs) {
+    const st = [];
+    for (let i = 0; i < pcs.length; i++)
+      st.push(((i + 1 < pcs.length ? pcs[i + 1] : pcs[0] + 1200) - pcs[i]));
+    return st;
+  }
+  function classify(steps) {
+    const uniq = [];
+    steps.forEach(s => {
+      if (!uniq.some(u => Math.abs(u - s) < EPS)) uniq.push(s);
+    });
+    uniq.sort((a, b) => b - a);
+    return uniq;
+  }
+
+  /* well-formed 判定（Carey–Clampitt）：
+     チェーン上の連続2音が音階上で常に同じ度数を張るか */
+  function wellFormed(g, N) {
+    const pcs = scaleOf(g, N);
+    const chain = [];
+    for (let i = 0; i < N; i++) chain.push(((i * g) % 1200 + 1200) % 1200);
+    const rank = x => {
+      for (let i = 0; i < pcs.length; i++)
+        if (Math.abs(pcs[i] - x) < 1e-6) return i;
+      return -1;
+    };
+    let span = null;
+    for (let k = 0; k < N - 1; k++) {
+      const a = rank(chain[k]), b = rank(chain[k + 1]);
+      if (a < 0 || b < 0) return false;
+      const d = (b - a + N) % N;
+      if (span === null) span = d;
+      else if (d !== span) return false;
+    }
+    return true;
+  }
+
+  function mosSeries(g) {
+    const out = [];
+    for (let N = 2; N <= 31; N++) {
+      const u = classify(stepsOf(scaleOf(g, N)));
+      if (u.length === 2 && wellFormed(g, N)) out.push(N);
+      if (u.length === 1 && N > 1) { out.push(N + "（等分で終端）"); break; }
+    }
+    return out;
+  }
+
+  function draw() {
+    const g = parseFloat(genS.value);
+    const N = parseInt(nS.value, 10);
+    genR.textContent = g.toFixed(1) + " ¢";
+    nR.textContent = N + " 音";
+
+    const pcs = scaleOf(g, N);
+    const steps = stepsOf(pcs);
+    const uniq = classify(steps);
+    const wf = uniq.length === 2 && wellFormed(g, N);
+    const isMOS = wf;
+    const isEq = uniq.length === 1;
+    verdict.textContent = isEq ? "等分（1種類）"
+      : isMOS ? "MOS！（2種類・well-formed）"
+      : uniq.length === 2 ? "2種類だが非MOS（well-formed でない）"
+      : uniq.length + " 種類";
+    verdict.style.color = isMOS ? "var(--accent-dark)" : "";
+
+    // aLbs とパターン
+    if (isMOS) {
+      const L = uniq[0], s = uniq[1];
+      const nL = steps.filter(x => Math.abs(x - L) < EPS).length;
+      const ns = steps.length - nL;
+      const pat = steps.map(x => Math.abs(x - L) < EPS ? "L" : "s").join("");
+      patEl.textContent = nL + "L" + ns + "s　" + pat + "　（L=" + L.toFixed(1) + "¢, s=" + s.toFixed(1) + "¢）";
+    } else if (isEq) {
+      patEl.textContent = "すべて " + uniq[0].toFixed(1) + "¢";
+    } else {
+      patEl.textContent = "ステップ：" + uniq.map(u => u.toFixed(1)).join(" / ") + " ¢";
+    }
+
+    // 環の描画
+    ring.innerHTML = "";
+    const W = 420, R = 165, cx = W / 2, cy = W / 2;
+    const svg = document.createElementNS(NS, "svg");
+    svg.setAttribute("viewBox", "0 0 " + W + " " + W);
+    svg.setAttribute("width", "100%");
+    svg.setAttribute("style", "max-width:420px;display:block;margin:0 auto");
+    ring.appendChild(svg);
+    const ang = c => (c / 1200) * 2 * Math.PI - Math.PI / 2;
+    const xy = (c, r) => [cx + r * Math.cos(ang(c)), cy + r * Math.sin(ang(c))];
+
+    // 弧
+    steps.forEach((st, i) => {
+      const a0 = pcs[i], a1 = pcs[i] + st;
+      const [x0, y0] = xy(a0, R), [x1, y1] = xy(a1, R);
+      const large = st > 600 ? 1 : 0;
+      const path = document.createElementNS(NS, "path");
+      path.setAttribute("d", "M " + x0 + " " + y0 +
+        " A " + R + " " + R + " 0 " + large + " 1 " + x1 + " " + y1);
+      path.setAttribute("fill", "none");
+      let col = "#9a9caa";
+      if (uniq.length <= 2) col = Math.abs(st - uniq[0]) < EPS ? "#3b4a9c" : "#c9973a";
+      else {
+        if (Math.abs(st - uniq[0]) < EPS) col = "#3b4a9c";
+        else if (Math.abs(st - uniq[1]) < EPS) col = "#c9973a";
+      }
+      path.setAttribute("stroke", col);
+      path.setAttribute("stroke-width", "7");
+      path.setAttribute("stroke-linecap", "round");
+      svg.appendChild(path);
+    });
+    // ノード
+    pcs.forEach((c, i) => {
+      const [x, y] = xy(c, R);
+      const dot = document.createElementNS(NS, "circle");
+      dot.setAttribute("cx", x); dot.setAttribute("cy", y); dot.setAttribute("r", 7);
+      dot.setAttribute("fill", i === 0 ? "#8a6116" : "#fff");
+      dot.setAttribute("stroke", "#1e1f24");
+      dot.setAttribute("stroke-width", "1.4");
+      svg.appendChild(dot);
+      const [lx, ly] = xy(c, R + 22);
+      const t = document.createElementNS(NS, "text");
+      t.setAttribute("x", lx); t.setAttribute("y", ly + 3);
+      t.setAttribute("text-anchor", "middle");
+      t.setAttribute("font-size", "10");
+      t.setAttribute("fill", "#565863");
+      t.textContent = c.toFixed(0);
+      svg.appendChild(t);
+    });
+
+    // MOS 系列
+    serEl.textContent = "この generator の MOS 系列（〜31音）： " + mosSeries(g).join(", ");
+  }
+
+  genS.addEventListener("input", draw);
+  nS.addEventListener("input", draw);
+  document.querySelectorAll("[data-g]").forEach(b =>
+    b.addEventListener("click", () => {
+      genS.value = b.getAttribute("data-g");
+      draw();
+    }));
+  document.getElementById("mos-play").addEventListener("click", () => {
+    const pcs = scaleOf(parseFloat(genS.value), parseInt(nS.value, 10));
+    const fr = pcs.map(c => XenAudio.freqFromCents(C4, c));
+    fr.push(C4 * 2);
+    XenAudio.playSeq(fr, { dur: 0.34, gap: 0.06 });
+  });
+  draw();
+})();
+</script>
+</body>
+</html>

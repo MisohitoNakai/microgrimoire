@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ⅴ-1 多重性の原理と読み方 — 微分音のグリモワール</title>
+<link rel="icon" href="./assets/data/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <button id="nav-toggle" aria-label="目次を開く"><span></span><span></span><span></span></button>
+  <a class="site-name" href="index.html">微分音のグリモワール</a>
+  <span class="topbar-section">第Ⅴ部 音律アトラス</span>
+</header>
+
+<div class="layout">
+  <aside id="sidebar" aria-label="目次"></aside>
+  <div id="sidebar-overlay"></div>
+
+  <main class="content">
+    <p class="eyebrow">第Ⅴ部 色々な音律 ── 音律アトラス　─　1</p>
+    <h1>多重性の原理と、アトラスの読み方</h1>
+
+    <div class="intuition">
+      <span class="layer-tag">直感レイヤー</span>
+      <p>第Ⅳ部で 31edo について確かめた<strong>ひとつの EDO は複数の音律の同時実装である</strong>事実は、31edo の特権ではありません。19edo も 22edo も 53edo も、それぞれ複数の顔を持ちます。<br>これを<strong>多重性の原理</strong>として、本アトラスの背骨に据えます。<br>地図の描き方はこう：<br>縦に種族（rank-2 の「道」）、横に EDO（「交差点」）を並べ、どの道がどの交差点を通るか、そして<strong>その交差点は道の最適な通り道にどれだけ近いか</strong>を記号で刻む。この一枚（次節のマトリクス）が描ければ、あとは道側から読む（Ⅴ-3）ことも、交差点側から読む（Ⅴ-4）こともできます。</p>
+    </div>
+
+    <h2 id="sec-principle">原理の再定式化</h2>
+
+    <p>第Ⅲ部の言葉で正確に述べます。rank-2 音律は kernel（消すコンマの組）で決まり、n EDO がそれを「<strong>支持する</strong>」（support）とは、n の patent val がその kernel をすべて消すこと（Ⅲ-3）。ひとつの val は多くのコンマを消すので、ひとつの EDO は多くの rank-2 音律を支持します。逆に、ひとつの rank-2 音律は無数の EDO に支持されます。generator の連分数近似（Ⅲ-4）が生む EDO の列がそれです。<strong>種族と EDO たちを貫く1本の道、EDO＝道々の交差点</strong>。この双対が地図の読み方です。</p>
+
+    <p>ただし「支持する」は資格であって成績ではありません。同じミーントーンの道でも、12edo は完全5度をわずかに広く、19edo は狭く、31edo はほぼ最適に通ります。成績を測る物差しは第Ⅲ部5で作った<strong>その音律の POTE 調律（最適な generator）と、その EDO が与える generator のずれ</strong>です。本アトラスの記号はこの物差しで機械的に付けます。</p>
+
+    <div class="table-scroll">
+    <table>
+      <thead><tr><th>記号</th><th>基準（POTE generator とのずれ）</th><th>意味</th></tr></thead>
+      <tbody>
+        <tr><td class="num">★</td><td class="num">|Δg| ≤ 1¢</td><td>その音律のほぼ最適な実装</td></tr>
+        <tr><td class="num">○</td><td class="num">1¢ &lt; |Δg| ≤ 5¢</td><td>実用的な実装（個性が付く）</td></tr>
+        <tr><td class="num">△</td><td class="num">|Δg| &gt; 5¢</td><td>支持はするが強い訛りがある</td></tr>
+        <tr><td class="num">（　）</td><td class="num">—</td><td>contorted：より小さい EDO の複製で、新しい音を加えない</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>基準を明示するのは、アトラスの★が<strong>趣味の投票ではなく再計算可能な判定</strong>であるためです。もちろん generator のずれは成績の一側面にすぎませんし、実際の「うまさ」には和声誤差の分布や MOS の形も効きます。★はあくまで入口の道標です。</p>
+
+    <div class="widget">
+      <p class="widget-title">交差点の顔ぶれ ── EDO を選んで、支持する音律をずれの小さい順に</p>
+      <div class="wrow">
+        <label for="mf-edo">EDO</label>
+        <select id="mf-edo"></select>
+      </div>
+      <div class="table-scroll"><table><tbody id="mf-out"></tbody></table></div>
+      <p class="widget-note">41 を引くと「miracle（Δ0.4¢）」が筆頭に、そのすぐ後ろに「magic の顔（Δ1.2¢）」が並び、次々の顔が現れます。<br>31 を引けばⅣ-2 の6つの顔が、53 を引けば schismatic・hanson・orwell が出てきます。カタログは本アトラスの15種族からです（一覧は次節）。</p>
+    </div>   
+      
+    <details class="precise" open>
+      <summary>精密レイヤー ── 地図の幾何学</summary>
+      <div class="precise-body">
+        <p>この地図には正確な幾何学的モデルがあります。5-limit の val の空間（3次元）を射影化すると、各 EDO の patent val は平面上の1点、rank-2 音律は<strong>その kernel に直交する val 全体＝1本の直線</strong>になります。ミーントーン直線の上に 12, 19, 26, 31, 43, 50… の点が一列に並び、31 の点ではミーントーン直線と würschmidt 直線と（7-limit へ拡げれば）slendric や miracle の直線が交わるため、「道と交差点」の比喩は、この射影平面の実景です（第Ⅲ部3に掲載の画像も参照）。さらに直線上の位置は generator の広さと単調に対応するため、<strong>道の上での POTE 点からの距離</strong>が★○△の基準そのものになります。この描像は Paul Erlich の "The Middle Path" などで整備されたもので、第Ⅵ部の誤差幾何（TE ノルム）とも接続します。</p>
+      </div>
+    </details>
+    <details class="precise" open>
+      <summary>精密レイヤー ── 種族（family）と連盟（clan）：系統樹の二つの編み方</summary>
+      <div class="precise-body">
+        <p>本書は rank-2 音律の系統をゆるく「種族」と呼んできましたが、Xenharmonic コミュニティの分類学はもう一段細かい語彙を持ちます。鍵は<strong>最初に消すコンマがどの素数世界に住んでいるか</strong>です。</p>
+        <p><strong>種族（family）</strong>は、<strong>5-limit（2.3.5）のコンマ1つ</strong>から始まる系統です。81/80 を消せばミーントーン種族、135/128 なら mavila 種族、250/243 なら porcupine 種族。まず 2.3.5 の平面で畳み方を決め、そこへ素数 7・11… の写像を後から接ぎ足す、接ぎ足すコンマの違いが種族内の兄弟を生みます（81/80 に 126/125 を足せば septimal ミーントーン、525/512 なら flattone）。</p>
+        <p><strong>連盟（clan）</strong>は、出発点のコンマが<strong>素数 5 を含まない</strong>系統です。多くは 2.3.7 のコンマから始まります。64/63 なら Archytas 連盟、49/48 なら Semaphoresmic 連盟、1029/1024 なら Gamelismic 連盟。2.3.11 の 243/242 から始まる Rastmic 連盟のような例もあります。こちらは 3 と 7（あるいは 11）の関係を先に固定し、<strong>素数 5 の消し方を後から選ぶ</strong>：同じ 1029/1024 を共有しながら、5 なしの slendric、81/80 を足した mothra、225/224 の miracle、126/125 の valentine が枝分かれします。</p>
+        <p>つまり種族と連盟は「コンマの追加で系統樹を編む」という同じ操作を、<strong>どの部分格子から編み始めるか</strong>だけが違う双子の分類法です。そしてひとつの律射が複数の系統に属するのはむしろ普通で、septimal ミーントーンは 81/80 のミーントーン種族であると同時に、59049/57344（Harrison コンマ：増6度を 7/4 と同一視）を消す Harrison 連盟の一員でもある。系統樹は木というより<strong>網</strong>で、<span class="xref" data-file="appendix-c-tables.html">付録C</span>の相互参照マトリクスはこの網を EDO の列で輪切りにした断面図です。</p>
+        <p>rank にも注意が要ります。コンマをまだ1つしか消していない出発点そのもの 2.3.5.7 で 225/224 だけを消した marvel、245/243 だけの sensamagic はまだ <strong>rank 3</strong>（period＋generator 2本）であり、rank-2 の子たちの「親」にあたります。付録Cのマトリクスでは、これら rank-3 の親は generator を1本に決められないため、支持の有無のみを示します。</p>
+      </div>
+    </details>
+    <div class="keybox">
+      <span class="kb-label">この節の要点</span>
+      <strong>多重性の原理</strong>：どの EDO も複数の rank-2 音律を支持する（逆も真）。<br>地図は種族（道）× EDO（交差点）の表で描き、 <strong>POTE generator とのずれ</strong>による最適さは機械的判定ができる。★は入口の道標であって成績のすべてではない。
+    </div>
+
+    <nav class="pager" id="pager"></nav>
+  </main>
+</div>
+
+<script src="assets/data/toc.js"></script>
+<script src="assets/data/glossary.js"></script>
+<script src="assets/data/atlas-data.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/audio.js"></script>
+<script>
+(function () {
+  "use strict";
+  const A = window.ATLAS;
+  const sel = document.getElementById("mf-edo");
+  A.edos.forEach(n => {
+    const o = document.createElement("option");
+    o.value = n; o.textContent = n + "edo";
+    if (n === 41) o.selected = true;
+    sel.appendChild(o);
+  });
+  const out = document.getElementById("mf-out");
+  function render() {
+    const n = sel.value;
+    const rows = [];
+    for (const k in A.fams) {
+      const c = A.fams[k].cells[n];
+      if (!c) continue;
+      rows.push([Math.abs(c.err), A.fams[k].jp, c, A.fams[k]]);
+    }
+    rows.sort((a, b) => a[0] - b[0]);
+    out.innerHTML = rows.length
+      ? rows.map(([, jp, c, F]) =>
+          "<tr><td>" + c.mark + (c.cont ? "（重）" : "") + "</td><td>" + jp +
+          "</td><td class='num'>gen " + c.gs + "歩＝" + c.gc + "¢</td>" +
+          "<td class='num'>POTE比 " + (c.err >= 0 ? "+" : "") + c.err + "¢</td>" +
+          "<td class='num'>" + F.c + "</td></tr>").join("")
+      : "<tr><td>この EDO はカタログ15族のいずれも支持しません。</td></tr>";
+  }
+  sel.addEventListener("change", render);
+  render();
+})();
+</script>
+</body>
+</html>

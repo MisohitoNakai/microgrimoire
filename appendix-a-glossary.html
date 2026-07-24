@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>付録A 用語索引 — 微分音のグリモワール</title>
+<link rel="icon" href="./assets/data/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+.gls-item { border-bottom: 1px solid #eceded; padding: .55rem .2rem; display: grid; grid-template-columns: minmax(9rem, 15rem) 1fr; gap: .2rem .9rem; align-items: baseline; }
+.gls-item dt { font-weight: 700; }
+.gls-item dt .en { display: block; font-weight: 400; color: #565863; font-size: .8em; margin-left: 0; }
+.gls-item dd { margin: 0; }
+@media (max-width: 640px) { .gls-item { grid-template-columns: 1fr; } }
+.idx-chip { display: inline-block; font-size: .78rem; line-height: 1.5; padding: .08rem .45rem; margin: .1rem .25rem .1rem 0;
+  border-radius: .3rem; background: #eef0fa; color: #3b4a9c; border: 1px solid #dfe3f4; text-decoration: none; white-space: nowrap; }
+.idx-chip:hover { background: #3b4a9c; color: #fff; border-color: #3b4a9c; }
+.idx-chip.primary { background: #fbf3e0; color: #8a6116; border-color: #f0dcb0; font-weight: 700; }
+.idx-chip.primary:hover { background: #c9973a; color: #fff; border-color: #c9973a; }
+#gls-search { width: 100%; max-width: 26rem; padding: .5rem .8rem; border: 1px solid #d7d9e6; border-radius: .5rem; font: inherit; }
+.gls-count { color: #565863; font-size: .85rem; margin-left: .8rem; }
+.idx-empty { color: #565863; font-size: .85rem; }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <button id="nav-toggle" aria-label="目次を開く"><span></span><span></span><span></span></button>
+  <a class="site-name" href="index.html">微分音のグリモワール</a>
+  <span class="topbar-section">付録</span>
+</header>
+
+<div class="layout">
+  <aside id="sidebar" aria-label="目次"></aside>
+  <div id="sidebar-overlay"></div>
+
+  <main class="content">
+    <p class="eyebrow">付録　─　A</p>
+    <h1>用語索引</h1>
+
+    <p>本書で導入した用語が<strong>どの節に現れるか</strong>の索引です。各用語の右に並ぶ節番号はすべてリンクになっており、クリックでその節へ移動します。<br><span class="idx-chip primary">琥珀</span>は<strong>定義・詳細のある節</strong>（その用語を主に解説している箇所）、<span class="idx-chip">藍</span>はその用語が本文中に現れる節です。<br>用語そのものの語釈は、サイドバー上部の<strong>用語検索</strong>から引けます。この索引の検索欄は用語名と英語表記にマッチします。</p>
+
+    <div class="widget">
+      <div class="wrow">
+        <input type="search" id="gls-search" placeholder="検索（例：コンマ、val、entropy、MOS…）">
+        <span class="gls-count" id="gls-count"></span>
+      </div>
+      <dl id="gls-list"></dl>
+    </div>
+
+    <nav class="pager" id="pager"></nav>
+  </main>
+</div>
+
+<script src="assets/data/toc.js"></script>
+<script src="assets/data/glossary.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/audio.js"></script>
+<script>
+(function () {
+  "use strict";
+  const G = (window.GLOSSARY || []).slice();
+  const IDX = window.TERM_INDEX || {};
+  // 五十音・アルファベット混在なので、原順（本文の導入順に近い）を尊重しつつ表示
+  const list = document.getElementById("gls-list");
+  const count = document.getElementById("gls-count");
+  const q = document.getElementById("gls-search");
+
+  // TOC から「ファイル名 → 節ラベル・節タイトル」を作る
+  const META = {};
+  (window.SITE_TOC || []).forEach(sec => (sec.items || []).forEach(it => {
+    if (it.pub === false) return;
+    const m = it.title.match(/^\s*(\d+)\./);
+    let label;
+    if (m) label = sec.num + "-" + m[1];
+    else if (/^([ABC])\./.test(it.title)) label = "付" + it.title.charAt(0);
+    else label = sec.num;
+    META[it.file] = { label: label, title: it.title };
+  }));
+
+  const esc = s => String(s).replace(/[&<>"]/g, c =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+  function chips(term) {
+    const files = IDX[term.t] || [];
+    const refFile = term.ref ? term.ref.split("#")[0] : null;
+    if (!files.length) return "<span class='idx-empty'>—</span>";
+    return files.map(f => {
+      const meta = META[f];
+      if (!meta) return "";
+      const isRef = (f === refFile);
+      // 定義のある節へは見出しアンカーまで送る
+      const href = isRef && term.ref ? term.ref : f;
+      return "<a class='idx-chip" + (isRef ? " primary" : "") + "' href='" + esc(href) +
+        "' title='" + esc(meta.title) + (isRef ? "（定義・詳細）" : "") + "'>" +
+        esc(meta.label) + "</a>";
+    }).join("");
+  }
+
+  function render(filter) {
+    const f = (filter || "").trim().toLowerCase();
+    const items = f
+      ? G.filter(x => (x.t + " " + (x.en || "")).toLowerCase().includes(f))
+      : G;
+    list.innerHTML = items.map(x =>
+      "<div class='gls-item'><dt>" + esc(x.t) +
+      (x.en ? "<span class='en'>" + esc(x.en) + "</span>" : "") +
+      "</dt><dd>" + chips(x) + "</dd></div>").join("");
+    count.textContent = items.length + " / " + G.length + " 語";
+  }
+  q.addEventListener("input", () => render(q.value));
+  render("");
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ⅶ-4 楽器 — 微分音のグリモワール</title>
+<link rel="icon" href="./assets/data/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+</head>
+<body>
+<header class="topbar">
+  <button id="nav-toggle" aria-label="目次を開く"><span></span><span></span><span></span></button>
+  <a class="site-name" href="index.html">微分音のグリモワール</a>
+  <span class="topbar-section">第Ⅶ部 実践</span>
+</header>
+
+<div class="layout">
+  <aside id="sidebar" aria-label="目次"></aside>
+  <div id="sidebar-overlay"></div>
+
+  <main class="content">
+    <p class="eyebrow">第Ⅶ部 実践　─　4</p>
+    <h1>楽器 ── 微分音を身体で弾く</h1>
+
+    <div class="intuition">
+      <span class="layer-tag">直感レイヤー</span>
+        <p>DAW の中だけでなく、実際の楽器で微分音を弾きたいなら必須の視点です。<br>ここでは実践例の豊富な 31edo の例にいくつか見ていきます。特に<a href="part4-04-modern.html">Ⅳ-4</a> でも概観した楽器を、ここでは<strong>「どう入手し、どう弾き始めるか」</strong>の実践に踏み込みます。<br>鍵盤・ギター・声、それぞれに 31edo への入口があります。<br>視覚的なインパクトは、映像コンテンツでの強い訴求点にもなるかもしれません。しかし、微分音楽器はいまだ一般的な物とは言えず専用機を用意する必要があるため、DTM での実践よりも極めて膨大な資金が必要な現実が見えてきます。</p>
+    </div>
+
+    <h2 id="sec-keyboard">鍵盤 ── Lumatone </h2>
+
+    <p>物理鍵盤で 31edo を弾く現状のスタンダードが <a href="https://www.lumatone.io/"><strong>Lumatone</strong></a> であり、280個の六角キーを持つ MIDI コントローラで、専用ソフトによるファームウェアの再マッピングにより 31edo を含む任意の EDO を isomorphic 配列（Ⅳ-5）で弾けます。「同じ和音は同じ形」という同型性のおかげで、31edo の複雑な音程関係が<strong>手の形のパターン</strong>として習得できる。<strong>4950アメリカドル（約 80万円）</strong>と阿鼻叫喚なほど非常に高価な専用機ですが、31edo を本格的に演奏するなら最有力です。音域は5オクターブと狭いのがネックポイントです。並々ならぬ覚悟は必要ですが、おひとついかがでしょうか。</p>
+    <div class="video-container">
+        <iframe width="1267" height="543" src="https://www.youtube.com/embed/HJKB1_gvhLE" title="Mike Battaglia - &quot;Scarborough Fair&quot; (Full Performance, 31-EDO, Lumatone Artist Series)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+
+    <p>注意点は、Lumatone は任意のチャンネルと任意の Note 番号を扱う機材であり、 MTS-ESP や MPE の信号を含みません。自作マッピングで31edo化する必要があります。</p>
+
+    <h2 id="sec-guitar">ギター ── フレットの打ち方</h2>
+
+      <p>微分音のギターは数多くあります。 31edo のフレットを施したギターは、Ⅳ-5 で見たとおり高フレット域で間隔が詰まり、製作精度が要ります。<br>ただし、弦長と周波数は反比例しますので、例えば 31edo ではナットからブリッジの長さ \( l \) のギターの \( n \) 番目のナットからのフレット位置 \( F \)を</p><p>$$ F = \frac{l}{2^{\frac{n}{31}}} $$</p><p>で理想値が計算可能です。実際は押弦時の弦の張力の増加により、弦を押さえるとわずかに周波数が上ずる為、<strong>ナット位置のブリッジ方向へのずらし補正</strong>があるとよいです。</p><p>アメリカではフロリダ州の <a href="https://metatonalmusic.com/conversionservice.html">Metatonal Music</a> の Ron Sword 氏によりオフィシャルに微分音改造を行っている画像が掲載されていますが、2024年時点で連絡しても返信が無い為、日本国内メーカーにオーダーするのが信頼でき、価格も抑えられるため無難です。<br>エレキギターやベースがボルトオンネックである場合、ネックごと新しく制作することができます。又は指板の張替えによって専用フレットに改造することも可能になります。<br>フレットが多い場合、<strong>弦がフレットに接触する『ビビり』</strong>が大きな問題となることが多いです。ネックの反りが少しでもあるとすぐにビビりが発生する為、フレットのすり合わせ工程が非常に難しくなり、ネックの反りやねじれが大敵になります。<br></p>
+      <p>オーストリアの音楽ユニット『Dsilton』はこうした鍵盤楽器やギターを自作した人らが変拍子と 31edo を用いたユニークな音楽を展開しています。</p>
+    <div class="video-container">
+        <iframe width="719" height="405" src="https://www.youtube.com/embed/GGmbIbYIjzg" title="Bbinsogg I - DSILTON" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+
+    <h2 id="sec-winds">擦弦・声・スライド管── 連続音高の強みと課題</h2>
+
+    <p>擦弦楽器・声・トロンボーンは<strong>もともと連続的に音高を作れる</strong>ため、原理的には31edo を演奏できる楽器です。問題は楽器でなく<strong>奏者の内的な音程感</strong>、つまりは微分音ソルフェージュであり、特有の音程感を狙って出す耳と身体の訓練です。難しくもこれは不可能ではありません。弦楽アンサンブルのミーントーン演奏は歴史的奏法として確立しており、バロック音楽などの古楽では実例が豊富で、訓練された奏者は12edo からの微妙なずれを日常的に制御しています。31edo の演奏もこれに倣う形となり、<strong>3度の純正比を探る</strong>耳訓練（Ⅵ-1・5 の仮想ピッチ・結合音を手がかりにする）から入るのが定石です。</p>
+    
+    <p>ドイツ・ハンブルクを拠点とする音楽プロジェクト『Hear Between The Lines』では実際に 31edo を用いて演奏する試みが見られます。特に代表的な楽曲『Colourblind』では弦楽器の微分音演奏技術が確立可能なことをよく表している作品と言えるでしょう。<br>Rami Olsen氏（ギター）と共同主宰のFreddi Sturm氏（Lumatone）に加えて、Subhraag Singh氏によるサックスのようなソフトウェア制御の楽器『infinitone』がゲスト参加しました。ハンブルク音楽歌劇大学において教授であるGeorg Hajdu氏のゼミなどと連携しながら、学生たちに向けて微分音音楽の理論や実践を教える場を設けており、学生や卒業生の巻きこみ『Colourblind』のライブ撮影に参加しています。微分音を正確にピッチコントロールして演奏できる優秀なプレイヤーを確保できたのは、同大学の全面的な協力と教育的土壌があった為です。</p>
+    <div class="video-container">
+        <iframe width="719" height="405" src="https://www.youtube.com/embed/kvX7gN_fQXQ" title="Colourblind (Live) - Hear Between The Lines feat. Subhraag Singh" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+      
+    <h2 id="sec-winds">バルブ金管楽器</h2>
+    <p>24edoであれば、イブラヒム・マアルフ氏（ابراهيم معلوف）の4ピストン仕様が存在しますが、まだ 31edo のトランペットなどのバルブ金管楽器が作成された例はありません。31edo をバルブ式金管楽器で演奏するためのには、少し課題があるからです。既存の3ピストン構造による拡張的アプローチが破綻するため、31段のグリッドを網羅するための全く新しい専用のバルブ・システムが要求されます。恐らく要求されるのは、1ステップを最小単位とした<strong>8・5・3・2・1</strong>の比率に基づく5ピストン・システムです。トランペットにおいて特定の自然倍音間を補完するためには、各バルブに 31edo のステップ数に準拠した抜差管を割り当てる必要があります。「8段、5段、3段、2段、1段」という管長の分割は、バルブの組み合わせによって必要な降下ピッチを効率的に網羅するための現実的設計です。<br>
+    倍音でコントロールする金管楽器の構造上、理想的な第3倍音は 31edo の狭まった完全5度との差においてずれを招きます。したがって、これらを正確に補正するため、<strong>奏者がアンブシュアや息の速度、リップ・コントロール</strong>などのピッチコントロールを担う必要がある点は擦弦楽器と同様になります。
+
+結論として、31EDO専用トランペットの構築には、「8, 5, 3, 2, 1」ステップを基本とする5ピストン構造を基盤としつつ、3倍音の不整合を考慮したアンブシュアも考慮できそうです。</p>
+    <details class="precise" open>
+      <summary>精密レイヤー ── アンサンブルと調律の実務</summary>
+      <div class="precise-body">
+          <p>複数楽器で31を合わせる際の勘所。<br>（1）<strong>基準の共有</strong>──<br>全員が同じ基準周波数を共有し、チューナーは12edo 用ではなく<strong>セント表示を使う必要があります。</strong><br>（2）<strong>耳合わせ優先</strong>──<br>31 の長3度はうなりが消える点が明瞭なので、数値より<strong>うなりを消す耳合わせ</strong>のほうが速く正確なことが多く、これは純正律アンサンブルの伝統的手法そのもので、 31edo ギターの耳でのチューニングは長3度の響き方から実際に確認できます。<br>（3）<strong>鍵盤の参加</strong>──<br>Lumatone 等を用いて、ソフトウェア音源で完結させてしまうのが現実的であり、鍵盤楽器の参加はノートパソコンなどを接続して解決することが手っ取り早いです。</p>
+      </div>
+    </details>
+
+    <div class="keybox">
+      <span class="kb-label">この節の要点</span>
+      鍵盤は <strong>Lumatone</strong>。<br>ギターはカスタム。<br>これらは見た目のインパクトが映像で映える。<br>擦弦・声では連続音高ゆえ原理的に弾け、課題は<strong>内的音程感の訓練</strong>。
+    </div>
+
+    <nav class="pager" id="pager"></nav>
+  </main>
+</div>
+<script src="assets/data/toc.js"></script>
+<script src="assets/data/glossary.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/audio.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ⅱ-1 純正音程と素数リミット — 微分音のグリモワール</title>
+<link rel="icon" href="./assets/data/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+</head>
+<body>
+<header class="topbar">
+  <button id="nav-toggle" aria-label="目次を開く"><span></span><span></span><span></span></button>
+  <a class="site-name" href="index.html">微分音のグリモワール</a>
+  <span class="topbar-section">第Ⅱ部 純正律とその格子</span>
+</header>
+
+<div class="layout">
+  <aside id="sidebar" aria-label="目次"></aside>
+  <div id="sidebar-overlay"></div>
+
+  <main class="content">
+    <p class="eyebrow">第Ⅱ部 純正律とその格子　─　1</p>
+    <h1>純正音程と素数リミット</h1>
+
+    <div class="intuition">
+      <span class="layer-tag">直感レイヤー</span>
+      <p>第Ⅰ部で見たとおり、倍音の重なりが最も整うのは、2音の周波数が小さな整数比にあるときでした。この整数比の音程だけで音楽を組もうとする立場が<strong>純正律</strong>です。そして整数はすべて素数の掛け算に分解できるので、純正音程には「どの素数を使ったか」という<strong>血統</strong>があります。3の家系は力強い5度、5の家系は3度を、7の家系はよりエスニック、11の家系は間の中立的な音程…<br>使う素数の上限を<strong>素数リミット</strong>と呼び、これが純正律の世界の広さを決める最初のダイヤルになります。</p>
+    </div>
+
+    <h2 id="sec-def">純正音程 ── 定義と根拠</h2>
+
+    <p><strong>純正音程</strong>（just interval）とは、周波数比が有理数（それも実用上は小さな整数の比）で与えられる音程です。<br><strong>純正律</strong>（just intonation, JI）は、音組織のすべての音程を純正音程で取る立場の総称です。その特権性の根拠は第Ⅰ部で確保済みです：楽音は倍音列を持ち（Ⅰ-3）、基本周波数が整数比 \(m\!:\!n\) にある2音は倍音が周期的に一致して衝突が減り、不協和曲線のくぼみとして浮かび上がる（Ⅰ-4）。またうなりが止まるトーチカとして、耳はこの比を極めて精密に検出できる（Ⅰ-1・Ⅰ-5）。</p>
+
+    <p>そして音程の合成は比の乗算でした（Ⅰ-2）。ここに素因数分解を持ち込むと、すべてが見通せます。たとえば純正長7度 15/8 は</p>
+
+    <p>$$ \frac{15}{8} = \frac{3 \times 5}{2^3} $$</p>
+
+    <p>——素数 2, 3, 5 だけからできています。<br>つまり 15/8 は「オクターブ（2）と完全5度（3）と長3度（5）の在庫」から組み立てられる音程です。<strong>純正音程の世界は、素数を軸とする在庫管理の世界</strong>であり、この見方が次節の「格子」に直結します。</p>
+
+    <h2 id="sec-limit">素数リミット</h2>
+
+    <p>比の分子・分母に現れる素因数がすべて \(p\) 以下であるとき、その音程を <strong>p-limit</strong>（\(p\)-リミット）の音程と呼びます。3/2 や 81/64 は 3-limit、5/4 や 15/8 は 5-limit、7/4 は 7-limit——リミットを上げるたび、新しい「家系」の響きが解禁されます。各リミットの代表的な響きを、和音のまま聴き比べてください。</p>
+
+    <div class="widget">
+      <p class="widget-title">素数リミットのパレット（基音 C3 ＝ 130.8 Hz）</p>
+      <div class="wrow">
+        <button class="btn" data-lim="3">3-limit　2:3:4</button>
+        <button class="btn" data-lim="5">5-limit　4:5:6</button>
+        <button class="btn" data-lim="7">7-limit　4:5:6:7</button>
+        <button class="btn" data-lim="11">11-limit　4:5:6:7:9:11</button>
+        <button class="btn" data-lim="13">13-limit　4:5:6:7:9:11:13</button>
+      </div>
+      <p class="widget-note">すべて倍音列の一部をそのまま和音にしたものです。5 で「長三和音」が生まれ、7 で属七のようなもの（ただし 12edo のそれよりずっと滑らか）が、11・13 で 12edo の語彙にない「間の音」が加わっていくのが分かります。</p>
+    </div>
+
+    <p>素数ごとの個性を、音程単位でも整理しておきます。各行の ♪ で基音 220 Hz との2音が鳴ります。</p>
+
+    <div class="table-scroll">
+    <table id="lim-table">
+      <thead><tr><th>リミット</th><th>比</th><th>通称</th><th class="num">セント</th><th>♪</th></tr></thead>
+      <tbody></tbody>
+    </table>
+    </div>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── prime limit と odd limit、そして subgroup</summary>
+      <div class="precise-body">
+        <p>「リミット」という語は文脈により二つの異なる尺度を指すので、ここで峻別します。</p>
+        <p><strong>素数リミット（prime limit）</strong>は上で定義したとおり、含まれる素因数の最大値です。これは<strong>音組織・格子の広がり</strong>を測る尺度で、本書で単に「リミット」と言えばこちらを指します。5-limit JI の音程全体は、2, 3, 5 の整数冪の積・商として書けるもの全体です。</p>
+        <p><strong>奇数リミット（odd limit）</strong>は、比を約分し 2 の因子（オクターブ）を取り除いたとき、分子・分母の奇数部分の大きい方を取る尺度です。たとえば 9/8 は素数リミットでは 3-limit ですが、odd limit では 9-limit（9 = 3² が現れるため）。odd limit は<strong>個々の音程の協和性の粗い目安</strong>として使われる尺度で、Partch の 11-limit トーナリティ・ダイアモンドの「11」はこちらの意味です。素数リミットは「世界の広さ」、odd limit は「音程の複雑さ」といったように、役割が違います。音程の複雑さのより精密な尺度（Tenney height）は<span class="xref" data-file="part3-05-optimization.html">第Ⅲ部5</span>で導入し、<span class="xref" data-file="part6-01-he.html">第Ⅵ部1（Harmonic Entropy）</span>で中核として再利用します。</p>
+        <p>また、素数を「p 以下すべて」ではなく飛び飛びに選ぶ立場もあります。たとえば 2.3.7（5 を含まない）のような <strong>subgroup</strong>（部分群）です。ガムラン的な響きを狙う Slendric 系の音律（<span class="xref" data-file="part5-03-families.html">第Ⅴ部3</span>）は素数 2、3、7 subgroup 上で語るのが自然で、31edo もこの subgroup で強力です。subgroup の厳密な扱いは第Ⅲ部の RTT の言語に乗せてから行います。</p>
+      </div>
+    </details>
+
+    <h2 id="sec-primes">素数の家系録</h2>
+
+    <p><strong>3 ── </strong>3/2（701.96¢）は最も強い協和で、あらゆる音楽文化の骨格に現れます。3 だけで組む 3-limit（ピタゴラス律）は、5度を積んで全音階を作れますが、その長3度 81/64（407.82¢）は鋭く、うなりの多い響きです。</p>
+
+    <p><strong>5 ── </strong>5/4（386.31¢）の登場で、西洋和声にあるような〝甘美な〟長3度・三和音が完成します。ルネサンス以降の和声の耳は本質的に 5-limit の耳です。ただし 5 の導入は、3 と 5 の「勘定の合わなさ」〝シントニックコンマ〟という深刻な問題を連れてきます（<a href="part2-03-syntonic.html">Ⅱ-3</a>）。</p>
+
+    <p><strong>7 ── </strong>7/4（968.83¢）は 12edo の短7度より 31¢ 低い「自然7度」。7/6・7/5 とともに、バーバーショップの歌い手が耳で見つけてきた響きの領域です。12edo はこの家系をほぼ表現できず、<strong>31edo が 7-limit を −1.1¢ で捉えることが、売りのひとつ</strong>になります（<span class="xref" data-file="part4-01-why31.html">第Ⅳ部1</span>）。</p>
+
+    <p><strong>11 ── </strong>11/8（551.32¢）は完全4度と増4度のちょうど間、11/9（347.41¢）は長3度と短3度の間の<strong>中立3度</strong>。四分音的な、アラブの音楽理論と響き合う領域です（<span class="xref" data-file="part5-04-spotlights.html">第Ⅴ部4</span> の 17edo・24edo も参照）。</p>
+
+    <p><strong>13 ── </strong>13/8（840.53¢）は短6度と長6度の間に落ちます。13 の響きは文脈なしには掴みにくいですが、13/12・16/13 などの中立的音程は 11 の家系と隣接します。（第Ⅳ部1）。</p>
+
+    <h2 id="sec-otonal">Otonality と Utonality ── 分子の和音・分母の和音</h2>
+
+    <p>倍音列の一部 4:5:6 をそのまま鳴らすと長三和音になります。<br>では比を「ひっくり返した」1/4 : 1/5 : 1/6（通分すれば 15:12:10）は？ 答えは短三和音です。<br>共通の倍音（この場合、各音の上方にある一致点）を分け合う形が長、共通の<strong>基音側</strong>（各音を倍音として含む仮想の低音）を分け合う形が短。Harry Partch はこれを <strong>Otonality</strong>（over-）と <strong>Utonality</strong>（under-）と名づけました。</p>
+
+    <div class="widget">
+      <p class="widget-title">Otonal / Utonal（同じ根音 220 Hz から）</p>
+      <div class="wrow">
+        <button class="btn" id="oto-play">Otonal　4:5:6（長）</button>
+        <button class="btn secondary" id="uto-play">Utonal　1/6:1/5:1/4 ＝ 10:12:15（短）</button>
+      </div>
+      <p class="widget-note">同じ素材（4, 5, 6）の分子側と分母側。長調と短調の双対性が、比のレベルにすでに書き込まれています。</p>
+    </div>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── 双対性の知覚的な非対称</summary>
+      <div class="precise-body">
+        <p>数理的には otonal と utonal は完全に対称ですが、<br>知覚的には非対称です。otonal な和音は成分が単一の倍音列に載るため、聴覚系がひとつの仮想的な基音（仮想ピッチ <span class="xref" data-file="part6-05-virtual-pitch.html">第Ⅵ部5</span>）に統合しやすく、「ひとつの根音を持つ」感覚が強い。utonal はその統合が弱く、同じ odd limit でもやや曇った印象を与えます。19世紀の和声二元論（Riemann ら）が短三和音を「下方倍音列」で基礎づけようとして難航したのは、この非対称のためです。差音・仮想ピッチの機構とあわせて第Ⅵ部で再訪します。</p>
+      </div>
+    </details>
+
+    <div class="keybox">
+      <span class="kb-label">この節の要点</span>
+      純正音程＝有理数比の音程。素因数分解が音程の「座標」を与え、使う素数の上限が<strong>素数リミット</strong>。 <br>3、5、7、11、13等はそれぞれの個性を持つ。<br>prime limit（世界の広さ）と odd limit（音程の複雑さ）は別の尺度。4:5:6 の裏返しが 10:12:15で、長短の双対は比に内蔵されている。
+    </div>
+
+    <p>素数が「軸」なら、純正律の全体は軸の張る<strong>格子</strong>として描けるはずです。<br>次節で、その地図〝トネッツ〟を実際に歩きます。</p>
+
+    <nav class="pager" id="pager"></nav>
+  </main>
+</div>
+
+<script src="assets/data/toc.js"></script>
+<script src="assets/data/glossary.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/audio.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+<script>
+(function () {
+  "use strict";
+  const C3 = 130.8128, A3 = 220;
+
+  /* --- リミット・パレット --- */
+  const CHORDS = {
+    "3": [4, 6, 8],
+    "5": [4, 5, 6],
+    "7": [4, 5, 6, 7],
+    "11": [4, 5, 6, 7, 9, 11],
+    "13": [4, 5, 6, 7, 9, 11, 13]
+  };
+  document.querySelectorAll("[data-lim]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const h = CHORDS[btn.getAttribute("data-lim")];
+      XenAudio.playFreqs(h.map(n => C3 * n / 4), { dur: 2.8 });
+    });
+  });
+
+  /* --- リミット別音程表 --- */
+  const ROWS = [
+    ["3", "3/2", 3/2, "完全5度"],
+    ["3", "4/3", 4/3, "完全4度"],
+    ["3", "9/8", 9/8, "大全音"],
+    ["3", "16/9", 16/9, "ピタゴラス短7度"],      
+    ["3", "81/64", 81/64, "ピタゴラス長3度"],
+    ["3", "256/243", 256/243, "リンマ（ピタゴラス短2度）"],
+    ["3", "2187/2048", 2187/2048, "アポトメ（ピタゴラス増1度）"],
+    ["5", "10/9", 10/9, "小全音"],
+    ["5", "5/4", 5/4, "純正長3度"],
+    ["5", "6/5", 6/5, "純正短3度"],
+    ["5", "5/3", 5/3, "純正長6度"],
+    ["5", "15/8", 15/8, "純正長7度"],
+    ["5", "16/15", 16/15, "純正全音階的半音"],
+    ["5", "25/16", 25/16, "純正増5度"],
+    ["5", "8/5", 8/5, "純正短6度"],
+    ["5", "27/25", 27/25, "大リンマ"],
+    ["5", "45/32", 45/32, "純正増4度"],
+    ["5", "9/5", 9/5, "純正大短7度"],
+    ["7", "7/4", 7/4, "自然7度"],
+    ["7", "7/6", 7/6, "セプティマル短3度"],
+    ["7", "7/5", 7/5, "セプティマル増4度（ホイヘンストライトーン）"],
+    ["7", "8/7", 8/7, "セプティマル長2度"],
+    ["7", "9/7", 9/7, "セプティマル長3度"],
+    ["7", "10/7", 10/7, "セプティマル減5度（オイラートライトーン）"],
+    ["11", "11/8", 11/8, "アンデシマル長4度"],
+    ["11", "11/6", 11/6, "アンデシマル中立7度"],
+    ["11", "11/9", 11/9, "アンデシマル中立3度"],
+    ["11", "33/32", 33/32, "アンデシマル四分音"],
+    ["11", "12/11", 12/11, "小さいアンデシマル中立2度"],
+    ["11", "11/10", 11/10, "大きいアンデシマル中立2度"],
+    ["13", "13/8", 13/8, "トリデシマル中立6度"],
+    ["13", "13/12", 13/12, "トリデシマル中立2度"],
+    ["13", "16/13", 16/13, "トリデシマル中立3度"]
+  ];
+  const tbody = document.querySelector("#lim-table tbody");
+  ROWS.forEach(([lim, label, r, name]) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = "<td>" + lim + "</td><td><code>" + label + "</code></td><td>" + name +
+      "</td><td class='num'>" + (1200 * Math.log2(r)).toFixed(2) + "</td><td></td>";
+    const btn = document.createElement("button");
+    btn.className = "btn small secondary";
+    btn.textContent = "♪";
+    btn.setAttribute("aria-label", label + " を試聴");
+    btn.addEventListener("click", () => XenAudio.playFreqs([A3, A3 * r], { dur: 2.0 }));
+    tr.lastElementChild.appendChild(btn);
+    tbody.appendChild(tr);
+  });
+
+  /* --- Otonal / Utonal --- */
+  document.getElementById("oto-play").addEventListener("click", () =>
+    XenAudio.playFreqs([A3, A3 * 5 / 4, A3 * 3 / 2], { dur: 2.6 }));
+  document.getElementById("uto-play").addEventListener("click", () =>
+    XenAudio.playFreqs([A3, A3 * 6 / 5, A3 * 3 / 2], { dur: 2.6 }));
+})();
+</script>
+</body>
+</html>

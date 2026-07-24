@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ⅲ-5 チューニングの決定と評価 — 微分音のグリモワール</title>
+<link rel="icon" href="./assets/data/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+</head>
+<body>
+<header class="topbar">
+  <button id="nav-toggle" aria-label="目次を開く"><span></span><span></span><span></span></button>
+  <a class="site-name" href="index.html">微分音のグリモワール</a>
+  <span class="topbar-section">第Ⅲ部 音律を組み立てる</span>
+</header>
+
+<div class="layout">
+  <aside id="sidebar" aria-label="目次"></aside>
+  <div id="sidebar-overlay"></div>
+
+  <main class="content">
+    <p class="eyebrow">第Ⅲ部 音律を組み立てる　─　5</p>
+    <h1>チューニングの決定と評価 ── TE・POTE・badness</h1>
+
+    <div class="intuition">
+      <span class="layer-tag">直感レイヤー</span>
+        <p>「どのコンマを消すか」を決めても（Ⅲ-2）、Ⅲ-1 のスライダーで動かしたように、まだ generator を<strong>何セントにするか</strong>という自由が残っています。<br>完全5度を犠牲にして3度を磨くか、按分するか……？<br>これは好みの問題に見えて、実は<strong>最適化問題として一意に計算ができます</strong>。<br><strong>「すべての素数周波数比の誤差を、音程の複雑さに応じた重みで、いっぺんに最小化せよ」</strong><br>その標準解が TE チューニング。さらに、律射どうしを比べる物差しとして、複雑さ（complexity）と正確さ（error）、その総合点（badness）まで揃えると、無限にある音律の中から「良い律射」を系統的に発掘できるようになります。</p>
+    </div>
+
+    <h2 id="sec-height">音程の複雑さを測る ── Tenney height</h2>
+
+    <p>最適化の重みに使うため、音程の「複雑さ」の物差しを先に決めます。<br>本書の標準は <strong>Tenney height</strong>：周波数比 \(\frac{n}{d}\)（既約分数）に対して</p>
+
+    <p>$$ H_T\left(\frac{n}{d}\right) = \log_2 (n \cdot d) $$</p>
+
+    <p>です。3/2 は \(\log_2 6 = 2.58\)、5/4 は \(\log_2 20 = 4.32\)、81/80 は \(\log_2 6480 = 12.66\)。<br><strong>単純な比ほど小さい</strong>、素直な物差しです。odd limit（Ⅱ-1）の連続版と考えてもよく、第Ⅵ部の Harmonic Entropy では「比の目立ちやすさ」の重みとして再登場します。<br>また、重要な性質として、Tenney height は monzo の<strong>重みつき L1 ノルム</strong> \( \sum_p |e_p| \log_2 p \) に等しく、格子の幾何（Tenney 格子）とも直結します。</p>
+
+    <h2 id="sec-te">TE チューニング ── 重みつき最小二乗</h2>
+
+    <p>調律の目標をこう立てます。：<br>各素数 \(p\) の写り先を<strong>純正値 \(1200 \log_2 p\) にできるだけ近づける。ただし単純な素数（＝単純な音程の材料）ほど重視する</strong>。<br>重みを \(1/\log_2 p\) に取り、二乗誤差の和を最小化した解が <strong>TE 調律</strong>（Tenney–Euclidean）です。generator の本数ぶんの変数しかないので、ただの重みつき最小二乗で計算できるものです。<br>なお、オクターブだけは純正に取ってあげようと、素数2だけを純正にしたものについては<strong>POTE 調律</strong>（Pure-Octave Tenney–Euclidean）と呼びます。<br>下のソルバーで、いくつかの種族の TE 解、 POTE 解を見てみましょう。</p>
+
+    <div class="widget">
+      <p class="widget-title">TE / POTE ソルバー</p>
+      <div class="wrow">
+        <label for="te-temp">種族</label>
+        <select id="te-temp">
+          <option value="meantone5" selected>ミーントーン（5-limit）　81/80</option>
+          <option value="meantone7">セプティマル・ミーントーン（7-limit）　81/80, 225/224</option>
+          <option value="migration13">migration（13-limit）（2.3.5.7.11.13）　81/80, 121/120, 126/125</option>
+          <option value="magic">septimal magic　3125/3072, 225/224</option>
+          <option value="wurschmidt">würschmidt（5-limit）　393216/390625</option>
+          <option value="porcupine">porcupine（5-limit）　250/243</option>
+          <option value="slendric">slendric（2.3.7）　1029/1024</option>
+        </select>
+      </div>
+      <div class="table-scroll"><table id="te-table"><tbody></tbody></table></div>
+      <div class="wrow">
+        <button class="btn" id="te-play">POTE 調律で長三和音（可能な音律のみ）を聴く</button>
+      </div>
+      <p class="widget-note">ミーントーンの POTE 完全5度が 1/4 コンマ（696.58¢）や 31edo（696.77¢）とどれほど近いか、各音律の generator が近隣の EDO では何セントになるかも並記します。<br>migration（13-limit）は 31edo の13-limitの射程を特徴づける POTE 中立3度となります。<br><strong>最適解のすぐそばに 31edo がいる</strong>光景に、これから何度も出会うことになります。</p>
+    </div>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── TE の式と、TOP・CTE という兄弟</summary>
+      <div class="precise-body">
+        <p>素数ベクトル \( \mathbf{j} = (1200\log_2 2, \dots, 1200\log_2 p_n) \)、重み行列 \( W = \operatorname{diag}(1/\log_2 p_i) \)、mapping \(M\)（\(r \times n\)）に対し、generator の調律 \( \mathbf{g} \)（\(1 \times r\)）を</p>
+        <p>$$ \mathbf{g}^{*} = \operatorname*{arg\,min}_{\mathbf{g}} \left\| (\mathbf{g} M - \mathbf{j})\, W \right\|_2 = \mathbf{j} W^2 M^{\mathsf T} \left( M W^2 M^{\mathsf T} \right)^{-1} $$</p>
+          <p>で求めるのが TE です（上のソルバーもこの式で計算しています）。ノルムを L2 でなく L∞ に取った解が <strong>TOP</strong>（Tenney OPtimal）で、「最悪の重みつき誤差を最小化」という思想です。素数 2 についても最適化に巻き込まれますので、 TE や TOP はオクターブも伸縮させます。全体的に見たら数字の名目上はそれが最適だからです。しかし、やはりオクターブだけは純正に固定したい実務のために、TE 解を素数 2 が純正になるよう再スケールしたのが <strong>POTE</strong> や、制約付き最適化として厳密に解く <strong>CTE</strong> があります。<br>本書で種族の「代表調律」を一つ示すときは、断りがなければ POTE を使います。</p><p>POTE はオクターブが純正になるように TE 調律を伸縮させたものですので、計算式は</p><p>$$\mathbf{g}_{\text{POTE}} = \frac{1200}{(\mathbf{g}^* M)_1} \mathbf{g}^*$$ </p><p>となります。ここで、\( (\mathbf{g}^* M)_1 \) は、TE解の調律における素数2（オクターブ）の周波数比に対応する音程です。</p><p>思想の含意としては、重み \(1/\log_2 p\) は「複雑な素数の誤差には寛容でよい」という立場の表明です。<br>重みの選び方に絶対の正解はなく、TE はあくまで<strong>合意されたデファクトスタンダード</strong>ではあるが、別の重み付け手法<br>（Weil Height：\( H_W\left(\frac{n}{d}\right) = \log_2 \max(\vert{}n\vert{},\vert{}d\vert{}) \) や Benedetti Height： \( H_B\left(\frac{n}{d}\right) = \sqrt{n \cdot d} \) ）<br>を選んでも解がさほど大きくは動くことはありません。</p>
+      </div>
+    </details>
+
+    <h2 id="sec-badness">調律を比べる ── complexity・error・badness</h2>
+
+    <p>調律を最適化してもなお残る誤差が、その種族の本質的な歪み「<strong>error</strong>」（TE error）です。一方、目的の純正音程に届くまでに generator を何歩積む必要があるか（ 5/4 はミーントーンでは generator が4歩、würschmidtなら1歩）という「手間」が <strong>complexity</strong>（TE complexity）。両者はトレードオフの関係にあります。コンマを大胆に消せば手間は減るが歪みが増え、慎重に消せば正確だが手間がかかる。<br>そこで総合点 badness を</p>
+
+    <p>$$ \text{badness} \;=\; \text{complexity}^{k} \times \text{error} $$</p>
+
+    <p>（小さいほど良い）で律をランクづけします。<br>指数 \(k\) の取り方には流儀があり、サイズの異なる種族を公平に比べられるよう調整した \( k = 1 \) 流儀は <strong>logflat badness</strong> が発掘作業の標準です。<br>\( k = 2 \) とする<strong>Cangwu Badness</strong>もあり、こちらは「人間が直感的に認識・演奏できるシンプルな音律こそが至高である」という思想に基づいていて、標準的なミーントーンなど、シンプルかつ実用性の高い種族が上位にランクインしやすくなる性質があります。<br>第Ⅴ部の音律アトラスに載る種族たちは、要するに<strong> badness の小さい秀才たち</strong>です。ミーントーン、magic、miracle 、porcupine 等々……いずれも「その complexity 帯で誤差が例外的に小さい」ことが歴史あるいは計算機的探索によって発見されてきました。</p>
+
+    <details class="precise" open>
+      <summary>精密レイヤー ── wedgie：種族の背番号</summary>
+      <div class="precise-body">
+        <p>mapping の行の取り方には自由度がある（Ⅲ-2）ため、「同じ種族か」を行列の見た目で判定はできません。基底の取り方によらない不変量が「<strong>wedgie</strong>」で、これは mapping の行ベクトルたちのウェッジ積（外積）、実体としては<strong>全ての 2×2 小行列式を並べたもの</strong>です。<br>ミーントーン \( M = \left[ \begin{matrix} \langle 1\,1\,0] \\ \langle 0\,1\,4]\end{matrix} \right] \) なら小行列式は \( (1{\cdot}1{-}1{\cdot}0,\; 1{\cdot}4{-}0{\cdot}0,\; 1{\cdot}4{-}0{\cdot}1) = (1, 4, 4) \) <br>すなわち wedgie は \( \left\langle \left\langle 1\, 4\, 4 \right] \right] \) 。ランクの数だけ括弧を重ねるルールになっています。<br>どの2つの val から出発しても（12edo &amp; 19edo でも 31edo &amp; 43edo でも）、ミーントーンなら必ず同じ wedgie に帰着します。<strong>音律の同一性＝wedgie の同一性</strong>。<br>多重線形代数（Grassmann 代数）の応用で、TE complexity は wedgie のノルムとして定義できます。</p>
+      </div>
+    </details>
+
+    <details class="precise">
+      <summary style="color:#8a6116">もっと！精密レイヤー ── wedgie の代数的正体：Grassmann 多様体と Plücker 座標</summary>
+      <div class="precise-body">
+
+        <p>素数リミットを固定し、素数の個数を \(n\) とします。monzo 空間 \(M \cong \mathbb{Z}^{n}\)（音程＝ベクトル）と、その双対である val 空間 \(V = M^{*}\)（写像＝余ベクトル）<br>rank-\(r\) の律射とは、mapping 行列 \(M_{r\times n}\) の<strong>行空間</strong> \(W \subset V\)（\(r\) 次元の飽和部分格子）のことです。generator の取り替えは \(W\) の基底を替えるだけで \(W\) 自体は動かない。双対側では、コンマ格子 \(W^{\perp} \subset M\) が \((n-r)\) 次元。つまり——</p>
+
+        <p style="text-align:center"><strong>律射 ≡ Grassmann 多様体 \(\mathrm{Gr}(r,n)\) の1点</strong></p>
+
+        <p>wedgie にまつわる性質は、すべてこの一行から出てきます。</p>
+
+        <h3>① 1次元部分空間への帰着（Plücker 埋め込み）</h3>
+
+        <p>\(\dim W = r\) のとき \(\Lambda^{r} W\) は<strong>1次元</strong>です。したがって</p>
+
+        <p>$$ w \;=\; v_1 \wedge v_2 \wedge \cdots \wedge v_r \;\in\; \Lambda^{r} V, \qquad \Lambda^{r} W = \mathbb{K}\cdot w $$</p>
+
+        <p>は、\(r\) 次元部分空間 \(W\) を射影空間 \(\mathbb{P}(\Lambda^{r}V)\) の<strong>たった1点</strong>へ潰します。<br>これが <strong>Plücker 埋め込み　</strong>\(\iota:\mathrm{Gr}(r,V)\hookrightarrow \mathbb{P}(\Lambda^{r}V)\) です。</p>
+
+        <p><strong>「背番号」たりうる根拠</strong>はここで尽きます。<br>基底を \(g \in GL_r\) で取り替えると \(w \mapsto \det(g)\, w\) <br>飽和格子の unimodular 変換なら \(\det g = \pm 1\) なので \(w \mapsto \pm w\) にしかならない。よって<strong>成分の gcd で割り、最初の非零成分の符号を正に固定</strong>すれば、\(w\) は generator の選び方に一切依存しない完全不変量になります。<br>「12edo &amp; 19edo から作っても 19edo &amp; 31edo から作っても同じ wedgie」という事実は、この \(\det g = \pm 1\) の一行に還元されるわけです。</p>
+
+        <h3>② Plücker 座標 ＝ mapping の全最大小行列式</h3>
+
+        <p>\(w\) を標準基底 \(e_{i_1}\wedge\cdots\wedge e_{i_r}\ (i_1 \lt \cdots \lt i_r)\) で展開した係数が <strong>Plücker 座標</strong>で、それはそのまま</p>
+
+        <p>$$ w_{i_1 \cdots i_r} \;=\; \det M[\,\text{全行}\,;\; i_1,\ldots,i_r\,] $$</p>
+
+        <p>これはmapping 行列の \(r\times r\) 小行列式を全て並べたものです。上の層で「小行列式を並べる」と述べた計算術は、外積代数の座標表示そのものだったことになります。<br>セプティマル・ミーントーン \(\left[ \begin{matrix} \langle 1\;1\;0\;{-3}] \\ \langle 0\;1\;4\;10] \end{matrix} \right]\) なら6個の 2×2 小行列式が並んで <br>wedgie は \( \left\langle \left\langle 1\; 4\; 10\; 4\; 13\; 12 \right] \right] \) </p>
+
+        <h3>③ 復元公式 ── 潰しても情報は失われない</h3>
+
+        <p>「1点へ潰す」と聞くと情報が消えそうですが、\(\iota\) は単射です。その根拠が次の一本の等式：</p>
+
+        <p>$$ W \;=\; \{\, v \in V \;:\; v \wedge w = 0 \,\} $$</p>
+
+        <p style="text-align:center">（\(v \wedge v_1 \wedge \cdots \wedge v_r = 0\) ⟺ \(v\) が \(v_1,\dots,v_r\) と一次従属 ⟺ \(v \in W\)）</p>
+          
+        <p>これは実用上そのまま<strong>EDO の支持判定</strong>になります。</p>
+
+        <p style="text-align:center"><strong>EDO の val \(v\) が律射 \(w\) を支持する ⟺ \(v \wedge w = 0\)</strong></p>
+
+        <div class="table-scroll">
+        <table>
+          <thead><tr><th>val</th><th>\(v \wedge w\)（septimal meantone）</th><th>判定</th></tr></thead>
+          <tbody>
+            <tr><td>12edo ⟨12 19 28 34]</td><td class="num">(0, 0, 0, 0)</td><td>支持 ★</td></tr>
+            <tr><td>19edo ⟨19 30 44 53]</td><td class="num">(0, 0, 0, 0)</td><td>支持 ★</td></tr>
+            <tr><td>31edo ⟨31 49 72 87]</td><td class="num">(0, 0, 0, 0)</td><td>支持 ★</td></tr>
+            <tr><td>22edo ⟨22 35 51 62]</td><td class="num">(−1, −2, 2, 5)</td><td>非支持</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>付録Cの掲載に当たり、マトリクスで採った「patent val とコンマの内積がすべて 0 か」という判定は、この判定の<strong>双対版</strong>にあたります（下の ⑤）。二つは同値です。</p>
+
+        <h3>④ Plücker 関係式 ── 「その数列は本当に律射か」</h3>
+
+        <p>\(\Lambda^{r}V\) の元がすべて \(v_1\wedge\cdots\wedge v_r\) の形に書けるわけではありません。<strong>分解可能</strong>（decomposable）な元だけが Grassmann 多様体の像で、それを切り出す二次式が <strong>Plücker 関係式</strong>です。7-limit の rank-2、すなわち \(\mathrm{Gr}(2,4)\) では、6成分に対してちょうど1本：</p>
+
+        <p>$$ w_{12}\,w_{34} \;-\; w_{13}\,w_{24} \;+\; w_{14}\,w_{23} \;=\; 0 $$</p>
+
+        <p>セプティマル・ミーントーン \( \left\langle \left\langle 1\; 4\; 10\; 4\; 13\; 12 \right] \right] \) で検算すると \(1{\cdot}12 - 4{\cdot}13 + 10{\cdot}4 = 12 - 52 + 40 = 0\)。一方 \( \left\langle \left\langle 1\; 0\; 0\; 0\; 0\; 1 \right] \right] \) は \(1{\cdot}1 - 0 + 0 = 1 \neq 0\) なので<strong>律射ではありません</strong>。ただの6個の数字列です。<br>一般形は Grassmann–Plücker 関係式</p>
+
+        <p>$$ \sum_{k=0}^{r} (-1)^{k}\, w_{i_1 \cdots i_{r-1} j_k} \cdot w_{j_0 \cdots \widehat{j_k} \cdots j_r} \;=\; 0 $$</p>
+
+        <p>で与えられます。幾何的には、\(\{v : v\wedge w = 0\}\) の次元がちょうど \(r\) になること（→ \(w\) が本当に \(r\) 次元部分空間から来ていること）の代数的な言い換えです。</p>
+
+        <h3>⑤ 双対性 ── wedgie とコンマは同じ情報</h3>
+
+        <p>Hodge 双対 \(\Lambda^{r}V \cong \Lambda^{\,n-r}M\) により、<strong>\(r\) 個の val の wedge と \((n-r)\) 個のコンマの wedge は同一の情報</strong>です。<br>5-limit rank-2（\(n=3, r=2\)）では \(\Lambda^{2}V \cong \Lambda^{1}M = M\)、つまり wedgie がそのままコンマ monzo になります：</p>
+
+        <p>$$ \langle 1\,1\,0] \times \langle 0\,1\,4] \;=\; (4,\,-4,\,1) \;\xrightarrow{\;\text{符号}\;}\; [{-}4\ 4\ {-}1\rangle \;=\; 81/80 $$</p>
+
+        <p>実際 \(\langle v_1, c\rangle = \langle v_2, c\rangle = 0\)（＝コンマが消える）。ミーントーンの wedgie \( \left\langle \left\langle 1\, 4\, 4 \right] \right] \) とシントニックコンマは、ホッジスター作用素を挟んで同じものを見ていたわけです。コンマ判定を wedgie 側で書くなら<strong>縮約</strong>（contraction）が使えて</p>
+
+        <p>$$ \iota_m\,(v_1\wedge\cdots\wedge v_r) \;=\; \sum_{k}(-1)^{k-1}\,\langle v_k,\, m\rangle\; v_1\wedge\cdots\widehat{v_k}\cdots\wedge v_r $$</p>
+
+          <p>より、</p><p style="text-align:center">\(m\) がコンマ ⟺ \(\iota_m w = 0\)</p><p>「\(v \wedge w = 0\) で val を判定し、\(\iota_m w = 0\) で monzo を判定する」という、上下から同じ \(w\) を挟む、きれいな双対になっています。</p>
+
+        <h3>⑥ 抜け穴 ── gcd 正規化と contorted（捻れ）</h3>
+        <p>標準的な ミーントーン \( M_1 \)：</p>
+        <p>$$M_1 = \left[ \begin{matrix} \langle 1 & 1 & 0] \\ \langle 0 & 1 & 4] \end{matrix} \right]$$ </p>
+        <p>訳あって generator を半分にした contorted な ミーントーン \( M_2 \)：</p>
+        <p>$$M_2 = \left[ \begin{matrix} \langle 1 & 1 & 0] \\ \langle 0 & 2 & 8] \end{matrix} \right]$$ </p>
+        <p>wedgie はどちらも \( \left\langle \left\langle 1\, 4\, 4 \right] \right] \)</p>
+        <p>このように、異なるマッピングであるにもかかわらず、gcd で正規化すると全く同じ wedgie になってしまいます。</p>
+
+        <p>wedgie を gcd で割る操作は、<strong>飽和した格子の情報しか残さない</strong>ことを意味します。<br>torsion（捻れ）を持つ mapping は真部分格子へ落ちますが、正規化後の wedgie は飽和版と一致してしまう。これが <strong>contorted な律射が「同じ背番号」を共有し、指数でしか区別できない</strong>理由です。（<span class="xref" data-file="appendix-c-tables.html">付録C</span>のマトリクスで「*」を付した印がまさにこれ）<br>wedgie は \(\mathbb{Q}\)-部分空間の完全不変量であって、格子そのものの完全不変量ではないことが唯一の綻びです。</p>
+
+
+
+        <h3>⑦ 背番号は計量も担う</h3>
+
+        <p>最後に。wedgie は単なる ID に留まりません。<br>Plücker 座標を Tenney 重みで測った<strong>ノルムが TE complexity</strong> に対応します。だから「wedgie が大きい＝複雑な律射」が定量的な意味を持ち、badness ＝ complexity × error のランキング（<span class="xref" data-file="part6-02-scale-he.html">Ⅵ-2</span> で登場する HE の谷と突き合わせたもの）が構成できるので、<strong>背番号でありながら計量を担う</strong>。これこそが Grassmann 定式化のいちばんの実り所です。<br>なお rank-1 では \(\Lambda^{1}V = V\) なので「EDO の wedgie は その val 自身」。というように素直な退化になっています。</p>
+
+      </div>      
+    </details>
+    <div class="keybox">
+      <span class="kb-label">この節の要点</span>
+      音程の複雑さの標準尺度＝ <strong>Tenney height</strong> は周波数比 \( \frac{n}{d}\) があったら \( \log_2 {n \cdot d} \)<br>調律の標準解＝<strong>TE</strong> とその純正オクターブ版 <strong>POTE</strong>。<br>律射の種族の評価は <strong>complexity</strong>（手間）× <strong>error</strong>（残留誤差）＝ <strong>badness</strong>。<br>基底によらない律の同一性証明が <strong>wedgie</strong>。<br>すばらしい律射は badness の小ささが勝負。
+    </div>
+
+    <p>理論の幹はこれで立ちました。<br>では、これらの音を<strong>紙の上にどうやって書きあらわすのか？</strong>微分音の五線譜上の表記法という、横断的な実務です。</p>
+
+    <nav class="pager" id="pager"></nav>
+  </main>
+</div>
+
+<script src="assets/data/toc.js"></script>
+<script src="assets/data/glossary.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/audio.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+<script>
+(function () {
+  "use strict";
+  const C4 = 261.6256;
+
+  /* 音律データ：primes, mapping（period行, generator行）, 近隣EDOのgenerator, 三和音の(第3音, 第5音)のgen座標 */
+  const TEMPS = {
+    meantone5: {
+      name: "ミーントーン（5-limit）",
+      primes: [2, 3, 5],
+      M: [[1, 1, 0], [0, 1, 4]],
+      genName: "完全5度",
+      edos: [["12edo", 700], ["19edo", 11 * 1200 / 19], ["31edo", 18 * 1200 / 31], ["1/4コンマ", 1200 * Math.log2(Math.pow(5, 0.25))]],
+      triad: { M3: [-2, 4], P5: [0, 1] }   // (period, gen) 座標
+    },
+    meantone7: {
+      name: "セプティマル・ミーントーン（7-limit）",
+      primes: [2, 3, 5, 7],
+      M: [[1, 1, 0, -3], [0, 1, 4, 10]],
+      genName: "完全5度",
+      edos: [["12edo", 700], ["19edo", 11 * 1200 / 19], ["31edo", 18 * 1200 / 31]],
+      triad: { M3: [-2, 4], P5: [0, 1] }
+    },
+    migration13: {
+      name: "migration（2.3.5.7.11.13 subgroup）",
+      primes: [2, 3, 5, 7, 11, 13],
+      M: [[1, 1, 0, -3, 2, 4], [0, 2, 8, 20, 5, -1]],
+      genName: "中立3度",
+      edos: [["24d", 7 * 1200 / 24],["31edo", 9 * 1200 / 31]],
+      triad: { M3: [-2, 8], P5: [0, 2] }
+    },
+    magic: {
+      name: "septimal magic",
+      primes: [2, 3, 5, 7],
+      M: [[1, 0, 2, -1], [0, 5, 1, 12]],
+      genName: "長3度",
+      edos: [["19edo", 6 * 1200 / 19], ["22edo", 7 * 1200 / 22], ["41edo", 13 * 1200 / 41]],
+      triad: { M3: [0, 1], P5: [-1, 5] }
+    },
+    wurschmidt: {
+      name: "würschmidt（5-limit）",
+      primes: [2, 3, 5],
+      M: [[1, -1, 2], [0, 8, 1]],
+      genName: "長3度",
+      edos: [["31edo", 10 * 1200 / 31], ["34edo", 11 * 1200 / 34], ["65edo", 21 * 1200 / 65]],
+      triad: { M3: [0, 1], P5: [-2, 8] }
+    },
+    porcupine: {
+      name: "porcupine（5-limit）",
+      primes: [2, 3, 5],
+      M: [[1, 2, 3], [0, -3, -5]],
+      genName: "小全音（〜10/9）",
+      edos: [["15edo", 2 * 1200 / 15], ["22edo", 3 * 1200 / 22], ["37edo", 5 * 1200 / 37]],
+      triad: { M3: [1, -5], P5: [1, -3] }   // 5/4 → (1,−5)、3/2 → (1,−3)（mapping の列から検算済み）
+    },
+    slendric: {
+      name: "slendric（2.3.7 subgroup）",
+      primes: [2, 3, 7],
+      M: [[1, 1, 3], [0, 3, -1]],
+      genName: "〜8/7",
+      edos: [["31edo", 6 * 1200 / 31], ["36edo", 7 * 1200 / 36], ["41edo", 8 * 1200 / 41]],
+      triad: null
+    }
+  };
+
+  function solveTE(T) {
+    const n = T.primes.length;
+    const j = T.primes.map(p => 1200 * Math.log2(p));
+    const w = T.primes.map(p => 1 / Math.log2(p));
+    const M = T.M;
+    // A = M W, b = j W（各列に重みを掛ける）
+    const A = M.map(row => row.map((x, i) => x * w[i]));
+    const b = j.map((x, i) => x * w[i]);
+    // g = b Aᵀ (A Aᵀ)⁻¹   （2×2）
+    const AAt = [
+      [0, 0],
+      [0, 0]
+    ];
+    for (let r = 0; r < 2; r++)
+      for (let c = 0; c < 2; c++)
+        for (let k = 0; k < n; k++) AAt[r][c] += A[r][k] * A[c][k];
+    const bAt = [0, 0];
+    for (let r = 0; r < 2; r++)
+      for (let k = 0; k < n; k++) bAt[r] += b[k] * A[r][k];
+    const det = AAt[0][0] * AAt[1][1] - AAt[0][1] * AAt[1][0];
+    const inv = [
+      [AAt[1][1] / det, -AAt[0][1] / det],
+      [-AAt[1][0] / det, AAt[0][0] / det]
+    ];
+    const g = [
+      bAt[0] * inv[0][0] + bAt[1] * inv[1][0],
+      bAt[0] * inv[0][1] + bAt[1] * inv[1][1]
+    ];
+    // POTE: 素数2の像を純正1200に再スケール
+    const oct = g[0] * M[0][0] + g[1] * M[1][0];
+    const s = 1200 / oct;
+    const pote = [g[0] * s, g[1] * s];
+    return { te: g, pote };
+  }
+
+  const sel = document.getElementById("te-temp");
+  const tbody = document.querySelector("#te-table tbody");
+  const playBtn = document.getElementById("te-play");
+  let cur = null;
+
+  function render() {
+    const T = TEMPS[sel.value];
+    const { te, pote } = solveTE(T);
+    cur = { T, pote };
+    const rows = [];
+    rows.push(["TE 解", "period " + te[0].toFixed(3) + "¢　／　" + T.genName + " " + te[1].toFixed(3) ]);
+    rows.push(["POTE 解（純正オクターブ）", "period " + pote[0].toFixed(3) + "¢　／　<strong>" + T.genName + " " + pote[1].toFixed(3) + "¢</strong>"]);
+    rows.push(["近隣の EDO の generator", T.edos.map(([n, c]) => n + "＝" + c.toFixed(2) + "¢").join("　／　")]);
+    // 素数ごとの POTE 誤差
+    const errs = T.primes.map((p, i) => {
+      const img = pote[0] * T.M[0][i] + pote[1] * T.M[1][i];
+      const e = img - 1200 * Math.log2(p);
+      return p + ": " + (e >= 0 ? "+" : "") + e.toFixed(2) + "¢";
+    });
+    rows.push(["POTE での素数の誤差", errs.join("　／　")]);
+    tbody.innerHTML = rows.map(r => "<tr><th>" + r[0] + "</th><td>" + r[1] + "</td></tr>").join("");
+    playBtn.disabled = !T.triad;
+  }
+  sel.addEventListener("change", render);
+  render();
+
+  playBtn.addEventListener("click", () => {
+    if (!cur || !cur.T.triad) return;
+    const { T, pote } = cur;
+    const cents = pg => pg[0] * pote[0] + pg[1] * pote[1];
+    XenAudio.playFreqs([
+      C4,
+      XenAudio.freqFromCents(C4, cents(T.triad.M3)),
+      XenAudio.freqFromCents(C4, cents(T.triad.P5))
+    ], { dur: 2.8 });
+  });
+})();
+</script>
+</body>
+</html>

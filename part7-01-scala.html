@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ⅶ-1 調律ファイル — 微分音のグリモワール</title>
+<link rel="icon" href="./assets/data/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@600;700&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+pre.code { background: #f6f6f2; border: 1px solid #e0e0d6; border-radius: 6px; padding: .8rem 1rem; overflow-x: auto; font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: .84rem; line-height: 1.5; }
+pre.code .cm { color: #8a8a76; }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <button id="nav-toggle" aria-label="目次を開く"><span></span><span></span><span></span></button>
+  <a class="site-name" href="index.html">微分音のグリモワール</a>
+  <span class="topbar-section">第Ⅶ部 実践</span>
+</header>
+
+<div class="layout">
+  <aside id="sidebar" aria-label="目次"></aside>
+  <div id="sidebar-overlay"></div>
+
+  <main class="content">
+    <p class="eyebrow">第Ⅶ部 実践　─　1</p>
+    <h1>調律ファイル</h1>
+
+    <div class="intuition">
+      <span class="layer-tag">直感レイヤー</span>
+      <p>理論から制作へ。最初の実務は<strong>「音律をコンピュータに伝える」</strong>ことです。<br>その共通語が <strong>Scala 形式</strong>、拡張子 <code>.scl</code>（音階の中身）と <code>.kbm</code>（鍵盤への割り当て）の2種のセット、および Anamark tuning ファイル<code>.tun</code>があり、微分音対応ソフトのほとんどがこれらいずれかを読みます。</p>
+    </div>
+
+    <h2 id="sec-scl">.scl ファイル ── 音階そのもの</h2>
+
+    <p><code>.scl</code> は音階の音程を、基準（1/1）からの<strong>セント値または比</strong>で列挙するテキストです。31edo なら「オクターブを31等分」なので、各音は \(k \times \frac{1200}{31}\) セント。構造はこうです：</p>
+
+    <pre class="code"><span class="cm">! 31edo.scl</span>
+<span class="cm">!</span>
+31-edo
+ 31
+<span class="cm">!</span>
+ 38.70968
+ 77.41935
+ 116.12903
+ <span class="cm">... （中略：4〜30番目）</span>
+ 1161.29032
+ 2/1</pre>
+
+    <p>読み方：<strong>感嘆符 <code>!</code> で始まる行はコメント</strong>。最初の非コメント行が<strong>説明文</strong>、次が<strong>音数（31）</strong>。以降が各音の音程で、<strong>小数点を含めばセント、含めば比（<code>3/2</code> など）</strong>として解釈されます。慣例として最後はオクターブ <code>2/1</code>（＝1200¢）で閉じ、起点の <code>0.0</code> は書きません（1/1 は暗黙）。つまり31行の音程データが並びます。等分音律は「1200/31 の倍数を31個」書くだけ。<br>下のジェネレータで実物を作れます。</p>
+
+    <div class="widget">
+      <p class="widget-title">edo .scl ジェネレータ（お試し）</p>
+      <div class="wrow">
+        <label for="scl-n">等分数</label>
+        <input type="number" id="scl-n" value="31" min="2" max="72" style="width:5rem">
+        <button class="btn" id="scl-gen">生成</button>
+        <button class="btn secondary" id="DL">ダウンロード</button>
+        <button class="btn secondary" id="scl-copy">クリップボードにコピー</button>
+      </div>
+      <pre class="code" id="scl-out" style="max-height:280px"></pre>
+      <p class="widget-note">生成された内容をテキストエディタに貼り、<code>31edo.scl</code> のような名前で保存すれば、そのまま各種ソフトに読み込めます。音源基準（C4＝261.6255653 Hz など）は <code>.scl</code> ではなく次の <code>.kbm</code> か、ソフト側の設定で与えます。</p>
+    </div>
+
+    <h2 id="sec-kbm">.kbm ファイル ── 鍵盤への割り当て</h2>
+
+    <p><code>.scl</code> は音階の「形」だけを定め、<strong>どの鍵盤キーをどの音に、どの周波数を基準に</strong>割り当てるかは <code>.kbm</code>（keyboard mapping）が担います。<br>31音を12鍵の物理鍵盤やMIDIにどう載せるかはこのファイル次第で、線形（1鍵1音で上へ）にも、後述のチャンネル分割（<span class="xref" data-file="part7-06-workflow.html">Ⅶ-6</span>）にもできます。基準周波数の指定もここで行います：</p>
+
+    <pre class="code"><span class="cm">! 基準：MIDI 60 (C) を 261.6 Hz </span>
+<span class="cm">! Size of map</span>
+12
+<span class="cm">! First / last MIDI note</span>
+0
+127
+<span class="cm">! Middle note</span>
+60
+<span class="cm">! Reference note / freq</span>
+60
+261.6255653
+<span class="cm">! Octave degree (scl の何番目でオクターブか)</span>
+12</pre>
+
+    <p>A4＝440 Hz を基準にしたい場合は、reference note を 69、freq を 440.0 とします。ただし多くのプラグインは基準周波数を独自 UI で持つため、<code>.kbm</code> を省いて <code>.scl</code> だけ渡す運用も一般的です。</p>
+
+    <h2 id="sec-anamark">AnaMark <code>.tun</code> ファイル ── もうひとつの標準</h2>
+
+    <p><code>.scl/.kbm</code> と並んで広く使われるもう一つの調律ファイル形式が、<strong>AnaMark の <code>.tun</code></strong>（TUN／AnaMark tuning file）です。もともと AnaMark シンセのために作られ、その後 VST 界でデファクトスタンダードのひとつになりました。<br><code>.scl</code> が「音階の相対構造」と「鍵盤割り当て」を2ファイルに分けるのに対し、<strong><code>.tun</code> は128個の MIDI ノートすべてに絶対周波数をセントで直接列挙するスタイルで、</strong>1個のファイルで「どのキーが何 Hz か」が完全に決まる自己完結型です。テキスト形式で、おおむね次の構造を持ちます：</p>
+
+    <pre class="code"><span class="cm">; AnaMark tuning file (.tun)</span>
+[Tuning]
+note 0=<span class="cm">（MIDI 0 のセント値）</span>
+note 1=...
+<span class="cm">... note 127 まで128行</span>
+[Exact Tuning]
+basefreq=261.6255653   <span class="cm">; 基準周波数</span>
+
+basefreq=261.6255653   <span class="cm">; 基準周波数</span></pre>
+
+    <p><code>.tun</code> の長所は<strong>自己完結性</strong>で、128鍵の絶対音高が1ファイルに収まるので、鍵盤割り当ての解釈違い（<code>.kbm</code> の設定ミス）による事故が起きにくいものです。<br>多くの VST シンセ（Serum 2、 Vital、 UVI Falconシリーズ、 Omnisphere 2、 Keyscapeなど）が <code>.tun</code> を読み込めます。短所は、128鍵を全部書き下すぶん<strong>「音階の構造」が読み取りにくい</strong>ことと、フォーマットにバージョン差（AnaMark TUN v0/v1/v2）があり実装ごとに解釈が微妙に異なる場合があること。<strong>構造を編集・共有するなら <code>.scl</code>、特定の音源に確実に流し込むなら <code>.tun</code></strong>、と使い分けるのもいいでしょう。
+
+<h2 id="sec-scl">Scale Workshop</h2>
+
+      <p><a href="https://sevish.com/scaleworkshop/">Scale Workshop</a> は微分音音楽の先駆者 <a href="https://www.youtube.com/@Sevish">Sevish</a> 氏の作成した音律ファイルを生成できるウェブアプリです。<br><code>.scl</code> と <code>.tun</code> の両方を書き出せるので、設計は Scale Workshop で行い、送り先の音源が要求する形式でエクスポートする、という導線が今日の定番です。音源の対応状況は <a href="https://en.xen.wiki/w/List_of_microtonal_software_plugins" target="_blank" rel="noopener">Xenharmonic wiki の対応プラグイン一覧</a>が随時更新しています。</p>
+
+    <div class="widget">
+      <p class="widget-title">調律ファイルの実物を見てみよう</p>
+      <div class="wrow">
+        <button id="subsetscl" class="btn">31edo_subset.scl</button>
+        <button id="ch1kbm" class="btn">31edo_ch1.kbm</button>
+        <button id="ch2kbm" class="btn">31edo_ch2.kbm</button>
+        <button id="ch3kbm" class="btn">31edo_ch3.kbm</button>
+        <button id="ch1tun" class="btn">31edo_ch1.tun</button>
+        <button id="ch2tun" class="btn">31edo_ch2.tun</button>
+        <button id="ch3tun" class="btn">31edo_ch3.tun</button>
+      </div>
+      <p class="widget-note">31edo から12音抜き出した1チャンネル分が含まれます。</p>
+    </div>      
+    <details class="precise" open>
+      <summary>精密レイヤー ── Scala エコシステムと相互運用</summary>
+      <div class="precise-body">
+        <p>Scala は単なるファイル形式ではなく、Op de Coul による<strong>同名のフリーソフト</strong>（音律の計算・分析・変換を行う老舗ツール）でもあり、その付属の <strong>scale archive</strong> には5000超の音律 <code>.scl</code> が収録されています。ミーントーン、各歴史的調律、世界の民族音律、そして本書で扱った rank-2 音律の MOS の多くが既製ファイルとして手に入ります。31edo を自作せずとも <code>31.scl</code> が最初から入っています。</p>
+        <p>相互運用の注意を三点。<br>（1）<strong>比か小数か</strong>：<br><code>.scl</code> は行に小数点があればセント、なければ比と解釈します。<code>700.0</code>（700¢）と <code>700</code>（700/1 という比＝とてつもない高音）はまったく別物で、セントを書くときは<code>700.</code>のように必ず小数点を付けます。<br>（2）<strong>1/1 を書かない</strong>：<br>起点は暗黙で、列挙するのは2番目の音から。31edo なら 38.7¢ から 1200¢（＝<code>2/1</code>）までの31行。<br>（3）<strong>形式の使い分け</strong>：<br>MTS-ESP・Vital・Scale Workshop などは <code>.scl/.kbm</code> や<code>.tun</code>を両方読めるものがあります。とはいえ<strong><code>.tun</code>は音高を絶対的に正しくもち、最も事故が少ない</strong>ので、まず <code>scl.</code>で構造を持ち、必要に応じて Scale Workshop で変換を行い、送り先に合わせて書き出すのが今日の定番です。</p>
+      </div>
+    </details>
+
+    <div class="keybox">
+      <span class="kb-label">この節の要点</span>
+      
+      <strong>Scala 形式</strong>が音律の共通語。<br><code>.scl</code>＝音階の中身をそのままセントで書いている。<strong>小数点ありでセント・なしで比</strong>、1/1 は省略、末尾が period。<br><code>.kbm</code>＝鍵盤割り当てと基準周波数。<br>並ぶ標準に <strong>AnaMark <code>.tun</code></strong>（128鍵の絶対音高を列挙）がある。
+    </div>
+    <nav class="pager" id="pager"></nav>
+  </main>
+</div>
+
+<script src="assets/data/toc.js"></script>
+<script src="assets/data/glossary.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/audio.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+<script>
+(function () {
+  "use strict";
+  function genScl(n) {
+    let s = "! " + n + "edo_straight.scl\n! Microtonal Grimoire\n" + n + "-edo\n " + n + "\n!\n";
+    for (let k = 1; k <= n; k++) {
+      if (k === n) s += " 2/1\n";
+      else s += " " + (k * 1200 / n).toFixed(5) + "\n";
+    }
+    return s;
+  }
+  const out = document.getElementById("scl-out");
+  function render() {
+    const n = Math.max(2, Math.min(72, parseInt(document.getElementById("scl-n").value, 10) || 31));
+    out.textContent = genScl(n);
+  }
+  document.getElementById("scl-gen").addEventListener("click", render);
+  document.getElementById("scl-copy").addEventListener("click", () => {
+    navigator.clipboard && navigator.clipboard.writeText(out.textContent);
+  }); 
+      //ダウンロード//
+  document.getElementById("DL").addEventListener("click", () => {
+    const numbedo = document.getElementById("scl-n").value;
+    const textData = genScl(numbedo);
+    const blob = new Blob([textData], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = numbedo +"edo_straight.scl";
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+    
+  render();
+    //ファイル//
+    document.getElementById("subsetscl").addEventListener("click", function() {
+     const targetUrl = "./assets/tunings/31edo_subset.scl";
+     const a = document.createElement('a');
+     a.href = targetUrl;
+     a.download = "";
+     document.body.appendChild(a);
+     a.click();
+     a.remove();
+   });
+    document.getElementById("ch1kbm").addEventListener("click", function() {
+     const targetUrl = "./assets/tunings/31edo_ch1.kbm";
+     const a = document.createElement('a');
+     a.href = targetUrl;
+     a.download = "";
+     document.body.appendChild(a);
+     a.click();
+     a.remove();
+   });
+    document.getElementById("ch2kbm").addEventListener("click", function() {
+     const targetUrl = "./assets/tunings/31edo_ch2.kbm";
+     const a = document.createElement('a');
+     a.href = targetUrl;
+     a.download = "";
+     document.body.appendChild(a);
+     a.click();
+     a.remove();
+   });
+    document.getElementById("ch3kbm").addEventListener("click", function() {
+     const targetUrl = "./assets/tunings/31edo_ch3.kbm";
+     const a = document.createElement('a');
+     a.href = targetUrl;
+     a.download = "";
+     document.body.appendChild(a);
+     a.click();
+     a.remove();
+   });
+    document.getElementById("ch1tun").addEventListener("click", function() {
+     const targetUrl = "./assets/tunings/31edo_ch1.tun";
+     const a = document.createElement('a');
+     a.href = targetUrl;
+     a.download = "";
+     document.body.appendChild(a);
+     a.click();
+     a.remove();
+   });
+    document.getElementById("ch2tun").addEventListener("click", function() {
+     const targetUrl = "./assets/tunings/31edo_ch2.tun";
+     const a = document.createElement('a');
+     a.href = targetUrl;
+     a.download = "";
+     document.body.appendChild(a);
+     a.click();
+     a.remove();
+   });
+    document.getElementById("ch3tun").addEventListener("click", function() {
+     const targetUrl = "./assets/tunings/31edo_ch3.tun";
+     const a = document.createElement('a');
+     a.href = targetUrl;
+     a.download = "";
+     document.body.appendChild(a);
+     a.click();
+     a.remove();
+   });
+})();
+</script>
+</body>
+</html>
