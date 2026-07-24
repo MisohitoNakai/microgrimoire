@@ -204,6 +204,7 @@ window.TERM_INDEX = {
   contorted: ["part3-05-optimization.html", "part5-01-multiplicity.html", "part5-02-matrix.html", "part5-04-spotlights.html", "part5-06-nonoctave.html", "appendix-c-tables.html"],
   トリターブ: ["part5-06-nonoctave.html"],
   "Bohlen–Pierce": ["part5-06-nonoctave.html"],
+  硬さ: ["part5-05-small-edos.html"],
   equave: ["part5-06-nonoctave.html"],
   "Carlos α・β・γ": ["part5-06-nonoctave.html"],
   "エントロピー（Shannon）": ["part6-01-he.html", "part6-04-delta-rational.html", "part6-05-virtual-pitch.html"],
