@@ -54,18 +54,18 @@
         <button class="btn" id="fc-scale">代表 MOS 音階を聴く</button>
         <button class="btn secondary" id="fc-short">和音の例を聴く</button>
       </div>
-      <p class="widget-note">和音の例では、その顔が売りにする純正音程への到達路。<br>同じ31音の環の上で、<strong>歩幅（generator）を変えるだけで別の音階系・別の和声観が立ち上がる</strong>のを確かめてください。各顔の音律としての一般論（31以外の調律を含む）は<span class="xref" data-file="part5-03-families.html">第Ⅴ部3</span>で。</p>
+      <p class="widget-note">和音の例では、その顔が売りにする純正音程への到達路。<br>同じ31音の環の上で、<strong>歩幅（generator）を変えるだけで別の音階系・別の和声観が立ち上がる</strong>のを確かめてください。各顔の音律としての一般論（31edo 以外の調律を含む）は<span class="xref" data-file="part5-03-families.html">第Ⅴ部3</span>で。</p>
     </div>
 
     <h2 id="sec-detail">それぞれの顔の売り</h2>
 
-    <p><strong>ミーントーン</strong>は31の「表の顔」。全音階・半音階という西洋音楽の全遺産がそのまま動き、しかも 5-limit を超えて <strong>septimal meantone</strong>（126/125・225/224 も消える）として動くため、従来の語法の内部に第7倍音が編み込まれます（増6度＝7/4。Ⅳ-6の主題）。</p>
+    <p><strong>ミーントーン</strong>は 31edo の「表の顔」。全音階・半音階という西洋音楽の全遺産がそのまま動き、しかも 5-limit を超えて <strong>septimal meantone</strong>（126/125・225/224 も消える）として動くため、従来の語法の内部に第7倍音が編み込まれます（増6度＝7/4。Ⅳ-6の主題）。</p>
 
     <p><strong>würschmidt</strong> は純正3度（10歩・+0.8¢）を積む顔。3度8つで「5度＋2オクターブ」に届く。完全5度中心の音楽観を3度中心へ反転させた世界で、MOS も 3度系特有の細かい系列（4, 7, 10, 13, …）を生やします。</p>
 
     <p><strong>slendric</strong>および<strong>slentonic</strong>は 8/7（6歩・232.3¢）で歩く顔です。<strong>8/7 を3つ積むと5度</strong>（1029/1024 の消去）という驚くほど単純な骨格をもち、5音 MOS はガムランのスレンドロを思わせる均等感を帯びます。素数5を経由しない 2.3.7 のサブグループによる音楽です。</p>
 
-    <p><strong>miracle</strong> は3歩（116.1¢）の generator は、George Secor が1974年に発見した <strong>secor</strong>と呼ばれる大きな半音程度の積み上げで組まれる顔。6歩で完全5度、オクターブ -2歩で 7/4。3歩で中立3度（11/9）という11-limit までの音程を少ステップ数で網羅する「効率の奇跡」で、21音 MOS <strong>blackjack</strong>は微分音界の名所です。ただし本来の最適調律は 72edo 寄りで、31での実装はやや粗い近似であり「31で試せる」ことと「31が最適」は別、という好例でもあります。</p>
+    <p><strong>miracle</strong> は3歩（116.1¢）の generator は、George Secor が1974年に発見した <strong>secor</strong>と呼ばれる大きな半音程度の積み上げで組まれる顔。6歩で完全5度、オクターブ -2歩で 7/4。3歩で中立3度（11/9）という11-limit までの音程を少ステップ数で網羅する「効率の奇跡」で、21音 MOS <strong>blackjack</strong>は微分音界の名所です。ただし本来の最適調律は 72edo 寄りで、31edo での実装はやや粗い近似であり「31edo で試せる」ことと「31edo が最適」は別、という好例でもあります。</p>
 
     <p><strong>orwell</strong> は 7/6 気味の 271.0¢（7歩）で歩く顔。この名は George Orwell の文学作品『1984年』にかけた洒落で、 generator が〝 84edo 〟の 〝19 歩〟に当たることから。9音 MOS が代表的な遊び場で、5度を経由しない独特の暗い透明感があります。</p>
 
@@ -76,14 +76,14 @@
     <details class="precise" open>
       <summary>精密レイヤー ── 「同居」の代数的な意味</summary>
       <div class="precise-body">
-        <p>これらの顔が31に同居するのは偶然ではありません。rank-2 音律が31edo に実装できる条件は、<strong>31 の patent val がその音律の kernel をすべて消す</strong>ことであり、すなわち val \( \left\langle 31 \; 49 \; 72 \; 87 \; 107 \; 115 \right] \) が、その音律を指名する2つの val の張る平面上にあることです（Ⅲ-3）。ミーントーン＝12 &amp; 19、würschmidt＝31 &amp; 34、slendric＝31 &amp; 36 などいずれの平面も点31を通ります。逆に、31を通る平面（＝31が消すコンマの組）を数え上げれば、31の顔の総目録が得られます。上の6つはその中で badness が良い（Ⅲ-5）代表選手です。</p>
-        <p>調律精度の注意をひとつ。同居するどの顔も、31edo という<strong>単一の調律</strong>を共有します。これは各音律の POTE 最適解と一致するとは限りません。ミーントーンには 696.77 はほぼ最適（POTE 696.24）ですが、miracle の secor の最適は 116.7¢ 付近で、31の 116.13 はやや窮屈です。<strong>「どの顔で聴くか」によって、同じ31が最適に近くも遠くもなる</strong>ため、アトラス（第Ⅴ部）でこの距離感を体系化します。</p>
+        <p>これらの顔が 31edo に同居するのは偶然ではありません。rank-2 音律が 31edo に実装できる条件は、<strong>31edo の patent val がその音律の kernel をすべて消す</strong>ことであり、すなわち val \( \left\langle 31 \; 49 \; 72 \; 87 \; 107 \; 115 \right] \) が、その音律を指名する2つの val の張る平面上にあることです（Ⅲ-3）。ミーントーン＝12 &amp; 19、würschmidt＝31 &amp; 34、slendric＝31 &amp; 36 などいずれの平面も点31を通ります。逆に、31edo を通る平面（＝31edo が消すコンマの組）を数え上げれば、31edo の顔の総目録が得られます。上の6つはその中で badness が良い（Ⅲ-5）代表選手です。</p>
+        <p>調律精度の注意をひとつ。同居するどの顔も、31edo という<strong>単一の調律</strong>を共有します。これは各音律の POTE 最適解と一致するとは限りません。ミーントーンには 696.77 はほぼ最適（POTE 696.24）ですが、miracle の secor の最適は 116.7¢ 付近で、31edo の 116.13 はやや窮屈です。<strong>「どの顔で聴くか」によって、同じ 31edo が最適に近くも遠くもなる</strong>ため、アトラス（第Ⅴ部）でこの距離感を体系化します。</p>
       </div>
     </details>
 
     <div class="keybox">
       <span class="kb-label">この節の要点</span>
-      31edo は<strong>多数の rank-2 音律の同時実装</strong>。<br>ミーントーン（18歩）・würschmidt（10歩）・slendric（6歩）・miracle（3歩）・orwell（7歩）・mohajira（9歩）など。<br>generator の選択＝文法の選択であり、楽器を替えずに音律を替えられる。<br>ただし31という単一調律が各顔の最適解に近いかどうかは顔ごとに異なる。
+      31edo は<strong>多数の rank-2 音律の同時実装</strong>。<br>ミーントーン（18歩）・würschmidt（10歩）・slendric（6歩）・miracle（3歩）・orwell（7歩）・mohajira（9歩）など。<br>generator の選択＝文法の選択であり、楽器を替えずに音律を替えられる。<br>ただし 31edo という単一調律が各顔の最適解に近いかどうかは顔ごとに異なる。
     </div>
 
     <nav class="pager" id="pager"></nav>
