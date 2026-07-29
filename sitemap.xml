@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+ 
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/index.html</loc>
+  <priority>1.0</priority>
+</url>
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/intro.html</loc>
+  <priority>0.9</priority>
+</url>
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/part1-01-sound.html</loc>
+  <priority>0.9</priority>
+</url>
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/part1-03-harmonics.html</loc>
+  <priority>0.9</priority>
+</url>
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/part1-02-cents.html</loc>
+  <priority>0.9</priority>
+</url>
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/part1-04-psychoacoustics.html</loc>
+  <priority>0.9</priority>
+</url>
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/part1-05-jnd.html</loc>
+  <priority>0.9</priority>
+</url>
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/part2-01-ji-limits.html</loc>
+  <priority>0.9</priority>
+</url>
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/part2-02-lattice.html</loc>
+  <priority>0.9</priority>
+</url>
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/part2-03-syntonic.html</loc>
+  <priority>0.9</priority>
+</url>    
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/part2-04-commas.html</loc>
+  <priority>0.9</priority>
+</url>    
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/part2-05-fokker.html</loc>
+  <priority>0.9</priority>
+</url>    
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/part3-01-tempering.html</loc>
+  <priority>0.9</priority>
+</url>    
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/part3-02-rtt.html</loc>
+  <priority>0.9</priority>
+</url>    
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/part3-03-edo.html</loc>
+  <priority>0.9</priority>
+</url>    
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/part3-04-mos.html</loc>
+  <priority>0.9</priority>
+</url>    
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/part3-05-optimization.html</loc>
+  <priority>0.9</priority>
+</url>    
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/part3-06-notation.html</loc>
+  <priority>0.9</priority>
+</url>    
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/part4-01-why31.html</loc>
+  <priority>0.9</priority>
+</url>    
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/part4-02-faces.html</loc>
+  <priority>0.9</priority>
+</url>    
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/part4-03-history.html</loc>
+  <priority>0.9</priority>
+</url>    
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/part4-04-modern.html</loc>
+  <priority>0.9</priority>
+</url>    
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/part4-05-keyboard.html</loc>
+  <priority>0.9</priority>
+</url>    
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/part4-06-harmony.html</loc>
+  <priority>0.9</priority>
+</url>    
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/part5-01-multiplicity.html</loc>
+  <priority>0.9</priority>
+</url>    
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/part5-02-matrix.html</loc>
+  <priority>0.9</priority>
+</url>    
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/part5-03-families.html</loc>
+  <priority>0.9</priority>
+</url>    
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/part5-04-spotlights.html</loc>
+  <priority>0.9</priority>
+</url>    
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/part5-05-small-edos.html</loc>
+  <priority>0.9</priority>
+</url>    
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/part5-06-nonoctave.html</loc>
+  <priority>0.9</priority>
+</url>    
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/part6-01-he.html</loc>
+  <priority>0.9</priority>
+</url>    
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/part6-02-scale-he.html</loc>
+  <priority>0.9</priority>
+</url>    
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/part6-03-timbre.html</loc>
+  <priority>0.9</priority>
+</url>    
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/part6-04-delta-rational.html</loc>
+  <priority>0.9</priority>
+</url>    
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/part6-05-virtual-pitch.html</loc>
+  <priority>0.9</priority>
+</url>    
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/part6-06-consonance.html</loc>
+  <priority>0.9</priority>
+</url>    
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/part6-07-brain.html</loc>
+  <priority>0.9</priority>
+</url>    
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/part7-01-scala.html</loc>
+  <priority>0.9</priority>
+</url>    
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/part7-02-midi.html</loc>
+  <priority>0.9</priority>
+</url>    
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/part7-03-plugins.html</loc>
+  <priority>0.9</priority>
+</url>    
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/part7-04-instruments.html</loc>
+  <priority>0.9</priority>
+</url>    
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/part7-05-workflow.html</loc>
+  <priority>0.9</priority>
+</url>    
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/appendix-a-glossary.html</loc>
+  <priority>0.8</priority>
+</url>    
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/appendix-b-references.html</loc>
+  <priority>0.8</priority>
+</url>    
+<url>
+  <loc>https://misohitonakai.github.io/microgrimoire/appendix-c-tables.html</loc>
+  <priority>0.8</priority>
+</url>        
+</urlset>
