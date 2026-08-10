@@ -262,7 +262,7 @@
   });
   document.getElementById("dr-delta").addEventListener("click", () => {
     XenAudio.playFreqs([base * 9/2 , base * 11/2 , base * 13/2], { dur: 3.0 });
-    document.getElementById("dr-note").textContent = "等差 3:4:5（差はどちらも base＝共通の差音。倍音列の断片）";
+    document.getElementById("dr-note").textContent = "等差 9:11:13（差はどちらも base＝共通の差音。倍音列の断片）";
   });
   document.getElementById("dr-nonint").addEventListener("click", () => {
     XenAudio.playFreqs([413, 562, 711], { dur: 3.0 });
